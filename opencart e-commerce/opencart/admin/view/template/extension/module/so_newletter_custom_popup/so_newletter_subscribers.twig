@@ -1,0 +1,107 @@
+<div class="button_action">
+	<div class="btn-group">
+		<button aria-expanded="false" data-toggle="dropdown" class="btn btn-warning dropdown-toggle" type="button">
+			<i class="fa fa-trash-o"></i> {{ objlang.get('entry_button_delete') }}  <span class="caret"></span>
+		</button>
+		<ul role="menu" class="dropdown-menu">
+			<li><a onclick="confirm('Are you sure?') ? delete_all() : false;">{{ objlang.get('entry_delete_all') }} </a></li>
+			<li><a onclick="confirm('Are you sure?') ? delete_all_selected() : false;">{{ objlang.get('entry_delete_selected') }} </a></li>
+			<li><a onclick="confirm('Are you sure?') ? delete_all_not_approved() :false;">{{ objlang.get('entry_delete_all_not_approved') }} </a></li>
+		</ul>
+	</div>
+	<div class="btn-group">
+		<button aria-expanded="false" data-toggle="dropdown" class="btn btn btn-primary dropdown-toggle" type="button">
+			<i class="fa fa-thumbs-o-up"></i> {{ objlang.get('entry_button_approve') }}  <span class="caret"></span>
+		</button>
+		<ul role="menu" class="dropdown-menu">
+			<li><a onclick="confirm('Are you sure?') ? approve_all_selected() :false;">{{ objlang.get('entry_approve_selected') }} </a></li>
+			<li><a onclick="confirm('Are you sure?') ? approve_all_not_approved() : false;">{{ objlang.get('entry_approve_all_not_approved') }} </a></li>
+		</ul>
+	</div>
+	<div class="btn-group">
+		<button aria-expanded="false" data-toggle="dropdown" class="btn btn btn-info dropdown-toggle" type="button">
+			<i class="fa fa-envelope-o"></i> {{ objlang.get('entry_button_mailing') }}  <span class="caret"></span>
+		</button>
+		<ul role="menu" class="dropdown-menu">
+			<li><a onclick="confirm('Are you sure?') ? mailing_all() : false;">{{ objlang.get('entry_mailing_send_email_to_all') }} </a></li>
+			<li><a onclick="confirm('Are you sure?') ? mailing_all_selected() : false;">{{ objlang.get('entry_mailing_send_email_to_all_selected') }} </a></li>
+			<li><a onclick="confirm('Are you sure?') ? mailing_all_not_notified() : false;">{{ objlang.get('entry_mailing_send_email_to_all_not_notified') }} </a></li>
+			<li><a onclick="confirm('Are you sure?') ? mailing_all_approved() : false;">{{ objlang.get('entry_mailing_send_email_to_all_approved_only') }} </a></li>
+		</ul>
+	</div>
+	<div class="btn-group">
+		<button aria-expanded="false" data-toggle="dropdown" class="btn btn btn-info dropdown-toggle" type="button" onclick="confirm('Are you sure?') ? revert_yet_send() : false;">
+			<i class="fa fa-refresh"></i> {{ objlang.get('entry_revert_yet_send') }} </span>
+		</button>
+	</div>
+</div>
+<form action="" method="post" enctype="multipart/form-data" id="form-product">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover">
+			<thead>
+			<tr>
+				<td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+				<td class="text-left">
+					{{ objlang.get('entry_column_email') }} 
+				</td>
+				<td class="text-left">
+					{{ objlang.get('entry_column_date_added') }} 
+				</td>
+				<td class="text-left">
+					{{ objlang.get('entry_column_status') }} 
+				</td>
+				<td class="text-left">
+					{{ objlang.get('entry_confirm_mail') }} 
+				</td>
+				<td class="text-center">{{ objlang.get('entry_column_action') }} </td>
+			</tr>
+			</thead>
+			<tbody>
+			{% if newletter_email %} 
+				{% for item in newletter_email %} 
+				<tr>
+					<td class="text-center">
+						<input type="checkbox" name="selected[]" value="{{ item.news_id }} " />
+					</td>
+					<td class="text-left">{{ item.news_email }} </td>
+					<td class="text-left">{{ item.news_create_date }} </td>
+					<td class="text-left">
+						{% if item.news_status  ==  0 %} 
+							<span class="label label-danger text-uppercase">{{ objlang.get('entry_not_approved') }} </span>
+						{% else %}   
+							<span class="label label-success text-uppercase">{{ objlang.get('entry_approved') }} </span>
+						{% endif %} 
+					</td>
+					<td class="text-left">
+						{% if item.confirm_mail  ==  0 %} 
+							<span class="label label-danger text-uppercase">{{ objlang.get('entry_yet_send') }} </span>
+						{% else %}   
+							<span class="label label-success text-uppercase">{{ objlang.get('entry_did_send') }} </span>
+						{% endif %}  
+					</td>
+					<td class="text-center">
+						<a data-original-title="Delete" class="btn btn-warning" title="" data-toggle="tooltip" onclick="confirm('Are you sure?') ? delete_selected('{{ item.news_id }}') : false;"><i class="fa fa-trash-o"></i></a>
+						<a class="btn btn-primary" data-original-title="{% if item.news_status  ==  0 %} Approve {% else %}  Not Approve {% endif %} " title="" data-toggle="tooltip" onclick="confirm('Are you sure?') ? approve_selected('{{ item.news_id }}') : false;">
+
+						<i class="
+						{% if item.news_status  ==  1 %} 
+							fa fa-thumbs-o-up
+						{% else %}   
+							fa fa-thumbs-o-down
+						{% endif %} 
+						"></i>
+						</a>
+						<a data-original-title="Send email" class="btn btn-info" title="" data-toggle="tooltip" onclick="confirm('Are you sure?') ? mailing_selected({{ item.news_id }}) : false;"><i class="fa fa-envelope-o"></i></a>
+					</td>
+				</tr>
+				{% endfor %}
+
+			{% else %}   
+			<tr>
+				<td class="text-center" colspan="8">{{ objlang.get('entry_text_no_results') }} </td>
+			</tr>
+			{% endif %} 
+			</tbody>
+		</table>
+	</div>
+</form>

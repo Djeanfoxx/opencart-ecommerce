@@ -1,0 +1,139 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/************************************************************************************************
+  FOOTER DEFFAULT
+*************************************************************************************************/
+footer.typefooter-4{ 
+	.footer-top { padding: 61px 0 55px 0;
+		.block-title {
+		    margin-bottom: 15px;
+	        text-transform: uppercase;
+		    font-weight: 700;
+		    line-height: 100%;
+		    font-size: 16px;
+		   	color: #fff;
+		}
+		.find-store{ position: relative;
+			.fa{ margin-#{$right}: 12px; }
+			&:before {
+			    background-color: rgba(255, 255, 255, 0.2);
+			    position: absolute;
+			    content: '';
+			    width: 1px;
+			    height: 177px;
+			    top: 0;
+			    #{$right}: 0;
+			}
+			@include breakpoint(lg){
+			    padding-right: 80px;
+			}
+			.block-content {
+			    p {margin: 0px 0 45px 0; color: #fff;}
+			    a { font-weight: 700; text-transform: uppercase; color: #fff; margin-#{$right}: 22px; }
+			    a.active { background-color: #fff;  padding: 10px 20px;  color: #ff5e00; margin: 0;
+			    	&:hover{
+			    		background: #999;
+			    		color: #fff;
+			    	}
+			    }
+			}
+		}
+		.follow-us  { text-align: center;
+			.block-title{ margin-bottom: 26px; }
+			ul{
+			    display: flex;
+			    justify-content: center;
+			    li {
+				    float: $left;
+				    margin: 0 20px;
+				    text-align: center;
+				    a .fa {
+					    font-size: 20px;
+					    width: 40px;
+					    height: 40px;
+					    line-height: 40px;
+					    background-color: #fff;
+					    color: #222222;
+					    border-radius: 100%;
+					    -moz-border-radius: 100%;
+					    -webkit-border-radius: 100%;
+					    &:hover{
+					    	background: #999; color: #fff;
+					    }
+					}
+					p{ color: rgba(255, 255, 255, 0.7); margin: 0; } 
+					.name-social { font-size: 14px; font-weight: 700; color: #fff; }
+				}
+			}
+			.app { text-align: center; margin-top: 11px; 
+				a { padding: 0 5px; }
+			}
+		}
+		.news-letter{ color: #fff; float: none;  position: relative;   padding: 0 42px 0 30px;  display: table-cell;
+			&:before {
+			    background-color: rgba(255, 255, 255, 0.2);
+			    position: absolute;
+			    content: '';
+			    width: 1px;
+			    height: 177px;
+			    top: 0;
+			    #{$right}: 0;
+			}
+			.title-block{ display: block; padding: 0; white-space: normal;
+				.page-heading{ color: #fff;  margin-bottom: 12px;
+					.fa{ margin-#{$right}: 9px; }
+				}
+				.pre-text{ line-height: 22px; font-size: 13px;  white-space: normal; display: block;
+					@include breakpoint(lg){
+						 padding-#{$right}: 15px;
+					}
+				}
+			}
+			.block_content{ display: block; padding: 0;     margin-top: 28px;
+				.input-box input{
+					height: 40px; border-radius: 0; width: 290px;
+				}
+				.subcribe button{
+					 padding: 0 15px; height: 40px; background: #999; border-color: #999; font-size: 12px; font-weight: 600; border-radius: 0;
+					z-index: 9;
+
+					&:hover{
+						background: #222;border-color: #222;
+					}
+				}
+			}
+			
+		} 
+	}
+	.footer-center {
+		@include breakpoint(lg){ padding-top: 64px; padding-bottom: 60px; }
+	}
+	.footer-bottom{ background: #fff; }
+	.so-custom-default{
+		background: transparent !important;
+		border: none !important;
+		padding: 0 !important;
+		.newsletter_promo{
+			line-height: 25px;
+		}
+	}
+}

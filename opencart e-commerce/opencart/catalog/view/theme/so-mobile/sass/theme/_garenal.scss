@@ -1,0 +1,370 @@
+/*===============================================
+	[SASS DIRECTORY ]
+	
+    [1] HEADING
+    [2] LINK & COLUMN
+    [3] BLOCK FORM
+    [4] BLOCK TABLE
+    [5] POPUP ADDED TO CART
+    [6] Pre-Loader 
+==============================================*/
+
+
+/*================ HEADING ===================*/
+
+html {
+	width: 100%;
+	outline: 0!important;
+	@include if-rtl {direction: rtl;}
+	@include if-ltr {direction: ltr;}
+}
+body {
+	color: $textBody;
+	font-size: $font-size-base;
+	@include scrollbars(.3em, $gray-light);
+
+}
+h1 {font-size: $font-size-h1;}
+h2 {font-size: $font-size-h2;}
+h3 {font-size: $font-size-h3;}
+h4 {font-size: $font-size-h4;}
+h5 {font-size: $font-size-h5;}
+h6 {font-size: $font-size-h6;}
+.h1, .h2, .h3, h1, h2, h3,.h4, .h5, .h6, h4, h5, h6{margin: 0 0 15px 0;}
+
+
+select, textarea, input[type="text"], 
+input[type="search"], 
+input[type="password"], 
+input[type="datetime"], 
+input[type="datetime-local"], 
+input[type="date"], 
+input[type="month"], 
+input[type="time"], 
+input[type="week"], 
+input[type="number"], 
+input[type="email"], 
+input[type="url"], 
+input[type="tel"], 
+input[type="color"]{ box-shadow: none; }
+
+//Disable Auto Zoom in Input “Text” tag - Safari on iPhone
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+    select:focus, textarea, input[type="text"]:focus, input[type="search"]:focus {
+        font-size: 16px !important;
+    }
+    
+}
+
+/*================ MOBILE APPS Ratchet ===================*/
+ @media  (min-width: 480px){ 
+	.content{width:441px;margin-left: auto;margin-right: auto;
+		.container {width:auto;}
+	}
+ }
+/*================ LINK & COLUMN ===================*/
+.textColor{color: $linkColor;}
+ul.menu, ol.menu ,ul.blank{list-style: none;margin: 0;padding: 0;}
+option { padding:2px 5px; border-width:1px;}
+.alert ol li {list-style-type:decimal;margin:0 0 5px 15px;	}
+
+img { max-width:100%;}
+.over{overflow: visible;}
+.align-center{display:table;margin:0 auto;}
+.text-danger{color: #fff; display: inline-block; background-color: #a94442; padding: 0 5px; margin: 5px 0; border-radius: 3px;font-size: 11px;}
+
+a{color: $gray-dark;
+	&:hover{color: $linkColorHover;text-decoration: none;}
+}
+a, a:visited, a:active, a:link, a:focus {cursor: pointer;text-decoration: none;outline: none; }
+
+ol {counter-reset: item;padding: 0 0 0 15px;}
+
+sup {color: #F00;font-size: 100%;top: -4px;}
+
+.list-inline{display: inline-block;margin: 0;
+	.container-megamenu &{
+		a{display: inline-block }
+	}
+	
+}
+.table-responsive{
+	@include if-rtl{ direction: ltr; }
+}
+
+.clearfix{clear: both;}
+
+.img-thumbnail{
+	&.pull-left{margin-right: 30px;}
+	&.pull-right{margin-left: 30px;}
+}
+
+.form-group {margin-bottom: 10px;}
+
+/*================ TABLE ===================*/
+.table thead > tr > th{background: #eee;}
+table.std th, table.std td {
+	vertical-align: middle;
+	border: $table-border-color;
+	padding: 10px;
+	text-align: center;
+}
+table.std th {
+	white-space: nowrap;
+	background: #f5f5f5;
+}
+table.std tfoot td {
+	color: #333;
+	text-align: $right;
+	white-space: nowrap;
+}
+ table.std {
+	background: #fdfdfd;
+	border-spacing: 0;
+	vertical-align: middle;
+	border: $table-border-color;
+	width: 100%;
+}
+table th {
+	border: $table-border-color;
+	color: #7a7a7a;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 10px;
+	text-align: center;
+	vertical-align: middle;
+	text-transform: uppercase;
+}
+
+.delivery_option table td {
+	text-align: center;
+}
+table tfoot td { text-align: $right;}
+table.table-bordered thead >*{background-color: rgba(51, 51, 51, 0.1); font-weight: bold;}
+
+
+/*================ PAGINATION ===================*/
+.pagination > li {display: inline-block; margin: 0 2px; vertical-align: top;
+    span, a{padding: 3px 8px;}
+    a:hover, span:hover{color: #fff; background: $background1; border-color: $linkColor;}
+    &.active, &:hover{background: transparent; border-color: $linkColor;
+	   span{color: $linkColor; background: transparent; border-color: $linkColor;
+		  &:hover{background: $background1; border-color: $linkColor;}
+	   }
+    }
+    &:last-child{margin-#{$right}: 0;}
+}
+.pagination > li:first-child > a, .pagination > li:first-child > span {border-radius: 0;}
+.pagination > li > a, .pagination > li > span {color: #666;}
+.pagination > li:last-child > a, .pagination > li:last-child > span {border-radius: 0;}
+
+/*================ RATCHET ===================*/
+.bar {
+	.title{    overflow: hidden;text-overflow: ellipsis;white-space: nowrap;     padding: 0 30px;}
+	@include if-rtl {
+		.icon-left-nav{ transform: rotate(180deg);}
+	}
+	
+}
+
+/*================ Magnific Popup responsive ===================*/
+.mfp-wrap figure{margin: 0;}
+.nopadding-xs > div{ padding: 0;}
+.btn-collapse{ font-size: 15px;
+	&:after{content: "\f107";font-family: $FontAwesome; font-size: 18px;}
+	&.active:after{content: "\f106";}
+}
+
+.side-menu{
+	.languages-block .dropdown-menu{
+		#{$left}: 0;
+	    #{$right}: auto;
+	}
+	.currencies-block .dropdown-menu{
+		#{$left}: auto;
+	    #{$right}: 0;
+	}
+	.dropdown-menu{
+	    transition: all 0.2s ease-out;
+	    border-radius: 0;
+	    min-width: 120px;
+	    padding: 0;
+	    border: 1px solid rgba(0,0,0,.15);
+	    -webkit-background-clip: padding-box;
+	    background-clip: padding-box;
+	    .btn-block{
+	    	font-size: 12px;
+	    }
+	}
+}
+
+
+/*================ POPUP ADDED TO CART ===================*/
+
+.alert {
+    position: relative;
+    padding: side-values(18px 40px 18px 75px);
+    z-index: 30;
+    color: #FFF;
+    border-radius: 0;
+    min-height: 60px;
+    box-sizing: border-box;
+    border: none;
+    font-weight: 600;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    transition: 1s all cubic-bezier(1, -0.01, 0, 0.99);
+}
+.alert i {
+    position: absolute;
+    top: 0;
+    #{$left}: 0;
+    bottom: 0;
+    text-align: center;
+    width: 60px;
+    font-size: 40px;
+    -webkit-animation: alert-icon-anim 1s;
+    -moz-animation: alert-icon-anim 1s;
+    -ms-animation: alert-icon-anim 1s;
+    -o-animation: alert-icon-anim 1s;
+    animation: alert-icon-anim 1s;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+}
+
+.alert i:before {
+    position: absolute;
+    top: 50%;
+    #{$left}: 0;
+    #{$right}: 0;
+    line-height: 0;
+}
+.alert a:hover {
+    text-decoration: underline;
+}
+.alert button.close {
+    position: absolute;
+    top: 50%;
+    line-height: 1;
+    #{$right}: 15px;
+    color: #FFF;
+    opacity: .7;
+    background: none;
+    border:none;
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+}
+.alert button.close:hover,
+.alert button.close:focus {
+    opacity: 1;
+    color: #FFF;
+}
+.alert.fadeOut {
+    -moz-transform: translate(0, -100%);
+    -ms-transform: translate(0, -100%);
+    -o-transform: translate(0, -100%);
+    -webkit-transform: translate(0, -100%);
+    transform: translate(0, -100%);
+}
+.alert.fadeOut .alert {
+    top: 100%;
+}
+@media (max-width: 479px) {
+    .alert {padding-#{$right}: 30px; }
+}
+.alert-success {background-color: #4caf50;}
+.alert-success i {background: #388E3C;}
+
+.alert-success a,
+.alert-success a:visited,
+.alert-success a:focus,
+.alert-success a:hover {
+    color: #C8E6C9;
+}
+.alert-danger {
+    background-color: #F44336;
+}
+.alert-danger i {
+    background: #D32F2F;
+}
+.alert-danger a,
+.alert-danger a:visited,
+.alert-danger a:focus,
+.alert-danger a:hover {
+    color: #FFCDD2;
+}
+.alert-info {
+    background-color: #03A9F4;
+}
+.alert-info i {
+    background: #0288D1;
+}
+.alert-info a,
+.alert-info a:visited,
+.alert-info a:focus,
+.alert-info a:hover {
+    color: #B3E5FC;
+}
+.alert-warning {
+    background-color: #FF5722;
+}
+.alert-warning i {
+    background: #E64A19;
+}
+.alert-warning a,
+.alert-warning a:visited,
+.alert-warning a:focus,
+.alert-warning a:hover {
+    color: #FFCCBC;
+}
+body>.alert {
+    position: fixed;
+    z-index: 10004;
+    top: 0;
+    left: 0;
+    width: 100%;
+    @include animation(alert-anim 1s cubic-bezier(1, -0.01, 0, 0.99));
+}
+body>.alert .alert{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+}
+body>.alert .alert.fadeOut{ top: -100%;}
+@include keyframes(alert-anim) {
+   0% {
+        top: -100%;
+    }
+    60% {
+        top: 0;
+    }
+    100% {
+        top: 0;
+    }
+}
+@include keyframes(alert-anim2) {
+   0% {
+        top: -100%;
+    }
+    60% {
+        top: 100%;
+    }
+    100% {
+        top: 100%;
+    }
+}
+@include keyframes(alert-icon-anim) {
+   0% {
+        font-size: 0;
+    }
+    60% {
+        font-size: 0;
+    }
+   
+}
+/*============ Pre-Loader   ==================*/
+.loaded .so-loadeding{display: none}
+.so-loadeding{background: white url(#{$imgPath}lazy-loader.gif) no-repeat center center;;height: 100%; position: absolute;z-index: 2;top: 0;left: 0;right: 0;opacity: 1;}
+

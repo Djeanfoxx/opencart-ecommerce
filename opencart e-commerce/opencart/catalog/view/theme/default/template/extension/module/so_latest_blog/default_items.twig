@@ -1,0 +1,90 @@
+<div class="item">
+	{% if type_show == 'simple' %}
+		{% if blog.thumb and blog_image %}
+			<div class="media-left">
+				<a href="{{ blog.link }}" target="{{ item_link_target }}">
+					<img src="{{ blog.thumb }}" alt="{{ blog.title }}" class="media-object"/>
+				</a>
+			</div>
+		{% endif %}
+		<div class="media-body">
+			{% if display_title %}
+				<h4 class="media-heading">
+					<a href="{{ blog.link }}" title="{{ blog.title }}" target="{{ item_link_target }}">{{ blog.title_maxlength }}</a>
+				</h4>
+			{% endif %}
+			<div class="media-content">
+				{% if display_date_added %}
+					<div class="media-date-added"><i class="fa fa-calendar"></i> {{ blog.date_modified|date("F jS, Y")}}</div>
+				{% endif %}
+				{% if display_description %}
+					<div class="description">
+						{{ blog.description|striptags|slice(0, 200) }}
+					</div>
+				{% endif %}
+				
+				{% if display_author or display_comment or display_view %}
+					<div class="media-subcontent">
+						{% if display_author %}
+							<span class="media-author">{{ blog.author }}</span>
+						{% endif %}
+						{% if display_comment %}
+							<span class="media-comment">{{ blog.comment_count }} {{ blog.text_comment }}</span>
+						{% endif %}
+						{% if display_view %}
+							<span class="media-view">{{ blog.view_count }} {{ blog.text_view }}</span>
+						{% endif %}
+					</div>
+				{% endif %}
+				
+				{% if display_readmore %}
+					<div class="readmore">
+						<a href="{{ blog.link }}" target="{{ item_link_target }}" class="readmore">{{ readmore_text }}</a>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	{% else %}
+		<div class="thumbnail">
+			{% if blog_image %}		
+				<a href="{{ blog.link }}" target="{{ item_link_target }}">
+					<img src="{{ blog.thumb }}" alt="{{ blog.title }}" target="{{ item_link_target }}" />
+				</a>
+			{% endif %}
+			<div class="caption">
+				{% if display_title %}
+					<h4>
+						<a href="{{ blog.link }}" title="{{ blog.title }}" target="{{ item_link_target }}">{{ blog.title_maxlength }}</a>
+					</h4>
+				{% endif %}
+				{% if display_date_added %}
+					<p class="media-date-added"><i class="fa fa-calendar"></i> {{ blog.date_modified|date("F jS, Y") }}</p>
+				{% endif %}
+				{% if display_description %}
+					<div class="description">
+						{{ blog.description|striptags|slice(0, 200) }}
+					</div>
+				{% endif %}
+				{% if display_author or display_comment or display_view %}
+					<div class="media-subcontent">
+						{% if display_author %}
+							<span class="media-author">{{ blog.author|capitalize }}</span>
+						{% endif %}
+						{% if display_comment %}
+							<span class="media-comment">{{ blog.comment_count }} {{ blog.text_comment }}</span>
+						{% endif %}
+						{% if display_view %}
+							<span class="media-view">{{ blog.view_count }} {{ blog.text_view }}</span>
+						{% endif %}
+					</div>
+				{% endif %}
+				
+				{% if display_readmore %}
+					<div class="readmore">
+						<a href="{{ blog.link }}" target="{{ item_link_target }}" class="readmore">{{ readmore_text }}</a>
+					</div>
+				{% endif %}
+			</div>
+    	</div>
+	{% endif %}
+</div>

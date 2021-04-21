@@ -1,0 +1,267 @@
+<div id="{{ tag_id }}" class="so-deal {{ position_thumbnail == 'vertical' ? 'slick-vertical' : 'slick-horizontal' }} so-deals-slick deals-slider-preload">
+	<div class="so-deals-slider-loading"></div>
+	<div class="deals-nav"></div>
+	<div class="deals-content">
+		<div class="ds-items">
+			{% set j = 0 %}
+			{% for product in list %}
+				{% set j = j + 1 %}
+				<div class="ds-item cf {{ j == 1 ? 'active' : '' }}">
+					<div class="ds-item-inner">
+						<div class="ds-image-thumb">
+							<img src="{{ product.thumb }}" alt="{{ product.name }}" class="img-responsive">
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="ds-items-detail">
+		{% set p = 0 %}
+		{% for product in list %}
+			{% set p = p + 1 %}
+			<div class="item {{ p==1 ? 'active' : '' }}">
+				<div class="product-thumb transition">
+					<div class="image">
+						{% if product.special and display_sale %}
+							<span class="label label-sale">{{ objlang.get('text_sale') }}</span>
+						{% endif %}
+
+						{% if product.productNew and display_new %}
+							<span class="label label-new">{{ objlang.get('text_new') }}</span>
+						{% endif %}
+
+						{% if product_image %}
+							<a href="{{ product.href }}" target="{{ item_link_target }}">
+								{% if product_image_num ==2 %}
+									<img data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ product.thumb }}" class="img-thumb1 lazyload" alt="{{ product.name }}">
+									<img data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ product.thumb2 }}" class="img-thumb2 lazyload" alt="{{ product.name }}">
+								{% else %}
+									<img class="lazyload"   data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ product.thumb }}" alt="{{ product.name }}">
+								{% endif %}
+							</a>
+						{% endif %}
+					</div>
+
+					<div class="caption">
+						<div class="item-time">
+							<div class="item-timer product_time_{{ product.product_id }}"></div>
+							<script type="text/javascript">
+								//<![CDATA[
+								listdeal{{ module }}.push('product_time_{{ product.product_id }}|{{ product.specialPriceToDate }}')
+								//]]>
+							</script>
+						</div>
+						
+						{% if display_title == 1 %}
+							<h4><a href="{{ product.href }}" target="{{ item_link_target }}" title="{{ product.name }}" >{{ product.name_maxlength }}</a></h4>
+						{% endif %}
+						
+						{% if display_description %}
+							<p>{{ product.description_maxlength|raw }}</p>
+						{% endif %}
+
+						{% if display_rating %}
+							<div class="rating">
+								{% for j in 1..5 %}
+									{% if product.rating < j %}
+										<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+									{% else %}
+										<span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+									{% endif %}
+								{% endfor %}
+							</div>
+						{% endif %}
+
+						{% if product.price and display_price %}
+							<p class="price">
+								{% if not product.special %}
+									{{ product.price }}
+								{% else %}
+									<span class="price-new">{{ product.special }}</span>
+									<span class="price-old">{{ product.price }}</span>
+								{% endif %}
+
+								{% if product.tax %}
+								<span class="price-tax">{{ objlang.get('text_tax') }} {{ product.tax }}</span>
+								{% endif %}
+							</p>
+						{% endif %}
+
+						{% if display_addtocart or display_wishlist or display_compare %}
+							<div class="button-group">
+								{% if display_addtocart %}
+									<button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ objlang.get('button_cart') }}</span></button>
+								{% endif %}
+
+								{% if display_wishlist %}
+									<button type="button" title="{{ objlang.get('button_wishlist') }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+								{% endif %}
+
+								{% if display_compare %}
+									<button type="button" title="{{ objlang.get('button_compare') }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+								{% endif %}
+							</div>
+						{% endif %}
+					</div>			
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+<script type="text/javascript">
+	//<![CDATA[
+	jQuery(document).ready(function ($) {  ;
+	(function (element) {
+		var $element = $(element);
+		setTimeout(function () {
+			$('.so-deals-slider-loading', $element).remove();
+			$element.removeClass('deals-slider-preload');
+			__runDealsSlider();
+		}, 1000);
+		function __runDealsSlider() {
+		var sync1 = $('.ds-items-detail',$element),
+			sync2 = $('.ds-items',$element);
+
+		sync2.slick({
+			{% if position_thumbnail =='vertical' %}
+				vertical:true,
+			{% endif %}
+			arrows: false,
+			autoplay: {{ autoplay }},
+			slidesToShow: {{ nb_column0 }},
+			slidesToScroll: {{ slideBy }},
+			infinite: {{ loop }},
+			initialSlide: {{ startPosition }},
+			speed: {{ autoplayTimeout }},
+			autoplaySpeed: {{ autoplaySpeed }},
+			asNavFor: '#{{ tag_id }} .ds-items-detail',
+			pauseOnHover: {{ autoplayHoverPause }},
+			dots: false,
+			centerMode: false,
+			focusOnSelect: true,
+			responsive: [
+				{
+					breakpoint: 1199,
+					settings: {
+						slidesToShow: {{ nb_column0 }},
+						slidesToScroll: {{ slideBy }}
+					}
+				},
+				{
+					breakpoint: 991,
+					settings: {
+						slidesToShow: {{ nb_column1 }},
+						slidesToScroll: {{ slideBy }}
+					}
+				},
+				{
+					breakpoint: 767,
+					settings: {
+						slidesToShow: {{ nb_column2 }},
+						slidesToScroll: {{ slideBy }}
+					}
+				},
+				{
+					breakpoint: 479,
+					settings: {
+						slidesToShow: {{ nb_column3 }},
+						slidesToScroll: {{ slideBy }}
+					}
+				},
+				{
+					breakpoint: 320,
+					settings: {
+						slidesToShow: {{ nb_column4 }},
+						slidesToScroll: {{ slideBy }}
+					}
+				}
+			]
+		});
+
+		sync1.slick({
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			autoplay: {{ autoplay }},
+			infinite: {{ loop }},
+			arrows: {{ navs }},	
+			initialSlide: 0,
+			//fade: true,
+			speed: {{ autoplayTimeout }},
+			autoplaySpeed: {{ autoplaySpeed }},
+			focusOnSelect: true,
+			pauseOnHover: {{ autoplayHoverPause }},
+			appendArrows: "#{{ tag_id }} .deals-nav",
+			prevArrow: '<span class="slick-prev">&#60;</span>', 
+			nextArrow: '<span class="slick-next">&#62;</span>',
+			asNavFor: '#{{ tag_id }} .ds-items'
+		});
+		{% if list|length <= 1 %}
+			$('#{{ tag_id }} .deals-nav').hide();
+		{% endif %}
+	}
+	data = new Date(2013, 10, 26, 12, 00, 00);
+	function CountDown(date, id) {
+		dateNow = new Date();
+		amount = date.getTime() - dateNow.getTime();
+		if (amount < 0 && $('#' + id).length) {
+			$('.' + id).html("Now!");
+		} else {
+			days = 0;
+			hours = 0;
+			mins = 0;
+			secs = 0;
+			out = "";
+			amount = Math.floor(amount / 1000);
+			days = Math.floor(amount / 86400);
+			amount = amount % 86400;
+			hours = Math.floor(amount / 3600);
+			amount = amount % 3600;
+			mins = Math.floor(amount / 60);
+			amount = amount % 60;
+			secs = Math.floor(amount);
+			if (days != 0) {
+				out += "<div class='time-item time-day'>" + "<div class='num-time'>" + days + "</div>" + " <div class='name-time'>" + ((days == 1) ? "Day" : "Days") + "</div>" + "</div> ";
+			}
+			if(days == 0 && hours != 0)
+			{
+				 out += "<div class='time-item time-hour' style='width:33.33%'>" + "<div class='num-time'>" + hours + "</div>" + " <div class='name-time'>" + ((hours == 1) ? "Hour" : "Hours") + "</div>" + "</div> ";
+			}else if (hours != 0) {
+				out += "<div class='time-item time-hour'>" + "<div class='num-time'>" + hours + "</div>" + " <div class='name-time'>" + ((hours == 1) ? "Hour" : "Hours") + "</div>" + "</div> ";
+			}
+			if(days == 0 && hours != 0)
+			{
+				out += "<div class='time-item time-min' style='width:33.33%'>" + "<div class='num-time'>" + mins + "</div>" + " <div class='name-time'>" + ((mins == 1) ? "Min" : "Mins") + "</div>" + "</div> ";
+				out += "<div class='time-item time-sec' style='width:33.33%'>" + "<div class='num-time'>" + secs + "</div>" + " <div class='name-time'>" + ((secs == 1) ? "Sec" : "Secs") + "</div>" + "</div> ";
+				out = out.substr(0, out.length - 2);
+			}else if(days == 0 && hours == 0)
+			{
+				out += "<div class='time-item time-min' style='width:50%'>" + "<div class='num-time'>" + mins + "</div>" + " <div class='name-time'>" + ((mins == 1) ? "Min" : "Mins") + "</div>" + "</div> ";
+				out += "<div class='time-item time-sec' style='width:50%'>" + "<div class='num-time'>" + secs + "</div>" + " <div class='name-time'>" + ((secs == 1) ? "Sec" : "Secs") + "</div>" + "</div> ";
+				out = out.substr(0, out.length - 2);
+			}else{
+				out += "<div class='time-item time-min'>" + "<div class='num-time'>" + mins + "</div>" + " <div class='name-time'>" + ((mins == 1) ? "Min" : "Mins") + "</div>" + "</div> ";
+				out += "<div class='time-item time-sec'>" + "<div class='num-time'>" + secs + "</div>" + " <div class='name-time'>" + ((secs == 1) ? "Sec" : "Secs") + "</div>" + "</div> ";
+				out = out.substr(0, out.length - 2);
+			}
+
+			$('.' + id).html(out);
+
+			setTimeout(function () {
+				CountDown(date, id);
+			}, 1000);
+		}
+	}
+	if (listdeal{{ module }}.length > 0) {
+		for (var i = 0; i < listdeal{{ module }}.length; i++) {
+			var arr = listdeal{{ module }}[i].split("|");
+			if (arr[1].length) {
+				var data = new Date(arr[1]);
+				CountDown(data, arr[0]);
+			}
+		}
+	}
+	})('#{{ tag_id }}');
+	});
+	//]]>
+</script>
+</div>

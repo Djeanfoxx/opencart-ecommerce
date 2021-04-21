@@ -1,0 +1,104 @@
+<div class="so-acc-vertical">
+	<ul class="yt-accordion">
+	{% set j = 0 %}
+	{% for product in products %}
+	{% set j = j + 1 %}
+		<li class="yt-acc-item {% if j == 1 %} 'enable' {% endif %}">
+			<div class="acc-heading">
+				<h3>
+					{% if display_title %}
+						{{ (product.name_maxlength|raw) }}
+					{% endif %}
+				</h3>		
+			</div>
+			<div class="acc-inner product-thumb">
+				<div class="image">
+					{% if product.special and display_sale %}
+						<span class="label label-sale">{{ text_sale }}</span>
+					{% endif %}
+					{% if product.productNew and display_new %}
+						<span class="label label-new">{{ text_new }}</span>
+					{% endif %}
+					{% if product_image %}
+						<a href="{{ product.href }}" target="{{ item_link_target }}" title= "{{ product.name }}">
+							{% if product_image_num ==2 %}
+								<img src="{{ product.thumb }}" class="img-thumb1" alt="{{ product.name }}">
+								<img src="{{ product.thumb2 }}" class="img-thumb2" alt="{{ product.name }}">
+							{% else %}
+								<img src="{{ product.thumb }}" alt="{{ product.name }}">
+							{% endif %}
+						</a>
+					{% endif %}
+				</div>
+				<div class="acc-inner-content">
+					{% if display_rating %}
+					<div class="rating">
+					  {% for i in 1..5 %}
+						  {% if product.rating < i %}
+							<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+						  {% else %}
+							<span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+						  {% endif %}
+					  {% endfor %} 
+					</div>
+					{% endif %}
+
+					{% if display_price  %}
+						{% if product.price %}
+						<p class="price">
+						  {% if not product.special %}
+						  {{ product.price }}
+						  {% else %}
+						  <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+						  {% endif %}
+						  {% if product.tax %}
+						  <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+						  {% endif %}
+						</p>
+						{% endif %}
+					{% endif %}
+					{% if display_description %}
+						<div class="acc-inner-desc">
+							{{ (product.description_maxlength|raw) }}
+						</div>
+					{% endif %} 
+				</div>
+				{% if display_add_to_cart or display_wishlist or display_compare %}
+					<div class="button-group">
+					{% if display_add_to_cart %}
+						<button type="button" onclick="cart.add('{{ product.product_id }};"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+					{% endif %}
+
+					{% if display_wishlist %}
+						<button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+					{% endif %}
+					{% if display_compare %}
+						<button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+					{% endif %}
+					</div>
+				{% endif %}
+			</div>
+		</li>
+	{% endfor %} 
+	</ul>
+</div>
+<script>
+jQuery(document).ready(function($) {
+	$("ul.yt-accordion li").each(function() {
+		if($(this).hasClass('enable')){
+			$(this).addClass("active");
+			$(this).children(".acc-inner").slideDown('slow');	
+		}
+		var ua = navigator.userAgent,
+		event = (ua.match(/iPad/i)) ? "touchstart" : "click";
+		$('.acc-heading',this).bind(event, function() {
+			$(this).parent().parent().children("li").removeClass("active");
+			$(this).parent().parent().children("li").children(".acc-inner").slideUp('slow');
+			$(this).parent().addClass("active");
+			$(this).parent().children(".acc-inner").slideDown('slow');	
+		});
+	});
+});
+</script>			
+				
+				

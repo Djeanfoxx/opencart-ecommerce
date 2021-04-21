@@ -1,0 +1,83 @@
+#so_popup_countdown .modal-dialog {
+	margin: 0 auto;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);	
+}
+#so_popup_countdown .modal-header {
+	background-color: #ff5c00;
+	position: relative;
+	border: 0;
+}
+#so_popup_countdown .modal-header h2 {
+	text-align: center;
+	color: #fff;
+	font-size: 18px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 10px;
+	margin: 0;
+}
+#so_popup_countdown .modal-header .close {
+	position: absolute;
+    right: 10px;
+    top: 50%;
+    color: #fff;
+    font-weight: normal;
+    opacity: 1;
+    font-size: 2.6rem;
+    text-shadow: none;
+    margin-top: -1.3rem;
+}
+#so_popup_countdown .modal-content {
+	border: 0px;
+	box-shadow: none;
+	border-radius: 0px;
+}
+#so_popup_countdown .modal-content p {
+	margin: 0px;
+}
+#so_popup_countdown .modal-footer {
+	padding: 0;
+    border: 0px;
+    text-align: justify;
+    position: relative;
+}
+#so_popup_countdown .modal-footer #so_countdown_timer {
+	position: absolute;
+	left: 30px;
+	top: 70px;
+}
+#so_popup_countdown .modal-footer #so_countdown_timer .time-item {
+	width: 60px;
+	height: 60px;
+	border: 5px solid rgba(255,255,255,0.7);
+	border-radius: 100%;
+	color: #fff;
+	float: left;
+	margin-right: 15px;
+	text-align: center;
+	text-transform: uppercase;
+	display: block;
+	vertical-align: middle;
+	padding-top: 5px;
+}
+#so_popup_countdown .modal-footer #so_countdown_timer .time-item .num-time {
+	font-size: 150%;
+	font-weight: bold;
+}
+#so_popup_countdown .modal-footer #so_countdown_timer .time-item .name-time {
+	font-size: 86%;
+}
+#so_popup_countdown.modal{ z-index: 10500;}
+
+@media (max-width: 767px) {
+	#so_popup_countdown {
+		display: none !important;
+	}
+	.modal-backdrop.in {
+		opacity: 0;
+		filter: alpha(opacity=0);
+	}
+}

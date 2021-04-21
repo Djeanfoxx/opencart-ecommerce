@@ -1,0 +1,1369 @@
+{# Twig variable So Config #}
+{% set fonts = { 
+	'standard' : 'Standard',
+	'google'  : 'Google Fonts',
+} %}
+
+{% set columns = { 
+	'1' : '1 columns',
+	'2' : '2 columns',
+	'3' : '3 columns',
+	'4' : '4 columns',
+	'5' : '5 columns',
+	'6' : '6 columns',
+	'7' : '7 columns',
+	'8' : '8 columns',
+	'9' : '9 columns',
+} %}
+
+{% set card_gallery = { 
+	'0' : 'Disable',
+	'1' : 'Align Left',
+	'2' : 'Align Right',
+	'3' : 'Align Bottom',
+} %}
+
+{% set refine_search = { 
+	'0' : 'Disable ',
+	'1' : 'Show image',
+	'2' : 'Show all',
+} %}
+
+{% set fonts_normal = { 
+	'inherit' : 'No Use',
+	'Arial, Helvetica, sans-serif'  : 'Arial',
+	'Verdana, Geneva, sans-serif'  : 'Verdana',
+	'Georgia,Times New Roman, Times, serif'  : 'Georgia',
+	'Impact, Arial, Helvetica, sans-serif'  : 'Impact',
+	'Tahoma, Geneva, sans-serif'  : 'Tahoma',
+	'Trebuchet MS, Arial, Helvetica, sans-serif'  : 'Trebuchet MS',
+	'Arial Black, Gadget, sans-serif'  : 'Arial Black',
+	'Times, Times New Roman, serif'  : 'Times',
+	'Palatino Linotype, Book Antiqua, Palatino, serif'  : 'Palatino Linotype',
+	'Lucida Sans Unicode, Lucida Grande", sans-serif'  : 'Lucida Sans Unicode',
+	'MS Serif, New York, serif'  : 'MS Serif',
+	'Comic Sans MS, cursive'  : 'Comic Sans MS',
+	'Courier New, Courier, monospace'  : 'Courier New',
+	'Lucida Console, Monaco, monospace'  : 'Lucida Console',
+} %}
+
+{% set devices = { 
+	'lg' : '<i class="fa fa-desktop"></i> Desktops',
+	'md' : '<i class="fa fa-tablet"></i> Tablet Landscape',
+	'sm' : '<i class="fa fa-tablet"></i> Tablet Portrait',
+	'xs' : '<i class="fa fa-mobile"></i> Phones',
+} %}
+
+{% set Scssformat = { 
+	'Expanded' : 'Expanded',
+	'Nested' : 'Nested (default)',
+	'Compressed' : 'Compressed',
+	'Compact' : 'Compact',
+	'Crunched' : 'Crunched',
+} %}
+
+{% set layoutStyle = { 
+	'full' : 'Default',
+	'fluid' : 'Layout fluid',
+	'boxed' : 'Layout boxed',
+} %}
+
+{% set content_bg_mode = { 
+	'repeat' : 'Repeat',
+	'no-repeat' : 'No-Repeat',
+} %}
+
+{% set content_attachment = { 
+	'scroll' : 'Scroll',
+	'fixed' : 'Fixed',
+} %}
+
+{% set related_position = { 
+	'vertical' : 'Vertical',
+	'horizontal' : 'Horizontal',
+} %}
+
+{% set thumbnailPos = { 
+	'bottom' : 'Gallery Bottom',
+	'left' : 'Gallery Left',
+	'grid' : 'Gallery Grid',
+	'list' : 'Gallery List',
+	'slider' : 'Gallery Slider',
+} %}
+
+{% set zoommode = { 
+	'window' : 'Basic Zoom',
+	'inner' : 'Inner Zoom',
+	'lens' : 'Lens Zoom',
+} %}
+
+{% set gallerysize = { 
+	'small' : 'Image Small',
+	'medium' : 'Image Medium',
+	'large' : 'Image Large',
+} %}
+
+{% set tabs_position = { 
+	'1' : 'Bottom vertical',
+	'2' : 'Bottom horizontal',
+} %}
+
+{% set toppanel_type = { 
+	'1' : 'Show Header Center',
+	'2' : 'Show Header Bottom',
+	'3' : 'Show All'
+} %}
+
+{% set catalog_mode = { 
+	'grid-list' : 'List Column',
+	'grid-table' : 'Table Column',
+	'grid-2' : '2 Columns',
+	'grid-3' : '3 Columns',
+	'grid-4' : '4 Columns',
+	'grid-5' : '5 Columns',
+} %}
+
+{% set radio_style = { 
+	'0' : 'Default',
+	'1' : 'Button'
+} %}
+
+{% set type_banner = { 
+	'1' : 'Hover effect 1',
+	'2' : 'Hover effect 2',
+	'3' : 'Hover effect 3',
+	'4' : 'Hover effect 4',
+	'5' : 'Hover effect 5',
+	'6' : 'Hover effect 6',
+	'7' : 'Hover effect 7',
+	'8' : 'Hover effect 8',
+	'9' : 'Hover effect 9',
+	'10' : 'Hover effect 10',
+	'11' : 'Hover effect 11',
+	'12' : 'Hover effect 12',
+} %}
+
+{% set preloader_animation = { 
+	'line' : 'Default line',
+	'double-loop' : 'Double Bounce',
+	'cube-move' : 'Cube Move',
+	'circle-bounce' : 'Circle Bounce',
+	'folding-cube' : 'Cube Folding',
+} %}
+
+{% set pattern_array = {'0' : 'None'} %}
+{% for pattern_id in 2..45 %}
+	{% if pattern_id not in pattern_array %}
+          {% set pattern_array = pattern_array|merge([pattern_id]) %}
+    {% endif %}
+{% endfor %}
+{# //End variable So Config #}
+
+<div class="sidebar " data-sticky_column>
+<ul class="nav nav-tabs main_tabs_vertical" >
+    <li class="active"><a href="#tab-general" data-toggle="tab">{{  objlang.get('maintabs_general') }} </a></li>
+    <li><a href="#tab-layout" data-toggle="tab">{{ objlang.get('maintabs_layout') }} </a></li>
+    <li><a href="#tab-products" data-toggle="tab">{{ objlang.get('maintabs_products')  }} </a></li>
+    <li><a href="#tab-fonts" data-toggle="tab">{{ objlang.get('maintabs_fonts')  }} </a></li>
+    <li><a href="#tab-social" data-toggle="tab">{{ objlang.get('maintabs_social')  }} </a></li>
+    <li><a href="#tab-custom" data-toggle="tab">{{ objlang.get('maintabs_custom')  }} </a></li>
+	<li><a href="#tab-advanced" data-toggle="tab">{{ objlang.get('maintabs_advanced')  }} </a></li>
+</ul>
+</div>
+
+<div class="tab-content main_content_vertical col-sm-10" data-sticky_column>
+    <!-------------------------------------Tab General---------------------------------->
+    <div class="tab-pane active" id="tab-general">
+        <ul class="nav nav-tabs  main_tabs_2 ">
+            <li class="active"><a href="#tab-general-layout1" class="selected" data-toggle="tab">{{ general_tab_general }} </a></li>
+            <li><a href="#tab-general-layout2" data-toggle="tab">{{ general_tab_header }} </a></li>
+            <li><a href="#tab-general-layout3" data-toggle="tab">{{ general_tab_footer }}  </a></li>
+			<li><a href="#tab-general-layout4" data-toggle="tab">Banner Effect</a></li>
+        </ul>
+
+        <div class="tab-content ">
+			{# General  Blocks---------------------------------------------  #}
+            <div class="tab-pane active" id="tab-general-layout1">
+				
+				<div class="so-panel">
+					<h3 class="panel-title">Select Layout</h3>
+					<div class="panel-container">
+						
+						<div id="tab-general__layouttype" class="form-group">
+							
+							<div class="col-sm-12">
+								{{ fields.field_typelayout('soconfig_general_store','typelayout',typelayouts,'6') }} 
+							</div>
+						</div>
+						
+						<div class="form-group" >
+							<label class="col-sm-2 control-label" >
+								<span data-toggle="tooltip" title="
+									<p class='help-hint-text'>
+										<i class='fa fa-bullhorn' ></i> 
+										<span>Create New Color</span>
+									</p>
+									<p ><strong class='text-primary'>Step 1:</strong> Select the layout you want to display.<p>
+									<p ><strong class='text-primary'>Step 2:</strong> Fill color and color code >> Click button Compile CSS >> Create a new Color.</p>
+									<p ><strong class='text-primary'>Step 3:</strong> Select the color you just created >> Click button Save. </p>
+								">
+									New Color
+								</span>
+							</label>
+							
+							<div class="col-sm-2">
+								{{ fields.field_text('soconfig_advanced_store','name_color','Name Color') }} 
+							</div>
+							<div class="col-sm-2">
+								<div class="input-group">
+									<i class="input-group-addon fa fa-paint-brush" aria-hidden="true"></i>
+									{{ fields.field_colors('soconfig_advanced_store','theme_color','Select color') }} 
+								</div>
+							</div>
+							<div class="col-sm-5">
+								<button onclick="buttonApplyColor();" class="btn btn-primary" type="button"  {% if scsscompile %} {{ "disabled='disabled'" }} {% endif %}><i class="fa fa-compress" aria-hidden="true"></i> Compile CSS</button>
+							</div>
+							<div class="col-sm-offset-2 col-sm-10">
+								{% if error.nameColor %}
+									<div class="text-danger"> {{error.nameColor}}</div>
+								{% endif %}
+							</div>
+							<div class="col-sm-offset-2 col-sm-10">
+			
+								 {% if (scsscompile  or  compileMutiColor)  %} 
+								<div class="text-info" style="margin-top:20px;">
+								<p><strong>You need set :</strong> Before Compile css</p>
+								<p>
+								1.Tab Advanced → SCSS Compile = Off .</br>
+								2.Tab Advanced → User Developer Compile Muti Color = Off .
+								</p>
+								
+								</div>
+								{% endif %} 
+							</div>
+						</div>
+						
+						
+						
+						<div id="tab-general__themecolor" class="form-group">
+							<label class="col-sm-2 control-label" >
+								<span data-toggle="tooltip" title="
+									<p class='help-hint-text'>
+										<i class='fa fa-bullhorn' ></i> 
+										<span>Create New Color</span>
+									</p>
+									<p ><strong class='text-primary'>Step 1:</strong> Select the layout you want to display.<p>
+									<p ><strong class='text-primary'>Step 2:</strong> Fill color and color code >> Click button Compile CSS >> Create a new Color.</p>
+									<p ><strong class='text-primary'>Step 3:</strong> Select the color you just created >> Click button Save. </p>
+								">
+									Select  Color
+								</span>
+							</label>
+							<div class="col-sm-6" id="select_color">
+								
+								{{ fields.field_select('soconfig_general_store','themecolor',allThemeColor,'width30') }} 
+								{% if allThemeColor['none'] %}
+									<div class="text-warning" style="margin-top:20px;">
+									<p><i class="fa fa-exclamation-triangle" style="font-size:24px;"></i> Can not find css color file. Please recreate color new </p>
+									</div>
+								{% endif %}	
+							</div>
+						</div>
+					</div>
+                </div>
+				
+				
+				<div class="so-panel">
+					<h3 class="panel-title" >
+						<span>Sticky Menu on Top   </span>
+						<a href="view/template/extension/soconfig/images/general/sticky_menu_top.png" target="_blank" class="question-circle" data-toggle="tooltip" title="Screenshot Themes Config ">
+							<i class="fa fa-question-circle" ></i>
+							
+						</a>
+							
+					</h3>
+					<div class="panel-container">
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="logo_position">
+								Status:
+							</label>
+							<div class="col-sm-10">
+								{{ fields.field_radio('soconfig_general_store','toppanel_status', {1:'ON',0 : 'OFF'},0 ,'parent sticky_menu' )}} 
+							</div>
+						</div>
+						<div class="form-group" >
+							<label class="col-sm-2 control-label" >
+								Select Block on header:
+							</label>
+							<div class="col-sm-8">
+								{{ fields.field_radio('soconfig_general_store','toppanel_type',toppanel_type,1 ,'child sticky_menu') }} 
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			
+				<div class="so-panel">	
+					<h3 class="panel-title">
+						Top Bar
+						<a href="view/template/extension/soconfig/images/general/top_bar.png" target="_blank" class="question-circle" data-toggle="tooltip" title="Screenshot Themes Config ">
+							<i class="fa fa-question-circle" ></i>
+							
+						</a>
+					</h3>
+					<div class="panel-container">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Telephone No</label>
+							<div class="col-sm-2" >
+								{{ fields.field_radio('soconfig_general_store','phone_status', {1:'ON',0 : 'OFF'},1 )}} 
+							</div>
+							<div class="col-sm-8" id="tab-field-phone_status">
+								{{ fields.field_langHori(languages,'soconfig_general_store','contact_number',50) }}
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Welcome Message</label>
+							<div class="col-sm-2" >
+								{{ fields.field_radio('soconfig_general_store','welcome_message_status', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+							<div class="col-sm-8" id="tab-field-welcome_message_status">
+								{{ fields.field_langHori(languages,'soconfig_general_store','welcome_message',50) }}
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Checkout Link</label>
+							<div class="col-sm-3" >
+								{{ fields.field_radio('soconfig_general_store','checkout_status', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+						</div>
+						
+						<div class="form-group last">
+							<label class="col-sm-2 control-label">Language/Currency Title</label>
+							<div class="col-sm-3" >
+								{{ fields.field_radio('soconfig_general_store','lang_status', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="so-panel">
+					<h3 class="panel-title">General</h3>
+					<div class="panel-container">		
+						<div class="form-group">
+							<label class="col-sm-2 control-label" >Preloader </label>
+							<div class="col-sm-10">
+								{{ fields.field_radio('soconfig_general_store','preloader', {1:'ON',0 : 'OFF'},1,'parent preloader' )}} 
+							</div>
+						</div>
+						<div class="form-group" id="tab-field-preloader">
+							<label class="col-sm-2 control-label" >
+								<span data-toggle="tooltip" title="Select a preloader animation from the list">
+									Preloader Animation:
+								</span>
+							</label>
+							<div class="col-sm-10">
+								{{ fields.field_radio('soconfig_general_store','preloader_animation', preloader_animation,'line','child preloader')}} 
+							</div>
+							
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label" > Status Payment  </label>
+							<div class="col-sm-10">
+								{{ fields.field_radio('soconfig_general_store','imgpayment_status', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+						</div>
+						<div class="form-group" id="tab-field-imgpayment_status">
+							<label class="col-sm-2 control-label" >
+								<span data-toggle="tooltip" title="Edit content here Footer Custom Block.">
+									Image (Payment block):
+								</span>
+							</label>
+							<div class="col-sm-10">
+								{{ fields.field_addimage('soconfig_general_store','imgpayment') }} 
+								
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">  {{ general_copyright }}   </label>
+							<div class="col-sm-4">
+								{{ fields.field_text('soconfig_general_store','copyright','Footer copyright content') }} 
+							</div>
+							<div class="col-sm-offset-2 col-sm-10">
+								{% if error.copyright %}
+									<div class="text-danger"> {{error.copyright}}</div>
+								{% endif %}
+							</div>
+						</div>
+						
+					</div>
+                </div>
+				
+            </div>
+           
+
+			{# Header  Blocks---------------------------------------------  #}
+            <div id="tab-general-layout2" class="tab-pane">
+				<div id="tab-general__headertype" class="tab-pane active">
+					<div class="so-panel">
+						<h3 class="panel-title">Type of Header</h3>
+						<span class="help-block">If you need content from other header like phone number you need to set it in custom Theme Control Panel.</span>
+						<p class="help-hint">
+							<i class="fa fa-bullhorn" aria-hidden="true"></i> 
+							<span>You can set these headers for any skin you want</span>
+						</p>
+						{{ fields.field_typeheader('soconfig_general_store','typeheader',typelayouts) }} 
+					</div>
+					
+				</div>
+								
+            </div>
+
+			
+			{# Footer Blocks -----------------------------------------------  #}
+            <div id="tab-general-layout3" class="tab-pane">
+				<div id="tab-general__footertype">
+					<div class="so-panel">
+						<h3 class="panel-title">Type of Footer</h3>
+						<span class="help-block">If you need content from other footer like contact us you need to set it in custom modules.</span>
+						<p class="help-hint">
+							<i class="fa fa-bullhorn" aria-hidden="true"></i> 
+							<span>You can set these footer for any skin you want</span>
+						</p>
+						{{ fields.field_typeheader('soconfig_general_store','typefooter',typelayouts) }} 
+					</div>
+				</div>
+			
+            </div>
+            
+			{# Effect Banner  Blocks---------------------------------------------  #}
+            <div id="tab-general-layout4" class="tab-pane">
+				<div class="clearfix">
+					
+						<div id="tab-general__bannereffect" class="tab-pane">
+							<div class="so-panel">
+								<h3 class="panel-title">Hover over image below to see effect.</h3>
+								<p class="help-hint">
+									<i class="fa fa-bullhorn" aria-hidden="true"></i> 
+									<span>Hover over image below to see effect.</span>
+								</p>
+								{{ fields.field_typebanner('soconfig_general_store','type_banner',type_banner,3) }} 
+							</div>
+							
+						</div>
+						
+					
+				</div>
+				
+				
+				
+            </div>
+
+        </div>
+    </div>
+    <!-------------------------------------end tab General---------------------------------->
+
+    <!-------------------------------------Tab Layout---------------------------------------->
+    <div class="tab-pane" id="tab-layout">
+		<!--subtabs: General -->
+		<div class="tab-pane active" id="tab-colors-layout1">
+			<div class="so-panel">
+				<h3 class="panel-title">Theme Layout Settings</h3>
+				<div class="panel-container">
+					<div class="form-group">
+						<label class="col-sm-3 control-label" >
+							<span data-toggle="tooltip" title="With the boxed layout you can choose additional options such as custom background images, patterns and solid colors">Layout Style</span>
+						</label>
+						<div class="col-sm-9">
+							<div class="btn-group btn-toggle block-group " data-toggle="buttons">
+								{{ fields.field_radio('soconfig_layout_store','layoutstyle', layoutStyle)}} 
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label">
+							 <span data-toggle="tooltip" title="Set background color for all content.">Body Background Color:</span>
+						</label>
+						<div class="col-sm-2">
+							{{ fields.field_colors('soconfig_layout_store','theme_bgcolor','Background color') }} 
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label" >Overlay pattern</label>
+						<div class="col-sm-9">
+							<div class="form-group no-margin">
+								{% for i in 1..45 %}
+									<div class="img-patt"><small>{{ i }} </small><img src="{{dir_soconfig}}patterns/{{ i }}.png" alt="pattern {{ i }} "></div>
+								{% endfor %}
+							</div>
+							{{ fields.field_select('soconfig_layout_store','pattern',pattern_array,'width30') }} 
+							
+							<small class="help-block">Select a pattern number if you want to use one.</small>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label">
+							<span data-toggle="tooltip" title="Set background image for all site.">Background Image:</span>
+						</label>
+						<div class="col-sm-9">
+							{{ fields.field_addimage('soconfig_layout_store','contentbg') }} 
+							
+						</div>
+						
+						
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label" >
+							 <span data-toggle="tooltip" title="Set background image display mode">
+								 Background Image display mode
+							 </span>
+						</label>
+						<div class="col-sm-9">
+							{{ fields.field_radio('soconfig_layout_store','content_bg_mode', content_bg_mode)}} 
+
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-3 control-label" >
+							Background Image display Attachment
+						</label>
+						<div class="col-sm-9">
+							{{ fields.field_radio('soconfig_layout_store','content_attachment', content_attachment)}} 
+
+						</div>
+					</div>
+
+					
+				</div>
+			</div>
+
+		</div>
+		<!--subtabs: General -->
+    </div>
+    <!-------------------------------------end tab Colors,backgrounds,fonts-->
+
+    <!-------------------------------------Tab Products sliders, products listings-->
+    <div class="tab-pane" id="tab-products">
+
+        <ul class="nav nav-tabs  main_tabs_2">
+            <li class="active"><a href="#tab-products-layout1" class="selected" data-toggle="tab">{{ pages_pro_listings }} </a></li>
+            <li><a href="#tab-products-layout2" data-toggle="tab">{{ pages_pro_detail }} </a></li>
+            <li><a href="#tab-products-layout3" data-toggle="tab">{{ pages_comingsoon }} </a></li>
+        </ul>
+        <div class="tab-content">
+            <!--subtabs: Listings -->
+            <div class="tab-pane active wrapper-tabcategory" id="tab-products-layout1">
+				
+				<div class="so-panel">
+					<h3 class="panel-title">
+						Layout Category & Product
+					</h3>
+					<div class="panel-container">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{{ product_catalog_col_position }} </label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','catalog_col_position', {'outside' : 'Outside content','inside':'Inside content'},'outside' )}} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{{ product_catalog_col_type }} </label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','catalog_col_type', {'default' : 'Default','off_canvas':'Column Off Canvas'},'default' )}} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{{ product_catalog_sidebar_sticky }} </label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','catalog_sidebar_sticky', {'disable' : 'Disable','left':'Sidebar Left','right':'Sidebar Right','all':'Sidebar All'},'disable' )}} 
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="so-panel">
+					<h3 class="panel-title">
+						Category Info
+						<a href="view/template/extension/soconfig/images/general/category_info.png" target="_blank" class="question-circle" data-toggle="tooltip" title="Screenshot Themes Config ">
+							<i class="fa fa-question-circle" ></i>
+						</a>
+					</h3>
+					<div class="panel-container">
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label" >
+								{{ product_catalog_refine }}
+							</label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','product_catalog_refine', refine_search)}} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" >{{ product_catalog_refine_col }}</span></label>
+							<div class="col-sm-9">
+								{{ fields.field_select('soconfig_pages_store','catalog_refine_number',columns,'width30') }} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{{ product_catalog_show }} </label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','lstimg_cate_status', {0:'Disable',1 : 'Show Derc',2 : 'Show all'})}} 
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="input-product_catalog_mode">
+								<span data-toggle="tooltip" title="Create your listings into simple catalog.">{{ product_catalog_mode }}</span>
+							</label>
+							<div class="col-sm-9">
+								{{ fields.field_select('soconfig_pages_store','product_catalog_mode', catalog_mode,'width30')}} 
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				
+				<div class="so-panel col-sm-6">
+					<h3 class="panel-title">Product Item</h3>
+					<div class="panel-container">
+						
+						<div class="form-group">
+							<label class="col-sm-6 control-label">
+								<span data-toggle="tooltip" title="Set display or not 'Discount' label.">Show "Discount":</span>
+							</label>
+							<div class="col-sm-6">
+								{{ fields.field_radio('soconfig_pages_store','discount_status',  {1:'ON',0 : 'OFF'})}} 
+								
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-6 control-label">
+								<span data-toggle="tooltip" title="Set display or not countdown of Special Offer in product sliders.">Show countdown of Special Offer:</span>
+							</label>
+							<div class="col-sm-6">
+								{{ fields.field_radio('soconfig_pages_store','countdown_status',  {1:'ON',0 : 'OFF'})}} 
+								
+							</div>
+						</div>
+						
+					    <div class="form-group">
+							<label class="col-sm-6 control-label">Show Ratings</label>
+							<div class="col-sm-6">
+								{{ fields.field_radio('soconfig_pages_store','rating_status',  {1:'ON',0 : 'OFF'})}} 
+								
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-6 control-label">Show image gallery </label>
+							<div class="col-sm-6">
+								{{ fields.field_radio('soconfig_pages_store','card_gallery',  card_gallery)}} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-6 control-label">Status use placeholder images</label>
+							<div class="col-sm-6">
+								{{ fields.field_radio('soconfig_pages_store','placeholder_status',  {1:'ON',0 : 'OFF'},0,'parent placeholder')}} 
+								
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-6 control-label" > Placeholder default images</label>
+							<div class="col-sm-6">
+								{{ fields.field_addimage('soconfig_pages_store','placeholder_img','child placeholder') }} 
+							</div>
+						</div>
+					
+
+					</div>
+				</div>
+				<div class="so-panel col-sm-6">
+					<h3 class="panel-title">Group Cart info
+						
+					</h3>
+					<div class="panel-container">
+							<div class="form-group">
+								<label class="col-sm-5 control-label">
+									Show position cart info
+								</label>
+								<div class="col-sm-7">
+									{{ fields.field_radio('soconfig_pages_store','desktop_addcart_position',  {'left':'Align Left','right' : 'Align Right','center' : 'Align Center','bottom' : 'Align Bottom'},'left')}} 
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-5 control-label">
+									Show "QuickView" Button
+								</label>
+								<div class="col-sm-7">
+									{{ fields.field_radio('soconfig_pages_store','quick_status',  {1:'ON',0 : 'OFF'})}} 
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-5 control-label">
+									Show "Addtocart " Button
+								</label>
+								<div class="col-sm-7">
+									{{ fields.field_radio('soconfig_pages_store','desktop_addcart_status',  {1:'ON',0 : 'OFF'})}} 
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-5 control-label">
+									Show "Wishlist " Button
+								</label>
+								<div class="col-sm-7">
+									{{ fields.field_radio('soconfig_pages_store','desktop_wishlist_status',  {1:'ON',0 : 'OFF'})}} 
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-5 control-label">
+									Show "Compare " Button
+								</label>
+								<div class="col-sm-7">
+									{{ fields.field_radio('soconfig_pages_store','desktop_Compare_status',  {1:'ON',0 : 'OFF'})}} 
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+
+         
+            <!--subtabs: product page -->
+            <div id="tab-products-layout2" class="tab-pane">
+                <div class="so-panel">
+					<h3 class="panel-title">Options Styles</h3>
+					<div class="panel-container">
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="input-thumbnails_position">Option Checkbox and Radio Style:</label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','radio_style', radio_style)}} 
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="so-panel">
+					<h3 class="panel-title">Product Page</h3>
+					<div class="panel-container">
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="input-thumbnails_position">Select of product gallery:</label>
+							<div class="col-sm-5">
+								<img src="{{dir_soconfig}}images/general/product-grid.png" alt="product-grid">
+								{{ fields.field_radio('soconfig_pages_store','thumbnails_position', thumbnailPos)}} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="input-cloudzoom_mode">
+								<span data-toggle="tooltip" title="Choose position of cloudzoom image preview on product page.">Enable Product Zoom</span>
+							</label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','product_enablezoom',  {1:'ON',0 : 'OFF'})}} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" >
+								Show Product sold
+							</label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','product_order',  {1:'ON',0 : 'OFF'},1)}} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" >
+								Button Show More on Description
+
+							</label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','product_enableshowmore',  {1:'ON',0 : 'OFF'},0)}} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="input-tabs_position">Tabs Style </label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','tabs_position', tabs_position)}} 
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label" >
+								Tabs Size Chart
+							</label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','product_enablesizechart',  {1:'ON',0 : 'OFF'},0,'parent sizechart')}} 
+							</div>
+						</div>
+
+						<div class="form-group" id="tab-field-product_enablesizechart">
+							<label class="col-sm-3 control-label" >
+								Size Chart:
+							</label>
+							<div class="col-sm-9">
+								{{ fields.field_addimage('soconfig_general_store','img_sizechart','child sizechart') }} 
+								
+							</div>
+						</div>
+						
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="input-meta-keyword">Tabs Shipping & Payment</label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','product_enableshipping',  {1:'ON',0 : 'OFF'},1)}} 
+							</div>
+						</div>
+						
+						<div class="form-group" id="tab-field-product_enableshipping">
+							<label class="col-sm-3 control-label" >Content Shipping & Payment</label>
+							<div class="col-sm-9">
+								{{ fields.field_langTextarea(languages,'soconfig_pages_store','product_contentshipping') }}
+							</div>
+						</div>
+
+					</div>
+				</div>	
+				<div class="so-panel">
+					<h3 class="panel-title">Social Share</h3>
+					<div class="panel-container">
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="input-meta-keyword">Show Custom</label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','product_page_button',  {1:'ON',0 : 'OFF'})}} 
+							</div>
+						</div>
+						
+						<div class="form-group" id="tab-field-product_page_button">
+							<label class="col-sm-3 control-label" >Custom block</label>
+							<div class="col-sm-9">
+								{{ fields.field_langTextarea(languages,'soconfig_pages_store','product_socialshare') }}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="so-panel">
+					<h3 class="panel-title">Related products</h3>
+					<div class="panel-container">
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="input-related">Show Related</label>
+							<div class="col-sm-9">
+								{{ fields.field_radio('soconfig_pages_store','related_status',  {1:'ON',0 : 'OFF'})}} 
+							</div>
+						</div>
+
+						<div id="tab-field-related_status">
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="input-listing_quick_type">Related product number per row <p class="help-block">(use orientation related = Horizontal)</p></label>
+								<div class="col-sm-9">
+									{{ fields.field_devices('soconfig_pages_store','product_related_column_',devices,columns) }} 
+
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>		
+					
+				
+            </div>
+			
+			<!--subtabs: Coming Soon-->
+			<div id="tab-products-layout3" class="tab-pane">
+	    	   <div class="so-panel">
+					<h3 class="panel-title">Coming Soon</h3>
+					<div class="panel-container">
+						<div class="form-group" id="tab-field-comingsoon_status">
+							<label class="col-sm-2 control-label" >
+								Coming Soon Background
+							</label>
+							<div class="col-sm-10">
+								{{ fields.field_addimage('soconfig_pages_store','comingsoon_imglogo') }} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Coming Soon Title</label>
+							<div class="col-sm-10" >
+								{{ fields.field_langHori(languages,'soconfig_pages_store','comingsoon_title',50) }}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Date</label>
+							<div class="col-sm-3" >
+								{{ fields.field_date('soconfig_pages_store','comingsoon_date','2016-05-26') }}
+							</div>
+						</div>
+						<div class="form-group" >
+							<label class="col-sm-2 control-label" >Content</label>
+							<div class="col-sm-10">
+								{{ fields.field_langTextarea(languages,'soconfig_pages_store','comingsoon_content') }}
+							</div>
+						</div>
+					</div>
+				</div>
+	        </div>
+        </div>
+
+    </div>
+    <!------------------------------------end tab Pages-->
+
+    <!-------------------------------------Tab Fonts-->
+    <div class="tab-pane" id="tab-fonts">
+		
+		<div class="so-panel">
+			<h3 class="panel-title">Fonts<span class="help-block">If you want to speed up your site use one of the common fonts instead of the fonts from Google.</span></h3>
+			<div class="panel-container">
+				<div class="form-group">
+					
+					<label class="col-sm-3 control-label" >{{ fonts_body }}  </label>
+					<div class="col-sm-9">
+						<div class="block-group fonts-change">
+							{{ fields.field_onOffFont('soconfig_fonts_store','body_status') }} 
+							<div class="block-group items-font font-standard" >
+								{{ fields.field_select('soconfig_fonts_store','normal_body',fonts_normal) }} 
+							</div>
+							<div class="block-group items-font font-google" >
+								<label class="control-label">  {{ entry_google_url }}   </label>
+								<div class="">
+									{{ fields.field_text('soconfig_fonts_store','url_body') }} 
+									<span class="help-block">{{ entry_google_url_help }}</span>
+								</div>
+							</div>
+							<div class="block-group items-font font-google" >
+								<label class=" control-label"> {{ entry_google_family }}</label>
+								<div class="">
+									{{ fields.field_text('soconfig_fonts_store','family_body') }} 
+									<span class="help-block"> {{ entry_google_family_help }}</span>
+								</div>
+							</div>
+						</div>
+						<div class="block-group">
+							{{ fields.field_textarea('soconfig_fonts_store','selector_body','Add css selectors') }} 
+						</div>
+					</div>
+				</div>
+		
+				<div class="form-group">
+					<label class="col-sm-3 control-label" >{{ fonts_menu }}  </label>
+					<div class="col-sm-9">
+						<div class="block-group fonts-change">
+							{{ fields.field_onOffFont('soconfig_fonts_store','menu_status') }} 
+							<div class="block-group items-font font-standard" >
+								{{ fields.field_select('soconfig_fonts_store','normal_menu',fonts_normal) }} 
+							</div>
+							<div class="block-group items-font font-google" >
+								<label class="control-label">  {{ entry_google_url }}   </label>
+								<div class="">
+									{{ fields.field_text('soconfig_fonts_store','url_menu') }} 
+									<span class="help-block">{{ entry_google_url_help }}</span>
+								</div>
+							</div>
+							<div class="block-group items-font font-google" >
+								<label class=" control-label"> {{ entry_google_family }}</label>
+								<div class="">
+									{{ fields.field_text('soconfig_fonts_store','family_menu') }} 
+									<span class="help-block"> {{ entry_google_family_help }}</span>
+								</div>
+							</div>
+						</div>
+						<div class="block-group">
+							{{ fields.field_textarea('soconfig_fonts_store','selector_menu','Add css selectors') }} 
+						</div>
+					</div>
+				</div>	
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" >{{ fonts_heading }}  </label>
+					<div class="col-sm-9">
+						<div class="block-group fonts-change">
+							{{ fields.field_onOffFont('soconfig_fonts_store','heading_status') }} 
+							<div class="block-group items-font font-standard" >
+								{{ fields.field_select('soconfig_fonts_store','normal_heading',fonts_normal) }} 
+							</div>
+							<div class="block-group items-font font-google" >
+								<label class="control-label"> {{ entry_google_url }}  </label>
+								<div class="">
+									{{ fields.field_text('soconfig_fonts_store','url_heading') }} 
+									<span class="help-block">{{ entry_google_url_help }}</span>
+								</div>
+							</div>
+							<div class="block-group items-font font-google" >
+								<label class=" control-label"> {{ entry_google_family }}</label>
+								<div class="">
+									{{ fields.field_text('soconfig_fonts_store','family_heading') }} 
+									<span class="help-block"> {{ entry_google_family_help }}</span>
+								</div>
+							</div>
+						</div>
+						<div class="block-group">
+							{{ fields.field_textarea('soconfig_fonts_store','selector_heading','Add css selectors') }} 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>				
+    </div>
+    <!-------------------------------------end tab Fonts-->
+	
+	<!-------------------------------------Tab Social-->
+	<div class="tab-pane" id="tab-social">
+		<div class="so-panel">
+			<h3 class="panel-title">sidebar social
+				
+			</h3>
+			<div class="panel-container">
+				<div class="form-group">
+					<label class="col-sm-3 control-label" >
+						Show sidebar social
+					</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('soconfig_social_store','social_sidebar', {0:'Disable',1 : 'Sidebar Left',2 : 'Sidebar Right'} )}} 
+					</div>
+				</div>
+				
+			</div>
+		</div>	
+		<div class="so-panel">
+			<h3 class="panel-title">Facebook</h3>
+			<div class="panel-container">
+				<div class="form-group">
+					<label class="col-sm-3 control-label" >
+						Show Facebook
+					</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('soconfig_social_store','social_fb_status', {1:'ON',0 : 'OFF'},'0','parent social_fb' )}} 
+					</div>
+				</div>
+				<div class="form-group" id="tab-field-social_fb_status">
+					<label class="col-sm-3 control-label" >
+						Facebook ID:
+					</label>
+					<div class="col-sm-3">
+						{{ fields.field_text('soconfig_social_store','facebook','Facebook profile name','child social_fb') }} 
+					</div>
+					<div class="col-sm-4">
+						 <a href="http://findmyfacebookid.com/" target="_blank" style="display: block;float: left;width: auto;margin-top: 7px">Find your Facebook ID »</a>
+					</div>
+				</div>
+			</div>
+		</div>	
+		
+		<div class="so-panel">
+			<h3 class="panel-title">Twitter</h3>
+			<div class="panel-container">
+				<div class="form-group">
+					<label class="col-sm-3 control-label" >
+						Show Twitter
+					</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('soconfig_social_store','social_twitter_status', {1:'ON',0 : 'OFF'},'0','parent social_tt' )}} 
+					</div>
+				</div>
+				<div class="form-group" id="tab-field-social_twitter_status">
+					<label class="col-sm-3 control-label" >
+						Twitter username:
+					</label>
+					<div class="col-sm-3">
+						{{ fields.field_text('soconfig_social_store','twitter','Twitter account name','child social_tt') }} 
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="so-panel">
+			<h3 class="panel-title">Custom</h3>
+			<div class="panel-container">
+				<div class="form-group">
+					<label class="col-sm-3 control-label" >Show Custom </label>
+					<div class="col-sm-3">
+						{{ fields.field_radio('soconfig_social_store','social_custom_status', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+				
+				<div class="form-group" id="tab-field-social_custom_status">
+					<label class="col-sm-3 control-label" >Custom block</label>
+					<div class="col-sm-9">
+						{{ fields.field_langTextarea(languages,'soconfig_social_store','video_code') }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-------------------------------------Tab Tab Advanced-->
+	<div class="tab-pane" id="tab-custom">
+		<div class="tab-horizontal">
+			<ul class="nav nav-tabs  main_tabs_2">
+				<li class="active"><a href="#tab-custom-layout1" class="selected" data-toggle="tab">{{custom_tab_css_input}}</a></li>
+				<li><a href="#tab-custom-layout2" data-toggle="tab">{{custom_tab_css_file}}</a></li>
+				<li><a href="#tab-custom-layout3" data-toggle="tab">{{custom_tab_js_input}}</a></li>
+
+			</ul>
+		</div>
+        <div class="tab-content ">
+        	<div class="tab-pane active" id="tab-custom-layout1">
+				<div class="so-panel">
+					<h3 class="panel-title">CSS CODE DIRECT INPUT</h3>
+					<div class="panel-container">
+						<div class="form-group">
+							<label class="col-sm-2 control-label" >Status </label>
+							<div class="col-sm-10">
+								{{ fields.field_radio('soconfig_custom_store','cssinput_status', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+						</div>
+						<div class="form-group">
+							{{ fields.field_textarea('soconfig_custom_store','cssinput_content') }} 
+						</div>
+						
+					</div>
+				</div>
+            </div>
+
+            <div id="tab-custom-layout2" class="customcode_wrap tab-pane">
+				<div class="so-panel">
+					
+					<div class="form-group no-margin" >
+						<h3 class="col-sm-2 panel-title ">ADD CSS FILES</h3>
+						<div class="col-sm-10 text-right"><a class="btn btn-success add-cssfile_url" > <i class="fa fa-plus-circle"></i> Add file</a></div>
+					</div>
+					<div class="panel-container">
+						<div class="form-group">
+							<label class="col-sm-2 control-label" >Status </label>
+							<div class="col-sm-10">
+								{{ fields.field_radio('soconfig_custom_store','cssfile_status', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+						</div>
+						
+						{% if (cssfile_url) is not empty %}
+							{% for cssfile in cssfile_url %}
+							<div class="form-group">
+								<label class="col-sm-2 control-label" >Enter file path</label>
+								<div class="col-sm-9">
+									<input class="form-control" type="text" name="soconfig_custom_store[cssfile_url][]" value="{{cssfile}}" />
+								</div>
+								<div class="col-sm-1">
+									<a href="#" class="btn btn-success remove_field"><i class="fa fa-times"></i></a>
+								</div>
+							</div>
+							{% endfor %}	
+						{% else %}	
+							<div class="form-group">
+								<label class="col-sm-2 control-label" >Enter file path</label>
+								<div class="col-sm-9">
+									<input class="form-control" type="text" name="soconfig_custom_store[cssfile_url][]" value="catalog/view/theme/{{theme_directory}}/css/custom.css" />
+								</div>
+							</div>
+						{% endif %}
+						
+					</div>
+				</div>
+			</div>
+
+            <div class="tab-pane" id="tab-custom-layout3">
+				<div class="so-panel">
+					<h3 class="panel-title">JS CODE DIRECT INPUT</h3>
+					<div class="panel-container">
+						<div class="form-group">
+							<label class="col-sm-2 control-label" >Status </label>
+							<div class="col-sm-10">
+								{{ fields.field_radio('soconfig_custom_store','jsinput_status', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+						</div>
+						<div class="form-group">
+							{{ fields.field_textarea('soconfig_custom_store','jsinput_content') }} 
+						</div>
+						
+					</div>
+				</div>
+            </div>
+           
+        </div>
+	</div>
+	<!------------------------------------- End Tab Tab Advanced-->
+	
+	<!-------------------------------------Tab Tab Advanced-->
+	<div class="tab-pane" id="tab-advanced">
+		
+		<div class="so-panel">
+			<h3 class="panel-title">SCSS Compile</h3>
+			<div class="panel-container">
+				<div class="form-group">
+					<label class="col-sm-2 control-label" >SCSS Compile</label>
+					<div class="col-sm-2">
+						{{ fields.field_radio('soconfig_advanced_store','scsscompile', {1:'ON',0 : 'OFF'},0,'parent scsscompile' )}} 
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" >CSS Format</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('soconfig_advanced_store','scssformat', Scssformat,'Nested','child scsscompile')}} 
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" >User Developer Compile Muti Color</label>
+					<div class="col-sm-2">
+						{{ fields.field_radio('soconfig_advanced_store','compileMutiColor', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="so-panel col-sm-6">
+			<h3 class="panel-title">Performance</h3>
+			<div class="form-group">
+				<label class="col-sm-4 control-label">Show Minify CSS </label>
+				<div class="col-sm-8">
+					{{ fields.field_radio('soconfig_advanced_store','cssminify', {1:'ON',0 : 'OFF'} )}} 					
+				</div>
+			</div>
+
+			<!-- cssminify -->
+			<div id="tab-field-cssminify" class="form-group">
+				
+				<div class="col-sm-8"  style="margin-bottom:15px">
+					<a onclick="add_cssExclude();" class="add-item-payment btn btn-info"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add file css</a>			
+				</div>
+				<table class="bottom-bar" id="listgroup-cssminify">
+					<thead>
+						<tr>
+							<td class="first" style="width: 40%;" >Exclude file css</td>
+							<td style="width: 10%;">Delete</td>
+						</tr>
+					</thead>
+
+					{% set listcss_row = 0 %}
+					{% if cssExcludes and  cssExcludes !=''%}
+
+					  	{% for cssExclude in cssExcludes %}
+						  	{% if cssExclude.namecss is not empty %}
+								<tbody id="listcssExclude{{listcss_row}}">
+									<tr>
+										<td class="first">
+											<input class="form-control" type="text" class="form-control" value="{{cssExclude.namecss}}" name="soconfig_advanced_store[cssExclude][{{listcss_row}}][namecss]">
+										</td>
+										<td>
+											<a onclick="$('#listcssExclude{{listcss_row}}').remove();" class="btn btn-danger">Remove</a>
+										</td>
+									</tr>
+								</tbody>
+							{%set listcss_row = listcss_row + 1 %}
+							{% endif %}
+						{% endfor %}	
+					{% endif %}
+					<tfoot></tfoot>
+				</table>
+
+				
+				<script type="text/javascript">
+				var listcss_row = {{listcss_row}} ;
+				var languages = {{languages|json_encode}} ;
+				
+				function add_cssExclude() {
+
+					html  = '<tbody id="listcssExclude' + listcss_row + '">';
+					html += '  <tr>';
+					html += '    <td>';
+					html += '		<input class="form-control" type="text" value="catalog/view/javascript/font-awesome/css/font-awesome.min.css" name="soconfig_advanced_store[cssExclude][' + listcss_row + '][namecss]">';
+					html += '    </td>';
+					html += '    <td><a onclick="$(\'#listcssExclude' + listcss_row + '\').remove();" class="btn btn-danger">Remove</a></td>';
+					html += '  </tr>';
+					html += '</tbody>';
+					
+					$('#listgroup-cssminify tfoot').before(html);
+					listcss_row++;
+				}
+				</script> 
+			</div>
+			<!--  END cssminify -->
+			<div class="form-group" style="padding:0;border:none;">
+				<div class="col-sm-10">
+					<a href="{{clear_cache}}"><button class="btn btn-warning" type="button"><i class="fa fa-eraser"></i> Clear Minify</button></a>
+					<span style="margin:0 10px;">Delete all of the theme css, js file path: system/library/so/cache/minify</span>
+				</div>
+			</div>
+		</div>
+		<div class="so-panel col-sm-6">
+			
+			<div class="form-group" style="margin-top: 15px;">
+				<label class="col-sm-4 control-label">Show Minify JS</label>
+				<div class="col-sm-8">
+					{{ fields.field_radio('soconfig_advanced_store','jsminify', {1:'ON',0 : 'OFF'} )}} 							
+				</div>
+			</div>
+
+			<!-- jsminify -->
+			<div id="tab-field-jsminify" class="form-group">
+				<div class="col-sm-8 "  style="margin-bottom:15px">
+					<a onclick="add_jsExclude();" class="add-item-payment btn btn-info"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add file JS</a>			
+				</div>
+				<table class="bottom-bar" id="listgroup-jsminify">
+					<thead>
+						<tr>
+							<td class="first" style="width: 40%;" >Exclude file Javascript</td>
+							<td style="width: 10%;">Delete</td>
+						</tr>
+					</thead>
+
+					{% set listjs_row = 0 %}
+					{% if jsExcludes and  jsExcludes !=''%}
+						
+					  	{% for jsExclude in jsExcludes %}
+						  	{% if jsExclude.namecss is not empty %}
+								<tbody id="listjsExclude{{listjs_row}}">
+									<tr>
+										<td class="first">
+											<input class="form-control" type="text" class="form-control" value="{{jsExclude.namecss}}" name="soconfig_advanced_store[jsExclude][{{listjs_row}}][namecss]">
+										</td>
+										
+										<td>
+											<a onclick="$('#listjsExclude{{listjs_row}}').remove();" class="btn btn-danger">Remove</a>
+										</td>
+									</tr>
+								</tbody>
+							{%set listjs_row = listjs_row + 1 %}
+							{% endif %}
+						{% endfor %}	
+					{% endif %}
+					<tfoot></tfoot>
+				</table>
+
+				
+				<script type="text/javascript">
+				var listjs_row = {{listjs_row}} ;
+				
+				function add_jsExclude() {
+
+					html  = '<tbody id="listjsExclude' + listjs_row + '">';
+					html += '  <tr>';
+					html += '    <td>';
+					html += '		<input class="form-control" type="text" value="catalog/view/javascript/jquery/datetimepicker/moment/moment-with-locales.min.js" name="soconfig_advanced_store[jsExclude][' + listjs_row + '][namecss]">';
+					html += '    </td>';
+					html += '    <td><a onclick="$(\'#listjsExclude' + listjs_row + '\').remove();" class="btn btn-danger">Remove</a></td>';
+					html += '  </tr>';
+					html += '</tbody>';
+					
+					$('#listgroup-jsminify tfoot').before(html);
+					listjs_row++;
+				}
+				</script> 
+			</div>
+			<!--  END jsminify -->
+		</div>
+		
+	</div>
+	<!-------------------------------------End Tab Advanced-->
+	
+	
+</div>

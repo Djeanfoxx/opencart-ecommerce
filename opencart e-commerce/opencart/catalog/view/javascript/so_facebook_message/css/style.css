@@ -1,0 +1,109 @@
+.so-fb-message.right-bottom {
+	position: fixed;
+    bottom: 0;
+    right: 20px;
+	z-index: 9999;
+}
+.so-fb-message.left-bottom {
+	position: fixed;
+    bottom: 0;
+    left: 20px;
+    z-index: 9999;
+}
+.so-fb-ms-inner {
+	position: relative;
+}
+.so-fb-message-style-default .so-fb-message-head {
+	background-color: #4267b2;
+    border: 1px solid #29487d;
+    cursor: pointer;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    color: #fff;
+    font-family: arial, sans-serif;
+	color: white;
+    font-size: 12px;
+    font-weight: bold;
+    height: 29px;
+    padding: 5px;
+    position: relative;
+}
+.so-fb-message-style-default .so-fb-message-head:hover {
+	background-color: #3b5998;
+}
+.so-fb-message .online {
+	padding-left: 5px;
+    padding-right: 5px;
+}
+.so-fb-message-style-metro .so-fb-message-head-metro {
+	width: 100%;
+}
+.so-fb-message-style-metro .so-fb-message-head-metro a {
+    width: 70%;
+    display: inline-block;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 13px;
+    color: #fff;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    padding: 0 20px 0 48px;
+    background-color: #3b5998;
+    position: relative;
+    transition: background-color 700ms ease-in-out;
+    -moz-transition: background-color 700ms ease-in-out;
+    -webkit-transition: background-color 700ms ease-in-out;
+    -o-transition: background-color 700ms ease-in-out;
+    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -o-box-sizing: content-box;
+    border: none;
+}
+
+.so-fb-message-style-metro .so-fb-message-head-metro a span {
+    width: 40px;
+    height: 36px;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background: url("../../../theme/default/image/so_facebook_message/iconmetro.png") no-repeat left top;
+}
+
+.so-fb-message-style-metro .so-fb-message-head-metro a:hover {
+    background-color: #2e4b89;
+    color: #fff;
+    border: none;
+    text-shadow: none;
+}
+.offline_heading, .online_heading {
+    position: absolute;
+    top: -35px;
+    z-index: 999;
+    height: 36px;
+    padding: 6px 0px;
+    color: #FFF;
+    cursor: pointer;
+    float: left;
+    background-color: #2e4b89;
+    margin-left: 1px;
+}
+.button_chat_offline_text {
+    max-width: 85%;
+    padding-left: 12px;
+    display: inline-block;
+    padding-right: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.fa-angle-down {
+    color: #FFF;
+    font-size: 22px;
+    float: right;
+    padding-right: 12px;
+}

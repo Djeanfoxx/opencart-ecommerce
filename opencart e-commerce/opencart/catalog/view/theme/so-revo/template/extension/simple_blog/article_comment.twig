@@ -1,0 +1,53 @@
+{% if comments %}
+    {% for comment in comments %}
+        <div class="media comments">
+            <a class="pull-left" href="#"> <i class="fa fa-comment-o" aria-hidden="true"></i></a>
+            <div class="media-body">
+                <div class="media-title">
+                    <a id="comment_reply" class="pull-right link" onclick="setArticleId({{ comment.simple_blog_comment_id }});">{{ text_reply_comment }}</a>
+                    <span class="username">by <b>{{ comment.author }}</b></span>
+                    <div class="time"><i class="fa fa-clock-o" aria-hidden="true"></i>{{ comment.date_added }}</div>
+                </div>
+                <div class="media-content">
+                    <p>{{ comment.comment }}</p>
+                </div>
+            </div>
+        </div>
+        {% if comment.comment_reply %}
+            {% for comment_reply in comment.comment_reply %}
+                <div class="media comments comments-level-1">
+                     <a class="pull-left" href="#"> <i class="fa fa-comment-o" aria-hidden="true"></i></a>
+                    <div class="media-body">
+                        <div class="media-title">
+                            <span class="username">by <b>{{ comment_reply.author }}</b></span>
+                            <div class="time"><span class="icon icon-access_time"></span>{{ comment_reply.date_added }}</div>
+                        </div>
+                        <div class="media-content">
+                            <p>{{ comment_reply.comment }}</p>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="form-group">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">{{ pagination }}</div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right">{{ results }}</div>
+    </div>
+{% else %}
+    <h5>{{ text_no_blog }}</h5>
+{% endif %}
+
+<script type="text/javascript">
+    function setArticleId(article_id) {
+        $("#blog-reply-id").val(article_id);
+        $("#reply-remove").css('display', 'inline');
+    }
+    $("#comment_reply").click(function (){
+        var tabTop = $("#review-title").offset().top;
+        $("html, body").animate({ scrollTop:tabTop }, 1000);
+    });
+
+</script>

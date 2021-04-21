@@ -1,0 +1,818 @@
+{# Twig variable So Config #}
+{% set fonts = { 
+	'standard' : 'Standard',
+	'google'  : 'Google Fonts',
+} %}
+
+{% set columns = { 
+	'1' : '1 columns',
+	'2' : '2 columns',
+	'3' : '3 columns',
+	'4' : '4 columns',
+	'5' : '5 columns',
+	'6' : '6 columns',
+} %}
+
+{% set secondimg = { 
+	'1' : 'One image',
+	'2' : 'Second images',
+} %}
+
+{% set refine_search = { 
+	'0' : 'With images',
+	'1' : 'Text only',
+	'2' : 'Disable',
+} %}
+
+{% set fonts_normal = { 
+	'inherit' : 'No Use',
+	'Arial, Helvetica, sans-serif'  : 'Arial',
+	'Verdana, Geneva, sans-serif'  : 'Verdana',
+	'Georgia,Times New Roman, Times, serif'  : 'Georgia',
+	'Impact, Arial, Helvetica, sans-serif'  : 'Impact',
+	'Tahoma, Geneva, sans-serif'  : 'Tahoma',
+	'Trebuchet MS, Arial, Helvetica, sans-serif'  : 'Trebuchet MS',
+	'Arial Black, Gadget, sans-serif'  : 'Arial Black',
+	'Times, Times New Roman, serif'  : 'Times',
+	'Palatino Linotype, Book Antiqua, Palatino, serif'  : 'Palatino Linotype',
+	'Lucida Sans Unicode, Lucida Grande", sans-serif'  : 'Lucida Sans Unicode',
+	'MS Serif, New York, serif'  : 'MS Serif',
+	'Comic Sans MS, cursive'  : 'Comic Sans MS',
+	'Courier New, Courier, monospace'  : 'Courier New',
+	'Lucida Console, Monaco, monospace'  : 'Lucida Console',
+} %}
+
+{% set devices = { 
+	'lg' : '<i class="fa fa-desktop"></i> Desktops',
+	'md' : '<i class="fa fa-tablet"></i> Tablet Landscape',
+	'sm' : '<i class="fa fa-tablet"></i> Tablet Portrait',
+	'xs' : '<i class="fa fa-mobile"></i> Phones',
+} %}
+
+{% set Scssformat = { 
+	'Expanded' : 'Expanded',
+	'Nested' : 'Nested (default)',
+	'Compressed' : 'Compressed',
+	'Compact' : 'Compact',
+	'Crunched' : 'Crunched',
+} %}
+
+{% set layoutStyle = { 
+	'full' : 'Full Layout',
+	'boxed' : 'Boxed',
+	'iframed' : 'Iframed',
+	'rounded' : 'Rounded',
+} %}
+
+{% set content_bg_mode = { 
+	'repeat' : 'Repeat',
+	'no-repeat' : 'No-Repeat',
+} %}
+
+{% set content_attachment = { 
+	'scroll' : 'Scroll',
+	'fixed' : 'Fixed',
+} %}
+
+{% set related_position = { 
+	'vertical' : 'Vertical',
+	'horizontal' : 'Horizontal',
+} %}
+
+{% set thumbnailPos = { 
+	'bottom' : 'Bottom',
+	'left' : 'Left',
+} %}
+
+{% set zoommode = { 
+	'window' : 'Basic Zoom',
+	'inner' : 'Inner Zoom',
+	'lens' : 'Lens Zoom',
+} %}
+
+{% set gallerysize = { 
+	'small' : 'Image Small',
+	'medium' : 'Image Medium',
+	'large' : 'Image Large',
+} %}
+
+{% set tabs_position = { 
+	'1' : 'Bottom vertical',
+	'2' : 'Bottom horizontal',
+} %}
+
+{% set toppanel_type = { 
+	'1' : 'Show Header Center',
+	'2' : 'Show Header Bottom',
+	'3' : 'Show All'
+} %}
+
+{% set catalog_mode = { 
+	'grid-list' : 'List Column',
+	'grid-table' : 'Table Column',
+	'grid-2' : '2 Columns',
+	'grid-3' : '3 Columns',
+	'grid-4' : '4 Columns',
+	'grid-5' : '5 Columns',
+} %}
+
+{% set radio_style = { 
+	'0' : 'Default',
+	'1' : 'Button'
+} %}
+
+{% set type_banner = { 
+	'1' : 'Hover effect 1',
+	'2' : 'Hover effect 2',
+	'3' : 'Hover effect 3',
+	'4' : 'Hover effect 4',
+	'5' : 'Hover effect 5',
+	'6' : 'Hover effect 6',
+	'7' : 'Hover effect 7',
+	'8' : 'Hover effect 8',
+	'9' : 'Hover effect 9',
+	'10' : 'Hover effect 10',
+	'11' : 'Hover effect 11',
+	'12' : 'Hover effect 12',
+} %}
+
+{% set preloader_animation = { 
+	'line' : 'Default line',
+	'rotate-plane' : 'Rotate Plane',
+	'double-loop' : 'Double Bounce',
+	'audio-wave' : 'Audio Wave',
+	'cube-move' : 'Cube Move',
+	'circle-bounce' : 'Circle Bounce',
+	'circle-bounce2' : 'Circle Bounce 2',
+	'cube-grid' : 'Cube Grid',
+	'folding-cube' : 'Cube Folding',
+} %}
+
+{% set pattern_array = {'0' : 'None'} %}
+{% for pattern_id in 2..45 %}
+	{% if pattern_id not in pattern_array %}
+          {% set pattern_array = pattern_array|merge([pattern_id]) %}
+    {% endif %}
+{% endfor %}
+{# //End variable So Config #}
+
+<div class="sidebar " data-sticky_column>
+<ul class="nav nav-tabs main_tabs_vertical" >
+    <li class="active"><a href="#tab-general" data-toggle="tab">{{  objlang.get('maintabs_general') }} </a></li>
+    <li><a href="#tab-barbottom" data-toggle="tab">{{ objlang.get('maintabs_barbottom') }} </a></li>
+    <li><a href="#tab-barleft" data-toggle="tab">{{ objlang.get('maintabs_barleft')  }} </a></li>
+    <li><a href="#tab-products" data-toggle="tab">{{ objlang.get('maintabs_products')  }} </a></li>
+    <li><a href="#tab-fonts" data-toggle="tab">{{ objlang.get('maintabs_fonts')  }} </a></li>
+	<li><a href="#tab-advanced" data-toggle="tab">{{ objlang.get('maintabs_advanced')  }} </a></li>
+</ul>
+</div>
+
+<div class="tab-content main_content_vertical col-sm-10" data-sticky_column>
+    <!-------------------------------------Tab General---------------------------------->
+    <div class="tab-pane active" id="tab-general">
+        <ul class="nav nav-tabs  main_tabs_2 ">
+            <li class="active"><a href="#tab-general-layout1" class="selected" data-toggle="tab">{{ general_tab_general }} </a></li>
+            <li><a href="#tab-general-layout2" data-toggle="tab">{{ general_tab_header }} </a></li>
+			<li><a href="#tab-general-layout3" data-toggle="tab">Footer</a></li>
+        </ul>
+
+        <div class="tab-content ">
+			{# General  Blocks---------------------------------------------  #}
+            <div class="tab-pane active" id="tab-general-layout1">
+				
+				<div class="so-panel">
+					<h3 class="panel-title">Select Layouts</h3>
+					<div class="panel-container">
+						
+						<div id="tab-general__layouttype" class="form-group">
+							<div class="col-sm-12">
+								{{ fields.field_mtypelayout('mobile_general','mobilelayout',typelayouts,'6') }} 
+
+							</div>
+						</div>
+						
+						<div class="form-group" >
+							<label class="col-sm-2 control-label" >
+								<span data-toggle="tooltip" title="
+									<p class='help-hint-text'>
+										<i class='fa fa-bullhorn' ></i> 
+										<span> New Color</span>
+									</p>
+									<p ><strong class='text-primary'>Step 1:</strong> Select the layout you want to display.<p>
+									<p ><strong class='text-primary'>Step 2:</strong> Fill color and color code >> Click button Compile CSS >> Create a new Color.</p>
+									<p ><strong class='text-primary'>Step 3:</strong> Select the color you just created >> Click button Save. </p>
+								">
+									New Color
+								</span>
+							</label>
+							
+							<div class="col-sm-2">
+								{{ fields.field_text('mobile_general','nameColor','Name Color') }} 
+							</div>
+							<div class="col-sm-2">
+								<div class="input-group">
+									<i class="input-group-addon fa fa-paint-brush" aria-hidden="true"></i>
+									{{ fields.field_colors('mobile_general','colorHex','Select color') }} 
+								</div>
+							</div>
+							<div class="col-sm-5">
+								<button onclick="buttonApplyColor();" class="btn btn-primary" type="button"  {% if scsscompile %} {{ "disabled='disabled'" }} {% endif %}><i class="fa fa-compress" aria-hidden="true"></i> Compile CSS</button>
+							</div>
+							<div class="col-sm-offset-2 col-sm-10">
+								{% if error.nameColor %}
+									<div class="text-danger"> {{error.nameColor}}</div>
+								{% endif %}
+							</div>
+							<div class="col-sm-offset-2 col-sm-10">
+			
+								 {% if (scsscompile  or  compileMutiColor)  %} 
+								<div class="text-info" style="margin-top:20px;">
+								<p><strong>You need set :</strong> Before Compile css</p>
+								<p>
+								1.Tab Advanced → SCSS Compile = Off .</br>
+								2.Tab Advanced → User Developer Compile Muti Color = Off .
+								</p>
+								
+								</div>
+								{% endif %} 
+							</div>
+						</div>
+						
+						<div id="tab-general__themecolor" class="form-group">
+							<label class="col-sm-2 control-label" >
+								<span data-toggle="tooltip" title="
+									<p class='help-hint-text'>
+										<i class='fa fa-bullhorn' ></i> 
+										<span>Create New Color</span>
+									</p>
+									<p ><strong class='text-primary'>Step 1:</strong> Select the layout you want to display.<p>
+									<p ><strong class='text-primary'>Step 2:</strong> Fill color and color code >> Click button Compile CSS >> Create a new Color.</p>
+									<p ><strong class='text-primary'>Step 3:</strong> Select the color you just created >> Click button Save. </p>
+								">
+									Themes Color
+								</span>
+							</label>
+							<div class="col-sm-6" id="select_color">
+								
+								{{ fields.field_select('mobile_general','mobilecolor',allThemeColor,'width30') }} 
+								{% if allThemeColor['none'] %}
+									<div class="text-warning" style="margin-top:20px;">
+										<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>  Can not find css color file. Please create color new 
+								            <button type="button" class="close" data-dismiss="alert">&times;</button>
+								        </div>
+									
+									</div>
+								{% endif %}	
+							</div>
+						</div>
+					</div>
+                </div>
+				
+				<div class="so-panel">	
+					<h3 class="panel-title">Platforms</h3>
+					<div class="panel-container">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Mobile Status</label>
+							<div class="col-sm-3" >
+								{{ fields.field_radio('mobile_general','platforms_mobile', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+						</div>
+						<div class="form-group" id="tab-field-imgpayment_status">
+							<label class="col-sm-2 control-label" >
+								Logo Mobile:
+							</label>
+							<div class="col-sm-10">
+								{{ fields.field_addimage('mobile_general','logomobile') }} 
+							</div>
+						</div>
+
+						<div class="form-group last">
+							<label class="col-sm-2 control-label">{{general_topbar_status}}</label>
+							<div class="col-sm-3" >
+								{{ fields.field_radio('mobile_general','barnav', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">  {{ general_copyright_text }}   </label>
+							<div class="col-sm-4">
+								{{ fields.field_text('mobile_general','mcopyright','Footer copyright content') }} 
+							</div>
+							<div class="col-sm-offset-2 col-sm-10">
+								{% if error.copyright %}
+									<div class="text-danger"> {{error.copyright}}</div>
+								{% endif %}
+							</div>
+						</div>
+						
+					</div>
+				</div>
+
+            </div>
+           
+
+			{# Header  Blocks---------------------------------------------  #}
+            <div id="tab-general-layout2" class="tab-pane">
+				<div id="tab-general__headertype" class="tab-pane active">
+					<div class="so-panel">
+						<h3 class="panel-title">Type of Header</h3>
+						<span class="help-block">If you need content from other header like phone number you need to set it in custom Theme Control Panel.</span>
+						<p class="help-hint">
+							<i class="fa fa-bullhorn" aria-hidden="true"></i> 
+							<span>You can set these headers for any skin you want</span>
+						</p>
+						{{ fields.field_mtypeheader('mobile_general','mtypeheader',typelayouts) }} 
+					</div>
+				</div>
+								
+            </div>
+
+			
+			{# Footer  Blocks---------------------------------------------  #}
+            <div id="tab-general-layout3" class="tab-pane">
+				<div class="clearfix">
+						<div id="tab-general__bannereffect" class="tab-pane">
+							<div class="so-panel">
+								<h3 class="panel-title">Other Footer</h3>
+								<div class="panel-container">
+									<div class="form-group">
+										<label class="col-sm-2 control-label" >Payment Image</label>
+										<div class="col-sm-10">
+											{{ fields.field_addimage('mobile_general','mimgpayment') }} 
+											
+										</div>
+									</div>
+									<div class="form-group" >
+										<label class="col-sm-2 control-label">Telephone No</label>
+										<div class="col-sm-2" >
+											{{ fields.field_radio('mobile_general','mphone_status', {1:'ON',0 : 'OFF'} )}} 
+										</div>
+										<div class="col-sm-8" id="tab-field-mphone_status">
+											{{ fields.field_langHori(languages,'mobile_general','mphone_text',50) }}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">Email Us</label>
+										<div class="col-sm-2" >
+											{{ fields.field_radio('mobile_general','memail_status', {1:'ON',0 : 'OFF'} )}} 
+										</div>
+										<div class="col-sm-8" id="tab-field-memail_status">
+											{{ fields.field_langHori(languages,'mobile_general','memail_text',50) }}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" >Custom Footer</label>
+										<div class="col-sm-2">
+											{{ fields.field_radio('mobile_general','customfooter_status', {1:'ON',0 : 'OFF'} )}} 
+										</div>
+										<div class="col-sm-8" id="tab-field-customfooter_status">
+											{{ fields.field_langTextarea(languages,'mobile_general','customfooter_text') }}
+										</div>
+									</div>
+									
+									
+									
+								</div>
+							</div>
+							<div class="so-panel">
+								<div class="form-group no-margin" >
+									<h3 class="col-sm-3 panel-title ">Add Link Menu For Footer</h3>
+								</div>
+								<div class="panel-container">
+									<div class="form-group">
+										<label class="col-sm-2 control-label" >Show Menu Footer</label>
+										<div class="col-sm-10">
+											{{ fields.field_radio('mobile_general','menufooter_status', {1:'ON',0 : 'OFF'} )}} 
+											
+										</div>
+									</div>
+
+									<!-- Menu More -->
+									<div id="tab-field-menufooter_status" class="form-group">
+										<table class="bottom-bar" id="listgroup-footer">
+											<thead>
+												<tr>
+													<td class="first" style="width: 40%;" >Name</td>
+													<td>Link</td>
+													<td style="width: 10%;">Sort</td>
+													<td style="width: 10%;">Delete</td>
+												</tr>
+											</thead>
+
+												{% set menu_row = 0 %}
+												{% if footermenus and  footermenus !=''%}
+												  	{% for menuitem in footermenus %}
+												  	{% if menuitem.name is not empty %}
+														<tbody id="list{{menu_row}}">
+															<tr>
+																<td class="first">
+																	<div class="payment-name">
+																		{{ fields.field_langAddMenu(languages,'mobile_general','footermenus',menuitem,menu_row,'name') }}
+																	</div>
+																</td>
+																<td>
+																	<input class="form-control" type="text" value="{{menuitem.link}}" name="mobile_general[footermenus][{{menu_row}}][link]">
+																</td>
+																<td >
+																	<input class="form-control" type="text" class="sort" value="{{menuitem.sort}}" name="mobile_general[footermenus][{{menu_row}}][sort]">
+																</td>
+																
+																<td>
+																	<a onclick="$('#list{{menu_row}}').remove();" class="btn btn-danger">Remove</a>
+																</td>
+															</tr>
+														</tbody>
+													{%set menu_row = menu_row + 1 %}
+													{% endif %}
+													{% endfor %}	
+												{% endif %}
+												
+											<tfoot></tfoot>
+										</table>
+
+										<a onclick="add_footermenu();" class="add-item-payment btn btn-primary">Add item</a>
+										<script type="text/javascript">
+										var menu_row = {{menu_row}} ;
+										var languages = {{languages|json_encode}} ;
+										console.log(menu_row)
+										function add_footermenu() {
+											console.log(menu_row)
+											html  = '<tbody id="list' + menu_row + '">';
+											html += '  <tr>';
+											html += '    <td class="first">';
+											html += '		<div class="payment_name">';
+											html +='		<div class="tab-horizontal">';
+											html +='			<ul class="nav nav-tabs main_tabs_horizontal">';
+																 $.each(languages, function(key, language){
+																	var  $active = language['language_id'] == 1 ? 'active' : '';
+											html +='				<li class="'+$active+'"><a href="#language-name'+ menu_row+language['language_id']+'" data-toggle="tab" aria-expanded="true"><img src="language/'+language['code']+'/'+language['code']+'.png" title="'+language['name']+'"> '+language['name']+'</a></li>';
+																 });
+											html +='			</ul>';
+											html +=	'			<div class="tab-content">';
+																$.each(languages, function(key, language){
+																	var  $active = language['language_id'] == 1 ? 'active' : '';
+											html +=	'				<div class="tab-pane '+$active+'" id="language-name'+ menu_row +language['language_id']+'"><input type="text" name="mobile_general[footermenus][' + menu_row + '][name]['+language['language_id']+']" value="Demo Menu " class="form-control" size="45"></div>';
+																 });
+
+											html +=	'			</div>';
+											html += '		</div>';
+											html += '</div>';
+											html += '    </td>';
+											html += '    <td>';
+											html += '		<input class="form-control" type="text" value="#" name="mobile_general[footermenus][' + menu_row + '][link]">';
+											html += '    </td>';
+											html += '    <td>';
+											html += '		<input class="form-control" type="text" class="sort" name="mobile_general[footermenus][' + menu_row + '][sort]">';
+											html += '    </td>';
+											html += '    <td><a onclick="$(\'#list' + menu_row + '\').remove();" class="btn btn-danger">Remove</a></td>';
+											html += '  </tr>';
+											html += '</tbody>';
+											
+											$('#listgroup-footer tfoot').before(html);
+											menu_row++;
+										}
+										</script> 
+									</div>
+									<!--  END Menu More -->
+
+								</div>
+
+							</div>
+							
+						</div>
+						
+					
+				</div>
+				
+				
+				
+            </div>
+
+        </div>
+    </div>
+    <!-------------------------------------end tab General---------------------------------->
+
+    <!-------------------------------------Tab Layout---------------------------------------->
+    <div class="tab-pane" id="tab-barbottom">
+		<!--subtabs: General -->
+		<div class="tab-pane active" id="tab-colors-layout1">
+			<div class="so-panel">
+				<h3 class="panel-title">{{barmore_heading}}</h3>
+				<div class="panel-container">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" >{{bottombar_status}}</label>
+						<div class="col-sm-6">
+							<div class="btn-group btn-toggle block-group " data-toggle="buttons">
+								{{ fields.field_radio('mobile_general','bottombar_status', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+						</div>
+					
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" >{{barmore_status}}</label>
+						<div class="col-sm-6">
+							<div class="btn-group btn-toggle block-group " data-toggle="buttons">
+								{{ fields.field_radio('mobile_general','barmore_status', {1:'ON',0 : 'OFF'} )}} 
+							</div>
+						</div>
+					
+					</div>
+					
+					
+					<!-- Menu More -->
+					<div id="tab-field-barmore_status" class="form-group">
+						<table class="bottom-bar" id="listgroup-bar">
+							<thead>
+								<tr>
+									<td class="first" style="width: 40%;" >Name</td>
+									<td>Link</td>
+									<td style="width: 10%;">Sort</td>
+									<td style="width: 10%;">Delete</td>
+								</tr>
+							</thead>
+
+								{% set menu_row = 0 %}
+
+								{% if listmenus and  listmenus !=''%}
+								  	{% for menuitem in listmenus %}
+								  	{% if menuitem.namemore is not empty %}
+										<tbody id="list{{menu_row}}">
+											<tr>
+												<td class="first">
+													<div class="payment-name">
+														{{ fields.field_langAddMenu(languages,'mobile_general','listmenus',menuitem,menu_row,'namemore') }}
+													</div>
+												</td>
+												<td>
+													<input class="form-control" type="text" value="{{menuitem.link}}" name="mobile_general[listmenus][{{menu_row}}][link]">
+												</td>
+												<td >
+													<input class="form-control" type="text" class="sort" value="{{menuitem.sort}}" name="mobile_general[listmenus][{{menu_row}}][sort]">
+												</td>
+												
+												<td>
+													<a onclick="$('#list{{menu_row}}').remove();" class="btn btn-danger">Remove</a>
+												</td>
+											</tr>
+										</tbody>
+									{%set menu_row = menu_row + 1 %}
+									{% endif %}
+									{% endfor %}	
+								{% endif %}
+								
+							<tfoot></tfoot>
+						</table>
+
+						<a onclick="add_listmenus();" class="add-item-payment btn btn-primary">Add item</a>
+						<script type="text/javascript">
+						var listmenu_row = {{menu_row}} ;
+						var languages = {{languages|json_encode}} ;
+						
+						function add_listmenus() {
+
+							html  = '<tbody id="list' + listmenu_row + '">';
+							html += '  <tr>';
+							html += '    <td class="first">';
+							html += '		<div class="payment_name">';
+							html +='		<div class="tab-horizontal">';
+							html +='			<ul class="nav nav-tabs main_tabs_horizontal">';
+												 $.each(languages, function(key, language){
+													var  $active = language['language_id'] == 1 ? 'active' : '';
+							html +='				<li class="'+$active+'"><a href="#language-namemore'+ listmenu_row+language['language_id']+'" data-toggle="tab" aria-expanded="true"><img src="language/'+language['code']+'/'+language['code']+'.png" title="'+language['name']+'"> '+language['name']+'</a></li>';
+												 });
+							html +='			</ul>';
+							html +=	'			<div class="tab-content">';
+												$.each(languages, function(key, language){
+													var  $active = language['language_id'] == 1 ? 'active' : '';
+							html +=	'				<div class="tab-pane '+$active+'" id="language-namemore'+ listmenu_row +language['language_id']+'"><input type="text" name="mobile_general[listmenus][' + listmenu_row + '][namemore]['+language['language_id']+']" value="Demo Menu " class="form-control" size="45"></div>';
+												 });
+
+							html +=	'			</div>';
+							html += '		</div>';
+							html += '</div>';
+							html += '    </td>';
+							html += '    <td>';
+							html += '		<input class="form-control" type="text" value="#" name="mobile_general[listmenus][' + listmenu_row + '][link]">';
+							html += '    </td>';
+							html += '    <td>';
+							html += '		<input class="form-control" type="text" class="sort" name="mobile_general[listmenus][' + listmenu_row + '][sort]">';
+							html += '    </td>';
+							html += '    <td><a onclick="$(\'#list' + listmenu_row + '\').remove();" class="btn btn-danger">Remove</a></td>';
+							html += '  </tr>';
+							html += '</tbody>';
+							
+							$('#listgroup-bar tfoot').before(html);
+							listmenu_row++;
+						}
+						</script> 
+					</div>
+					<!--  END Menu More -->
+
+
+					
+				</div>
+			</div>
+
+		</div>
+		<!--subtabs: General -->
+    </div>
+    <!-------------------------------------end tab Colors,backgrounds,fonts-->
+
+    <!-------------------------------------Tab Products sliders, products listings-->
+    <div class="tab-pane" id="tab-products">
+    	<div class="so-panel">
+			<div class="form-group no-margin" >
+				<h3 class="col-sm-2 panel-title ">{{ category_heading }}</h3>
+				<div class="col-sm-10 text-right">
+					
+				</div>
+			</div>
+
+			<div class="panel-container">
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" > {{general_morecategory_status}}</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('mobile_general','category_more', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label" > {{general_compare_status}}</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('mobile_general','compare_status', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label" > {{general_wishlist_status}}</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('mobile_general','wishlist_status', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label" > {{general_addcart_status}}</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('mobile_general','addcart_status', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+			</div>
+		</div>	
+       
+    </div>
+    <!------------------------------------end tab Pages-->
+
+    <!-------------------------------------Tab Fonts-->
+    <div class="tab-pane" id="tab-fonts">
+		
+		<div class="so-panel">
+			<h3 class="panel-title">Fonts<span class="help-block">If you want to speed up your site use one of the common fonts instead of the fonts from Google.</span></h3>
+			<div class="panel-container">
+				<div class="form-group">
+					
+					<label class="col-sm-3 control-label" >{{ fonts_body }}  </label>
+					<div class="col-sm-9">
+						<div class="block-group fonts-change">
+							{{ fields.field_onOffFont('mobile_general','mbody_status') }} 
+							<div class="block-group items-font font-standard" >
+								{{ fields.field_select('mobile_general','mnormal_body',fonts_normal) }} 
+							</div>
+							<div class="block-group items-font font-google" >
+								<label class="control-label">  {{ entry_google_url }}   </label>
+								<div class="">
+									{{ fields.field_text('mobile_general','murl_body') }} 
+									<span class="help-block">{{ entry_google_url_help }}</span>
+								</div>
+							</div>
+							<div class="block-group items-font font-google" >
+								<label class=" control-label"> {{ entry_google_family }}</label>
+								<div class="">
+									{{ fields.field_text('mobile_general','mfamily_body') }} 
+									<span class="help-block"> {{ entry_google_family_help }}</span>
+								</div>
+							</div>
+						</div>
+						<div class="block-group">
+							{{ fields.field_textarea('mobile_general','mselector_body','Add css selectors') }} 
+						</div>
+					</div>
+				</div>
+		
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" >{{ fonts_heading }}  </label>
+					<div class="col-sm-9">
+						<div class="block-group fonts-change">
+							{{ fields.field_onOffFont('mobile_general','mheading_status') }} 
+							<div class="block-group items-font font-standard" >
+								{{ fields.field_select('mobile_general','mnormal_heading',fonts_normal) }} 
+							</div>
+							<div class="block-group items-font font-google" >
+								<label class="control-label"> {{ entry_google_url }}  </label>
+								<div class="">
+									{{ fields.field_text('mobile_general','murl_heading') }} 
+									<span class="help-block">{{ entry_google_url_help }}</span>
+								</div>
+							</div>
+							<div class="block-group items-font font-google" >
+								<label class=" control-label"> {{ entry_google_family }}</label>
+								<div class="">
+									{{ fields.field_text('mobile_general','mfamily_heading') }} 
+									<span class="help-block"> {{ entry_google_family_help }}</span>
+								</div>
+							</div>
+						</div>
+						<div class="block-group">
+							{{ fields.field_textarea('mobile_general','mselector_heading','Add css selectors') }} 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>				
+    </div>
+    <!-------------------------------------end tab Fonts-->
+	
+	<!-------------------------------------Tab Bar Left-->
+	<div class="tab-pane" id="tab-barleft">
+		<div class="so-panel">
+			<div class="form-group no-margin" >
+				<h3 class="col-sm-2 panel-title ">{{ barleft_heading }}</h3>
+				<div class="col-sm-10 text-right">
+					
+				</div>
+			</div>
+
+			<div class="panel-container">
+				<div class="form-group">
+					<label class="col-sm-3 control-label" > {{barsearch_status}}</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('mobile_general','barsearch_status', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label" > {{barmega1_status}}</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('mobile_general','barmega1_status', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-3 control-label" > {{barmega2_status}}</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('mobile_general','barmega2_status', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+
+				
+				<div class="form-group">
+					<label class="col-sm-3 control-label" > {{barwistlist_status}}</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('mobile_general','barwistlist_status', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label" > {{barcompare_status}}</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('mobile_general','barcompare_status', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+				
+			</div>
+		</div>	
+		
+		
+	</div>
+	
+	
+	
+	<!-------------------------------------Tab Tab Advanced-->
+	<div class="tab-pane" id="tab-advanced">
+		
+		<div class="so-panel">
+			<h3 class="panel-title">SCSS Compile</h3>
+			<div class="panel-container">
+				<div class="form-group">
+					<label class="col-sm-2 control-label" >SCSS Compile</label>
+					<div class="col-sm-2">
+						{{ fields.field_radio('mobile_general','mscsscompile', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" >CSS Format</label>
+					<div class="col-sm-9">
+						{{ fields.field_radio('mobile_general','mscssformat', Scssformat)}} 
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" >User Developer Compile Muti Color</label>
+					<div class="col-sm-2">
+						{{ fields.field_radio('mobile_general','mcompileMutiColor', {1:'ON',0 : 'OFF'} )}} 
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+
+
+	</div>
+	<!-------------------------------------End Tab Advanced-->
+	
+</div>

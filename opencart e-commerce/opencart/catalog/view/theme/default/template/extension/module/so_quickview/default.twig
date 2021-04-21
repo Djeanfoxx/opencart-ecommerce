@@ -1,0 +1,36 @@
+<script type="text/javascript">
+	function _SoMagnificPopup(){
+		$('.quickview_handler').magnificPopup({
+			type:'iframe',
+			tLoading: '',
+			fixedContentPos: false,
+			fixedBgPos: true,
+			overflowY: 'scroll',
+			closeBtnInside: true,
+			closeOnContentClick: true,
+			preloader: true,
+			midClick: true,
+			removalDelay: 300,
+		});
+	}
+	function _SoQuickView(){
+		var $item_class = $('{{ class_suffix }}');
+		if ($item_class.length > 0) {
+			for (var i = 0; i < $item_class.length; i++) {
+				$($item_class[i]).addClass('quickview');
+				if($($item_class[i]).find('.quickview_handler').length <= 0){
+					var producturlpath = $($item_class[i]).find('a', $(this)).attr('href');
+					if(typeof producturlpath !== 'undefined' && producturlpath.length > 0 ){
+						$product_id = producturlpath.split("=").pop();
+						var _quickviewbutton = "<a class='btn-quickview quickview_handler' href='{{ our_url.link('extension/module/so_quickview/detail','product_id=') }}"+$product_id+"' title=\"{{ label_text }}\" data-title =\"{{ label_text }}\" data-fancybox-type=\"iframe\" ><i class=\"quickview fa fa-search\"></i></a>";
+						$($item_class[i]).append(_quickviewbutton);
+					}
+				}
+			}
+		}
+		_SoMagnificPopup();
+	}
+	jQuery(document).ready(function ($) {
+		setTimeout(function (){_SoQuickView()}, 500);
+	});
+</script>

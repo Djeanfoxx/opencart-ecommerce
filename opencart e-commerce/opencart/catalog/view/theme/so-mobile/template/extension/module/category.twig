@@ -1,0 +1,35 @@
+
+<div class="module category-style">
+  <h3 class="modtitle"><span>{{ heading_title }} </span></h3>
+  <div class="mod-content box-category">
+    <ul class="accordion" id="accordion-category">
+      {% for i,category in categories %} 
+		<li class="panel">
+			{% if category.category_id == category_id %} 
+				<a href="{{ category.href }} " class="active">{{ category.name }} </a>
+			{% else %}   
+				<a href="{{ category.href }} ">{{ category.name }} </a>
+			{% endif %} 
+						
+			{% if category.children %} 
+				<span class="head"><a  class="pull-right accordion-toggle{% if category.category_id  !=  category_id %} {{ ' collapsed' }} {% endif %} " data-toggle="collapse" data-parent="#accordion-category" href="#category{{ i }} "></a></span>
+				<div id="category{{ i }}" class="panel-collapse collapse {% if category.category_id  == category_id %} {{ 'in' }} {% endif %} " style="clear:both">
+					<ul>
+					   {% for child in category.children %} 
+						<li>
+							{% if child.category_id  ==  child_id %} 
+								<a href="{{ child.href }} " class="active">{{ child.name }} </a>
+							{% else %}   
+								<a href="{{ child.href }} ">{{ child.name }} </a>
+							{% endif %} 
+						</li>
+					   {% endfor %}
+					</ul>
+				</div>
+				
+			{% endif %} 
+		</li>
+       {% endfor %}
+    </ul>
+  </div>
+</div>

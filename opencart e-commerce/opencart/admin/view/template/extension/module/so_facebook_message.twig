@@ -1,0 +1,290 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+				<button type="submit" form="form-featured" data-toggle="tooltip" title="{{ objlang.get('entry_button_save') }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ objlang.get('entry_button_save') }}</button>
+				<a class="btn btn-success" onclick="$('#action').val('save_edit');$('#form-featured').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_edit') }}" ><i class="fa fa-pencil-square-o"></i> {{ objlang.get('entry_button_save_and_edit') }}</a>
+				<a class="btn btn-info" onclick="$('#action').val('save_new');$('#form-featured').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_new') }}" ><i class="fa fa-book"></i>  {{ objlang.get('entry_button_save_and_new') }}</a>
+				<a href="{{ cancel }}" data-toggle="tooltip" title="{{ objlang.get('entry_button_cancel') }}" class="btn btn-danger"><i class="fa fa-reply"></i>  {{ objlang.get('entry_button_cancel') }}</a>
+			</div>
+			<h1>{{ objlang.get('heading_title_so') }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid">
+		{% if error.warning is defined %}
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error.warning }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		
+		{% if success is defined and success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ subheading }}</h3>
+			</div>
+			<div class="panel-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
+					<input type="hidden" name="action" id="action" value=""/>
+					<div class="row">
+						<ul class="col-sm-12 nav nav-tabs" role="tablist" style="padding-left: 15px;">
+							<li {% if selectedid == 0 %}class="active" {% endif %}> <a href="{{ link }}"> <span class="fa fa-plus"></span> {{ objlang.get('button_add_module') }}</a></li>
+							{% set i=1 %}
+							{% for key, module in moduletabs %}
+								<li role="presentation" {% if module.module_id == selectedid %} class="active" {% endif %}>
+									<a href="{{ link }}&module_id={{ module.module_id }}" aria-controls="bannermodule-{{ key }}"  >
+										<span class="fa fa-pencil"></span> {{ module.name }}
+									</a>
+								</li>
+								{% set i = i + 1 %}
+							{% endfor %}
+						</ul>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							{% set module_row = 1 %}
+							{% for module in modules %}
+								{% if selectedid %}
+									<div class="pull-right">
+										<a href="{{ action }}&delete=1" class="remove btn btn-danger" ><span><i class="fa fa-remove"></i> {{ objlang.get('entry_button_delete') }}</span></a>
+									</div>
+								{% endif %}
+								<div id="tab-module{{ module_row }}" class="col-sm-12">
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-name"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_name_desc') }}">{{ objlang.get('entry_name') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="name" value="{{ module.name }}" placeholder="{{ objlang.get('entry_name') }}" id="input-name" class="form-control" />
+											</div>
+											{% if error.name is defined %}
+											<div class="text-danger col-sm-12">{{ error.name }}</div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-status"><b style="font-weight:bold; color:#f00">*</b><span data-toggle="tooltip" title="{{ objlang.get('entry_status_desc') }}">{{ objlang.get('entry_status') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="status" id="input-status" class="form-control">
+													{% if module.status %}
+														<option value="1" selected="selected">{{ objlang.get('text_enabled') }}</option>
+														<option value="0">{{ objlang.get('text_disabled') }}</option>
+													{% else %}
+														<option value="1">{{ objlang.get('text_enabled') }}</option>
+														<option value="0" selected="selected">{{ objlang.get('text_disabled') }}</option>
+													{% endif %}
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-position"><span data-toggle="tooltip" title="{{ objlang.get('entry_position_desc') }}">{{ objlang.get('entry_position') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="position" id="input-position" class="form-control">
+													<option value="left-bottom" {{ module.position == 'left-bottom' ? 'selected="selected"' : '' }}>{{ objlang.get('text_left_bottom') }}</option>
+													<option value="right-bottom" {{ module.position == 'right-bottom' ? 'selected="selected"' : '' }}>{{ objlang.get('text_right_bottom') }}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-width"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_width_desc') }}">{{ objlang.get('entry_width') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="width" value="{{ module.width }}" placeholder="{{ objlang.get('entry_width') }}" id="input-width" class="form-control" />
+											</div>
+											{% if error.width is defined %}
+											<div class="text-danger col-sm-12">{{ error.width }}</div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-height"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_height_desc') }}">{{ objlang.get('entry_height') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="height" value="{{ module.height }}" placeholder="{{ objlang.get('entry_height') }}" id="input-height" class="form-control" />
+											</div>
+											{% if error.height is defined %}
+											<div class="text-danger col-sm-12">{{ error.height }}</div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-style"><span data-toggle="tooltip" title="{{ objlang.get('entry_button_style_desc') }}">{{ objlang.get('entry_button_style') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="button_style" id="input-style" class="form-control">
+													<option value="default" {{ module.button_style == 'default' ? 'selected="selected"' : '' }}>{{ objlang.get('text_default') }}</option>
+													<option value="metro" {{ module.button_style == 'metro' ? 'selected="selected"' : '' }}>{{ objlang.get('text_metro') }}</option>
+													<option value="icon" {{ module.button_style == 'icon' ? 'selected="selected"' : '' }}>{{ objlang.get('text_icon') }}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-style">{{ objlang.get('entry_button_preview') }}</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+											   	<div class="chat-panel-default" style="display:none">
+									              	<div class="chat-content">
+									                  	<img class="online" src="../catalog/view/theme/default/image/so_facebook_message/da.png">Message us on Facebook!
+									               	</div>
+								          		</div>
+									           	<div class="chat-panel-icon" style="display:none">
+									              	<div class="chat-content-icon">
+									                  	<img  src="../catalog/view/theme/default/image/so_facebook_message/fbmessenger.svg" style="width:50px;">
+									              	</div>
+									          	</div>
+									          	<div class="chat-panel-metro" style="display:none">
+									              	<div class="chat-content-metro">
+									                  	<a href="javascript:void(0)" class="fbkMetroStyleBtn"><span></span>Message us on Facebook!</a>
+									              	</div>
+									          	</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-widget-text"><b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_widget_text_desc') }}">{{ objlang.get('entry_widget_text') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												{% set i = 0 %}
+												{% for language in languages %}
+													{% set i = i + 1 %}
+													<input type="text" name="module_description[{{ language.language_id }}][widget_text]" placeholder="{{ objlang.get('entry_widget_text') }}" id="input-widget-text-{{ language.language_id }}" value="{{ module_description[language.language_id].widget_text is defined ? module_description[language.language_id].widget_text : '' }}" class="form-control {{ i>1 ? ' hide ' : ' first-name' }}" />
+													{% if i == 1 %}
+													<input type="hidden" class="form-control" id="input-widget_text" placeholder="{{ objlang.get('entry_widget_text') }}" value="{{ module_description[language.language_id].widget_text is defined ? module_description[language.language_id].widget_text : '' }}" name="widget_text" />
+													{% endif %}
+												{% endfor %}
+											</div>
+											<div class="col-sm-3">
+												<select  class="form-control" id="language">
+													{% for language in languages %}
+														<option value="{{ language.language_id }}">{{ language.name }}</option>
+													{% endfor %}
+												</select>
+											</div>
+											{% if error.widget_text is defined %}
+											<div class="text-danger col-sm-12">{{ error.widget_text }}</div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-page-url"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_page_url_desc') }}">{{ objlang.get('entry_page_url') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-8">
+												<input type="text" name="page_url" value="{{ module.page_url }}" placeholder="{{ objlang.get('entry_page_url') }}" id="input-page-url" class="form-control" />
+											</div>
+											{% if error.page_url is defined %}
+											<div class="text-danger col-sm-12">{{ error.page_url }}</div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-tabs"><span data-toggle="tooltip" title="{{ objlang.get('entry_tabs_desc') }}">{{ objlang.get('entry_tabs') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="tabs" id="input-tabs" class="form-control">
+													<option value="messages" {{ module.tabs == 'messages' ? 'selected="selected"' : '' }}>{{ objlang.get('text_messages') }}</option>
+													<option value="timeline" {{ module.tabs == 'timeline' ? 'selected="selected"' : '' }}>{{ objlang.get('text_timeline') }}</option>
+													<option value="events" {{ module.tabs == 'events' ? 'selected="selected"' : '' }}>{{ objlang.get('text_events') }}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-small_header"><span data-toggle="tooltip" title="{{ objlang.get('entry_small_header_desc') }}">{{ objlang.get('entry_small_header') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="control-label"><input id="input-small_header" type="checkbox" name="small_header" value="1" {{ module.small_header == 1 ? 'checked="checked"' : '' }} /></label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-hide_cover"><span data-toggle="tooltip" title="{{ objlang.get('entry_hide_cover_desc') }}">{{ objlang.get('entry_hide_cover') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="control-label"><input id="input-hide_cover" type="checkbox" name="hide_cover" value="1" {{ module.hide_cover == 1 ? 'checked="checked"' : '' }} /></label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-show_facepile"><span data-toggle="tooltip" title="{{ objlang.get('entry_show_facepile_desc') }}">{{ objlang.get('entry_show_facepile') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="control-label"><input id="input-show_facepile" type="checkbox" name="show_facepile" value="1" {{ module.show_facepile == 1 ? 'checked="checked"' : '' }} /></label>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% set module_row = module_row + 1 %}
+							{% endfor %}
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$('#language').change(function(){
+		var that = $(this),
+			opt_select = $('option:selected', that).val(),
+			_input = $('#input-widget-text-'+opt_select);
+		$('[id^="input-widget-text-"]').addClass('hide');
+		_input.removeClass('hide');
+	});
+
+	$('.first-name').change(function(){
+		$('input[name="widget_text"]').val($(this).val());
+	});
+
+	var $stylePicker = $('select[name="button_style"]');
+    var $defaultStyle = $('.chat-panel-default');
+    var $metroStyle = $('.chat-panel-metro');
+    var $messengerIcon = $('.chat-panel-icon');
+ 	if ($stylePicker.val() === 'default') {
+        $defaultStyle.show();
+        $metroStyle.hide(); 
+        $messengerIcon.hide();
+  	} else if ($stylePicker.val() === 'icon') {
+        $defaultStyle.hide();
+        $metroStyle.hide(); 
+        $messengerIcon.show();
+  	} else if($stylePicker.val() === 'metro'){
+        $defaultStyle.hide();
+        $metroStyle.show(); 
+        $messengerIcon.hide();
+  	}   
+   
+   	$stylePicker.change(function(){
+        if ($stylePicker.val() === 'default') {
+            $defaultStyle.fadeIn(300);
+            $metroStyle.hide(); 
+            $messengerIcon.hide();  
+            
+        } else if($stylePicker.val() === 'icon') {
+            $defaultStyle.hide();
+            $metroStyle.hide(); 
+            $messengerIcon.fadeIn(300); 
+        } else if($stylePicker.val() === 'metro'){
+            $defaultStyle.hide();
+            $metroStyle.fadeIn(300); 
+            $messengerIcon.hide();
+        }
+    });
+</script>
+{{ footer }}

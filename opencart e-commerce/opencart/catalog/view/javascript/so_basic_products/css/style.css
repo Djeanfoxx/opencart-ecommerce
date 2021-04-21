@@ -1,0 +1,238 @@
+/*------------------------------------------------------------------------
+ * @package Sj Virtue Mart
+ * @version 2.0
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @copyright (c) 2012 YouTech Company. All Rights Reserved.
+ * @author YouTech Company http://www.smartaddons.com
+ *
+ *-------------------------------------------------------------------------*/
+ 
+.cf:before,
+.cf:after {
+	content: " "; /* 1 */
+	display: table; /* 2 */
+}
+
+.cf:after {
+	clear: both;
+} 
+.so-basic-product{
+    margin:0;
+    padding:0;
+    overflow:hidden;
+}
+
+.so-basic-product .item-wrap {
+    overflow: hidden;
+}
+
+.so-basic-product  .item-element {
+	float:left;
+}
+.so-basic-product  .item-element .item-inner{
+	padding:0 15px 0 15px;	
+}
+@media all and (max-width: 479px){
+    .so-basic-product .preset04-1 .item-element{width: 100%;}
+    .so-basic-product .preset04-2 .item-element{width: 50%;}
+    .so-basic-product .preset04-3 .item-element{width: 33.3295%;}
+    .so-basic-product .preset04-4 .item-element{width: 25%;}
+    .so-basic-product .preset04-5 .item-element{width: 20%;}
+    .so-basic-product .preset04-6 .item-element{width: 16.6595%;}
+    .so-basic-product .preset04-1  .clr1,
+    .so-basic-product .preset04-2  .clr2,
+    .so-basic-product .preset04-3  .clr3,
+    .so-basic-product .preset04-4  .clr4,
+    .so-basic-product .preset04-5  .clr5,
+    .so-basic-product .preset04-6  .clr6{
+        clear: both;
+    }
+}
+
+@media all and (min-width: 480px) and (max-width: 767px){
+    .so-basic-product .preset03-1 .item-element{width: 100%;}
+    .so-basic-product .preset03-2 .item-element{width: 50%;}
+    .so-basic-product .preset03-3 .item-element{width: 33.3295%;}
+    .so-basic-product .preset03-4 .item-element{width: 25%; }
+    .so-basic-product .preset03-5 .item-element{width: 20%;}
+    .so-basic-product .preset03-6 .item-element{width: 16.6595%;}
+    .so-basic-product .preset03-1  .clr1,
+    .so-basic-product .preset03-2  .clr2,
+    .so-basic-product .preset03-3  .clr3,
+    .so-basic-product .preset03-4  .clr4,
+    .so-basic-product .preset03-5  .clr5,
+    .so-basic-product .preset03-6  .clr6{
+        clear: both;
+    }
+}
+
+@media all and (min-width: 768px) and (max-width: 991px){
+    .so-basic-product .preset02-1 .item-element{width: 100%;}
+    .so-basic-product .preset02-2 .item-element{width: 50%; }
+    .so-basic-product .preset02-3 .item-element{width: 33.3295%;}
+    .so-basic-product .preset02-4 .item-element{width: 25%; }
+    .so-basic-product .preset02-5 .item-element{width: 20%;}
+    .so-basic-product .preset02-6 .item-element{width: 16.6595%;}
+    .so-basic-product .preset02-1  .clr1,
+    .so-basic-product .preset02-2  .clr2,
+    .so-basic-product .preset02-3  .clr3,
+    .so-basic-product .preset02-4  .clr4,
+    .so-basic-product .preset02-5  .clr5,
+    .so-basic-product .preset02-6  .clr6{
+        clear: both;
+    }
+}
+
+@media all and (min-width: 992px) and (max-width: 1199px){
+    .so-basic-product .preset01-1 .item-element{width: 100%;}
+    .so-basic-product .preset01-2 .item-element{ width: 50%; }
+    .so-basic-product .preset01-3 .item-element{ width: 33.3295%; }
+    .so-basic-product .preset01-4 .item-element{ width: 25%; }
+    .so-basic-product .preset01-5 .item-element{ width: 20%; }
+    .so-basic-product .preset01-6 .item-element{ width: 16.6595%;}
+    .so-basic-product .preset01-1  .clr1,
+    .so-basic-product .preset01-2  .clr2,
+    .so-basic-product .preset01-3  .clr3,
+    .so-basic-product .preset01-4  .clr4,
+    .so-basic-product .preset01-5  .clr5,
+    .so-basic-product .preset01-6  .clr6{
+        clear: both;
+    }
+}
+
+@media all and (min-width: 1200px){
+    .so-basic-product .preset00-1 .item-element{width: 100%;}
+    .so-basic-product .preset00-2 .item-element{ width: 50%; }
+    .so-basic-product .preset00-3 .item-element{ width: 33.3295%; }
+    .so-basic-product .preset00-4 .item-element{ width: 25%; }
+    .so-basic-product .preset00-5 .item-element{ width: 20%; }
+    .so-basic-product .preset00-6 .item-element{ width: 16.6595%;}
+    .so-basic-product .preset00-1  .clr1,
+    .so-basic-product .preset00-2  .clr2,
+    .so-basic-product .preset00-3  .clr3,
+    .so-basic-product .preset00-4  .clr4,
+    .so-basic-product .preset00-5  .clr5,
+    .so-basic-product .preset00-6  .clr6{
+        clear: both;
+    }
+}
+/*--------------Sale---------------*/
+.so-basic-product .product-thumb .image span.label-sale:after{
+    border-left: 8px solid transparent;
+    border-top: 9px solid #e74c3c;
+    bottom: -6px;
+    content: "";
+    position: absolute;
+    right: 8px;
+}
+.so-basic-product .product-thumb .image span.label-sale{
+    background: #e74c3c none repeat scroll 0 0;
+    left: 20px;
+    top: 20px;
+	z-index:3;
+}
+.so-basic-product .product-thumb .image .label-new,.so-basic-product .product-thumb .image .label-sale {
+    display: block;
+    font-size: 12px;
+    height: 30px;
+    line-height: 23px;
+    min-width: 56px;
+    padding: 3px 10px;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    z-index: 1;
+}
+/*--------------New---------------*/
+.so-basic-product .product-thumb .image span.label-new:after{
+    border-right: 8px solid transparent;
+    border-top: 9px solid #1e91cf;
+    bottom: -6px;
+    content: "";
+    position: absolute;
+    left: 8px;
+}
+.so-basic-product .product-thumb .image span.label-new{
+    background: #1e91cf none repeat scroll 0 0;
+    right: 20px;
+    top: 20px;
+	z-index:3;
+}
+
+/* Hover Image*/
+.so-basic-product .product-thumb .image .img-thumb1 {
+    position: relative;
+	z-index: 2;
+	transform: translateX(0);
+	-moz-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	-ms-transform: translateX(0);
+	transition: all 0.3s ease-in-out;
+}
+.so-basic-product .product-thumb .image .img-thumb2 {
+    position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	transition: all 0.3s ease-in;
+}
+.so-basic-product .product-thumb .image{
+	overflow: hidden;
+    position: relative;
+}
+.so-basic-product .product-thumb .image:hover .img-thumb1{
+	transform: translateX(200%);
+	-moz-transform: translateX(200%);
+	-webkit-transform: translateX(200%);
+	-ms-transform: translateX(200%);
+	transition: all 0.3s ease-in-out;
+}
+
+/*Accordion Vertical*/
+.so-basic-product .yt-accordion{
+	padding:0;
+	margin:0;
+}
+.so-basic-product .so-acc-vertical li.yt-acc-item{
+	list-style:none;
+	padding:0;
+	margin:0 0 2px 0;
+}
+.so-basic-product .so-acc-vertical li.yt-acc-item .acc-heading{
+	color:#565656;
+	background:#eee;
+	border-radius:5px;
+	font-size:14px;
+	position:relative;
+	display:block;
+	overflow:hidden;
+	border:#e5e5e5 1px solid;
+	cursor:pointer;
+}
+.so-basic-product .so-acc-vertical li.yt-acc-item .acc-heading h3{
+	margin:0;
+	padding:10px;
+	font-size:14px;
+}
+.so-basic-product .so-acc-vertical li.yt-acc-item .acc-inner{
+	display:none;
+	border-top:none;
+	border-color:#E5E5E5;
+	margin-bottom:0;
+}
+.so-basic-product .so-acc-vertical li.yt-acc-item.active .acc-heading h3{
+	color:#5BB300;
+}
+.so-basic-product .so-acc-vertical li.yt-acc-item.active .acc-heading{
+	border-radius: 5px 5px 0 0;
+}
+.so-basic-product .so-acc-vertical li.yt-acc-item .acc-inner-content{
+	text-align:center;
+}
+.so-basic-product .so-acc-vertical li.yt-acc-item .acc-inner-content .acc-inner-desc{
+	margin-bottom:10px;
+}

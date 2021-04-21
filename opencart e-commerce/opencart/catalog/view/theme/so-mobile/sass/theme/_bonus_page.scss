@@ -1,0 +1,542 @@
+/*===============================================
+	[SASS DIRECTORY ]
+	
+    [1] CONTACT PAGE
+    [2] PAEG ABOUT US
+    [3] PAGE BLOG
+    [4] PAGE 404 
+==============================================*/
+
+/*============ CONTACT PAGE ==============*/
+#map-canvas{
+  height: 250px;
+  width: 100%;
+  margin: 0px 0 10px;
+}
+.contacts{
+	fieldset{ border: none; padding: 0; margin-bottom: 5px; }
+}
+.info-contact{padding-top: 5px;
+    .name-store h3{
+        font-size: 16px;
+        color: $gray-darker;
+        text-transform: uppercase;
+    }
+    .text{padding-#{$left}: 30px;}
+    .comment{
+        padding-bottom: 15px;
+       
+        margin-bottom: 5px;
+    }
+    
+}
+
+.contact-form{
+  legend{
+      border: none;
+      padding: 0;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin: 5px 0;
+      h2{
+        font-size: 12px;
+        color: #222;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-top: 20px;
+        display: inline-block;
+        margin: 0;
+      }
+  }
+  textarea.form-control{ box-shadow: none; border-color: #e9e9e9;  }
+  p{ font-size: 12px; color: #666; }
+  .location-address{
+    position: relative;
+    li{
+      font-size: 12px;
+      color: #8c8c8c;
+      position: relative;
+      margin-bottom: 20px;
+      padding-#{$left}: 30px;
+      
+      &:before{
+        background: url("#{$imgPath}icon/sprites.png") no-repeat center;
+        content: "";
+        background-position: -17px -162px ;
+        width: 15px;
+        height: 19px;
+        position: absolute;
+        #{$left}: 0;
+        top: 20px;
+      }
+    }
+    strong{
+      font-weight: 700;
+      color: #222;
+      text-transform: capitalize;
+      font-size: 14px;
+      display: block;
+    }
+  }
+  .form-mail{
+     &:before{
+        background: url("#{$imgPath}icon/sprites.png") no-repeat center;
+        content: "";
+        background-position: -15px -118px ;
+        width: 19px;
+        height: 14px;
+        position: absolute;
+        #{$left}: 0;
+        top: 15px;
+      }
+  }
+  .form-name{
+     &:before{
+      background: url("#{$imgPath}icon/sprites.png") no-repeat center;
+      content: "";
+      background-position: -16px -20px ;
+      width: 17px;
+      height: 20px;
+      position: absolute;
+      #{$left}: 0;
+      top: 15px;
+    }
+  }
+  .form-mail,
+  .form-name{
+    margin: 0;
+    position: relative;
+    border-top: 1px solid #e9e9e9;
+    &:before{
+      
+    }
+    input{
+      width: 100%;
+      border: 0;
+      padding: 20px 30px;
+      font-size: 13px;
+      color: #7d7d7d;
+      font-weight: 500;
+      height: 50px;
+      
+      box-shadow: none;
+      margin: 0;
+      border-radius: 0;
+    } 
+  }
+}
+
+
+/*============ PAEG ABOUT US ==============*/
+
+/*============ PAEG ABOUT US ==============*/
+
+
+.title-about-us h2 {
+  color: #333;
+  font-size: 22px;
+}
+
+.welcome-about-us {
+
+  .des-about-us {
+    padding: 30px 0;
+  }
+}
+
+.our-member {
+  clear: both;
+  padding-top: 30px;
+   img:hover{
+      opacity: 0.7;
+    }
+  .title-about-us {
+
+
+    h2 {
+      font-size: 22px;
+      color: #333;
+    }
+  }
+
+  .short-des {
+   
+    margin-bottom: 35px;
+  }
+
+  .overflow-owl-slider {
+    padding-top: 50px;
+  }
+
+  .respl-item {
+    border: 1px solid #ddd;
+    margin-bottom: 30px;
+    .item-inner{
+      padding: 20px;
+      display: inline-block;
+    }
+    .w-image-box {
+      display: block;text-align: center;
+    }
+
+    .info-member {
+     
+      ul{@extend ul.blank}
+      li{
+        float: $left;
+        .fa{
+          width: 29px;
+          height: 29px;
+          border: 1px solid #999;
+          line-height: 27px;
+          text-align: center;
+          color: #999;
+          border-radius: 50%;
+          margin-#{$right}: 5px;
+          display: inline-block;
+          &:hover{
+            color: $background1;
+            border-color: $background1;
+          }
+        }
+        .fa-f:before{
+           content: "\f09a";
+           font-family: FontAwesome;
+          }
+        .fa-t:before{
+           content: "\f099";
+           font-family: FontAwesome;
+          }
+        .fa-s:before{
+           content: "\f17e";
+           font-family: FontAwesome;
+          }
+        .fa-g:before{
+           content: "\f0d5";
+           font-family: FontAwesome;
+        }
+      }
+      .cl-name > a {
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #444!important;
+        &:hover{
+          color:$background1!important;
+        }
+      }
+
+      .cl-job {
+        padding: 5px 0px;
+        text-transform: uppercase;
+      }
+
+      .cl-des {
+        color: #909090;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+.why-list { @extend ul.blank;
+  li {
+    position: relative;
+    padding-#{$left}: 29px;
+
+    &:before {
+      content: "";
+      width: 14px;
+      height: 12px;
+      display: inline-block;
+      position: absolute;
+      #{$left}: 0px;
+      top: 10px;
+      background-repeat: no-repeat;
+      background-position: top $left;
+      background-image: url("#{$imgPath}icon-whylist.png");
+    }
+
+    a {
+      display: block;
+      padding: 5px 0 7px;
+      background-image: url("#{$imgPath}border-bottom-bs.png") repeat-x left bottom;
+    }
+
+    &:last-child > a {
+      background: none;
+    }
+  }
+}
+
+.happy-about-us {
+    direction: ltr;
+  clear: both;
+  padding-top: 10px;
+  .happy-ab {
+    border: 1px solid #e9e9e9;
+    padding: 33px 8px 20px;
+
+    .title-happy-about {
+      background: #fff;
+      display: inline-block;
+      #{$left}: 20px;
+      padding: 5px 10px;
+      position: absolute;
+      top: -5px;
+
+      h2 {
+        font-size: 20px;
+        position: relative;
+        top: -2px;
+        color: #444;
+      }
+    }
+
+    .ct-why {
+      padding: 0 10px 0 25px;
+      position: relative;
+        @include if-rtl {direction: rtl;}
+      .client-say {
+        font-size: 107.69%;
+        color: #909090;
+        margin-bottom: 10px;
+      }
+
+      .client-info-about {
+        color: #000;
+
+        .name {
+          font-size: 18px;
+          color: $linkColor;
+        }
+      }
+    }
+  }
+  .owl2-controls {
+    background: #fff;
+    padding: 0 5px;
+    position: absolute;
+    #{$right}: 2px;
+    top: -47px;
+  }
+
+  .owl2-controls .owl2-prev,
+  .owl2-controls .owl2-next {
+    border: none;
+    display: inline-block;
+    width: 26px !important;
+    height: 26px !important;
+    background-position: left top;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    text-indent: -9999px;
+    background-color: transparent !important;
+    top: 0px;
+    margin: 0 3px;
+    position: relative;
+  }
+
+  .owl2-controls .owl2-prev {
+    background-image: url("#{$imgPath}btn-prev-hp.png")!important;
+    margin-right: 3px;
+    right: 0px !important;
+    left: inherit !important;
+  }
+
+  .owl2-controls .owl2-nav {
+    width: 68px;
+    display: inline-block;
+    height: 26px;
+    background: #fff;
+  }
+
+  .owl2-controls .owl2-next {
+   background-image: url("#{$imgPath}btn-next-hp.png")!important;
+    right: 0px !important;
+  }
+
+  .item > div:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 16px;
+    height: 12px;
+    left: 0px;
+    top: 6px;
+  }
+
+  .owl2-dots {
+    display: none !important;
+  }
+}
+
+
+
+/*============ PAGE 404  ==============*/
+.button-404 > a{margin: 0 10px;}
+.content_404{ margin: 40px 0 30px; }
+.content_404 .block-top h2 {
+    color: #222;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+.content_404 .block-top .warning-code {
+    font-size: 14px;
+    color: #7d7d7d;
+    margin-bottom: 40px;
+}
+
+/*============ PAGE COMMING SOON  ==============*/
+.page-comingsoon{
+    background: url("#{$imgPath}/bg-comingsoon.jpg") no-repeat center center;
+    text-align: center;
+    min-height: 600px
+}
+
+/*INFOMATION*/
+
+.module-content{
+    background: #fff;border: 1px solid #ddd; padding: 0 20px;
+    .list-box{
+        li{
+            position: relative;
+            padding-#{$left}: 15px; 
+           &:before { position: absolute;display: block;top: 16px; background: #999; content: "";width: 6px; height: 6px; border-radius: 100%; #{$left}: 0;} 
+        }
+    }
+}
+.panel-default>.panel-heading{background: #fff;}
+.title-under{
+    position: relative;
+    margin-bottom: 50px;
+    &:after {
+        content: "";
+        position: absolute;
+        display: block;
+        height: 4px;
+        width: 68px;
+        background: $background;
+        bottom: -10px;
+    }
+}
+.owl2-carousel .owl2-item img {
+    transform-style: initial!important;
+}
+.title-under.text-center:after {
+    left: 50%;
+    margin-left: -34px;
+}
+.media-box-link--arrow .fa-arrow-right{    @include if-rtl {transform: rotate(180deg);}}
+.media-box-link--arrow .icon{font-size: 30px;}
+.media-box-link--figure .icon{font-size: 55px;}
+.media-box-link {
+  display: table-row;
+  width: 100%;
+  height: 100%;
+  background-color: $background;
+  cursor: pointer;
+  color: #fff;
+ @include transition(all 0.3s ease-in-out);
+}
+.media-box-link--content p{ color: #fff; }
+.media-box-link h4 {
+  color: #fff;
+  @include transition(all 0.3s ease-in-out);
+}
+.media-box-link .icon {
+  @include transition(all 0.3s ease-in-out);
+  font-family: FontAwesome;
+}
+.media-box-link--figure,
+.media-box-link--content,
+.media-box-link--arrow {
+  display: table-cell;
+  padding: 6% 0;
+  vertical-align: middle;
+}
+.media-box-link--figure {
+  width: 23%;
+}
+.media-box-link--content {
+  padding-right: 5%;
+  width: 67%;
+}
+.media-box-link--arrow {
+  width: 10%;
+  vertical-align: middle;
+}
+.media-box-link:hover {
+  background-color: #f5f5f5;
+  color: #777777;
+}
+.media-box-link:hover h4 {
+  color: #333333;
+}
+.media-box-link:hover .icon {
+  color: $background;
+}
+.page_warranity{
+    color: #777;
+    .title-under{color: #333;}
+    .icon.icon-error{font-size: 30px;vertical-align: middle;}
+    .media-icon--content .color-dark.font18{color: #333;font-size: 500;}
+}
+.color {
+    color:  $background;
+}
+.title-decimal {
+    font-size: 20px;
+    @media (min-width: 1200px) {
+        font-size: 30px;
+    }
+
+    position: relative;
+    padding: side-values(4px 0 9px 69px);
+    &:before {
+        content: attr(data-content);
+        display: table-cell;
+        vertical-align: middle;
+        position: absolute;
+        top: 0px;
+        line-height: 1.45em;
+        background: $background;
+        width: 44px;
+        height: 44px;
+        color: #fff;
+        text-align: center;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        #{$left}: 0;
+    }
+}
+.decimal-list {
+    padding: 0;
+    margin: 10px 0 0 0;
+    list-style-type: none;
+    counter-reset: myCounter;
+}
+.decimal-list li {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    padding: side-values(0 0 0 18px);
+    margin-bottom: 7px;
+    text-indent: 0;
+    position: relative;
+    &:before {
+        content: counter(myCounter);
+        counter-increment: myCounter;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        color: $background;
+        font-weight: 500;
+        #{$left}: 0;
+    }
+}

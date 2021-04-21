@@ -1,0 +1,70 @@
+{# =========== Show Footer ==============#}
+		<div class="container footer-content">
+
+			{% if soconfig.get_settings('mphone_status') or soconfig.get_settings('memail_status') %}
+			<div class="footernav-top">
+				<div class="need-help">
+					<p>{{ text_needhelp }}</p>
+					<div class="nh-contact">
+						{% if soconfig.get_settings('mphone_status') %}
+							<a href="tel:{{soconfig.get_settings('mphone_text')}}"><i class="fa fa-phone"></i> {{soconfig.get_settings('mphone_text')}}</a>
+						{% endif %}
+						{% if soconfig.get_settings('memail_status') %}
+							<a href="mailto:{{soconfig.get_settings('memail_text')}}" class="need-help-padding" target="_top"><i class="fa fa-envelope-o"></i>  {{text_emailus}}</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			{% endif %}
+
+			{% if soconfig.get_settings('customfooter_status') %}
+			<div class="footernav-social">
+				{{customfooter_text}}
+			</div>
+			{% endif %}
+
+			{% if soconfig.get_settings('menufooter_status') %}
+			<div class="footernav-midde">
+				<ul class="footer-link-list row">
+				{% if soconfig.get_settings('footermenus') %}
+					
+					{% for menuitem in soconfig.get_settings('footermenus') %}
+						{% for nameid, menuname in menuitem.name %}
+							{% if nameid == lang_id %}
+							<li class="col-xs-6"><a href="{{ menuitem.link }}">{{ menuname }}</a></li>
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+				{% endif %}
+				</ul>
+			</div>
+			{% endif %}
+
+			<div class="footernav-bottom">
+				<div class="text-center">
+					{% if soconfig.get_settings('mimgpayment') %}
+						<p class="nomargin"><img alt="Footer Image" class="form-group" src="image/{{soconfig.get_settings('mimgpayment')}}"></p>
+					{% endif %}
+
+					{% if soconfig.get_settings('mcopyright') is empty %}
+						{{ powered }}
+					{% else %}
+						{{ soconfig.decode_entities(soconfig.get_settings('mcopyright'))|replace({'{year}': "now"|date("Y")}) }}
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+	
+
+	</div>
+	<!-- End Main Content -->
+	
+	</div>
+	<!-- End Main wrapper -->
+	
+	
+
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+
+<div class="module {{direction_class}} {{ class_suffix }}">
+	{% if disp_title_module %} 
+		<h3 class="modtitle">{{ head_name }}</h3>
+	{% endif %}
+
+	{% if pre_text|trim is not empty  %} 
+		<div class="form-group">
+			{{ pre_text }}
+		</div>
+	{% endif %}
+
+	<div class="modcontent">
+		
+		{% if products is empty %}
+			<div class="alert alert-info"><i class="fa fa-info-circle"></i> 
+				{{ text_noproduct }}
+				<button type="button" class="close" data-dismiss="alert">×</button>
+			</div>
+
+		{% else %}
+			{% set count_item 	= products|length %}	
+			{% set cls_btn_page =  (button_page  ==  'top') ? 'buttom-type1':'button-type2' %}	
+			{% set btn_type 	=  (button_page  ==  'top') ? 'button-type1':'button-type2'%}
+			
+			{% set tag_id = 'so_extra_slider_'~suffix %}
+			{% set class_respl = 'preset00-'~nb_column0~' preset01-'~nb_column1~' preset02-'~nb_column2~' preset03-'~nb_column3~' preset04-'~nb_column4 %}
+			{% set btn_prev = (button_page == 'top') ? '&#171':'&#139' %}
+			{% set btn_next = (button_page == 'top') ? '&#187':'&#155' %}
+			{% set i = 0 %}
+
+			<div id="{{tag_id}}" class="so-extraslider {{cls_btn_page}} {{class_respl}} {{btn_type}}">
+				<!-- Begin extraslider-inner -->
+				<div class="extraslider-inner" data-effect="{{effect}}">
+					{% for i, product in products %}
+						{% set i = i + 1 %}
+						{% if i % nb_rows  ==  1  or  nb_rows  ==  1 %} 
+						<div class="item ">
+						{% endif %} 
+
+							<div class="item-wrap {{ products_style }} ">
+								<div class="item-wrap-inner">
+									<div class="item-image">
+										<div class="item-img-info">
+											{% if product.special  and  display_sale  %} 
+												<span class="label label-sale">{{ objlang.get('text_sale') }} </span>
+											{% endif %} 
+
+											{% if product.productNew  and  display_new  %} 
+												<span class="label label-new">{{ objlang.get('text_new') }} </span>
+											{% endif %} 
+
+											{% if product_image_num  == 2 %}
+												<img src="{{ product.thumb}}" class="img-thumb1" alt="{{ product.nameFull }}">
+												<img src="{{ product.thumb2}}" class="img-thumb2" alt="{{ product.nameFull }}">
+											{% else %} 
+												<img src="{{ product.thumb}}" alt="{{ product.nameFull }}">
+											{% endif %}
+
+										</div>
+									</div>
+
+									{% if display_title   or  display_description  or  display_price    or  display_addtocart  or  display_wishlist  or  display_compare  %} 
+										<div class="item-info">
+											{% if display_title %} 
+												<div class="item-title">
+													<a href="{{ product.href }}" target="{{ item_link_target }}" title="{{ product.nameFull }} "  >
+														{{ product.name }} 
+													</a>
+												</div>
+											{% endif %} 
+
+											{% if display_rating %}
+												{% if product.rating %}
+													<div class="rating">
+														{% for k in 1..5 %}
+															{% set k = k + 1 %}
+															{% if product.rating < k %} 
+																<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+														 	{% else %}   
+																<span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+															{% endif %} 
+														{% endfor %} 
+													</div>
+												{% else %}  
+												<div class="rating">
+													{% for j in 1..5 %}
+														{% set j = j + 1 %}
+														<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+													{% endfor %} 
+													
+												</div>
+												{% endif %}	
+											{% endif %}		
+											
+
+											{% if display_description  or  display_price or  display_addtocart  or  display_wishlist  or  display_compare  %} 
+												<!-- Begin item-content -->
+												<div class="item-content">
+													{% if display_description %} 
+														<div class="item-des">
+															{{ product.description }} 
+														</div>
+													{% endif %} 
+
+													{% if display_price %} 
+														<div  class="content_price">
+															{% if not product.special %} 
+																<span class="price product-price">
+																	{{ product.price }} 
+																</span>
+															{% else %}   
+																<span class="old-price product-price">{{ product.special }} </span>&nbsp;&nbsp;
+																<span class="price-old">{{ product.price }} </span>&nbsp;
+															{% endif %} 
+															{% if product.tax %} 
+																<span class="price-percent-reduction">{{ objlang.get('text_tax') }}  {{ product.tax }} </span>
+															{% endif %} 
+														</div>
+													{% endif %} 
+
+													{% if display_addtocart  or  display_wishlist  or  display_compare %} 
+														<div class="button-container">
+															{% if display_addtocart  %} 
+															<button type="button" onclick="cart.add('{{ product.product_id }} ');"><i class="fa fa-shopping-cart"></i>
+																{% if nb_column0  !=  6 %} 
+																<span class="hidden-xs hidden-sm hidden-md">{{ objlang.get('button_cart') }} </span>
+																{% endif %} 
+															</button>
+															{% endif %} 
+															{% if display_wishlist  %} 
+															<button type="button" data-toggle="tooltip" title="{{ objlang.get('button_wishlist') }} " onclick="wishlist.add('{{ product.product_id }} ');"><i class="fa fa-heart"></i></button>
+															{% endif %} 
+															{% if display_compare %} 
+															<button type="button" data-toggle="tooltip" title="{{ objlang.get('button_compare') }} " onclick="compare.add('{{ product.product_id }} ');"><i class="fa fa-exchange"></i></button>
+															{% endif %} 
+														</div>
+													{% endif %} 
+
+												</div>
+												<!-- End item-content -->
+											{% endif %} 
+										</div>
+										<!-- End item-info -->
+									{% endif %} 
+								</div>
+								<!-- End item-wrap-inner -->
+							</div>
+							<!-- End item-wrap -->
+
+						{% if i % nb_rows  ==  0  or  i  ==  count_item %} 
+						</div>
+						{% endif %} 
+
+					{% endfor %}	 
+				</div>
+				<!--End extraslider-inner -->
+
+				<script type="text/javascript">
+				//<![CDATA[
+				jQuery(document).ready(function ($) {
+					(function (element) {
+						var $element = $(element),
+								$extraslider = $(".extraslider-inner", $element),
+								_delay = {{ delay }} ,
+								_duration = {{ duration }} ,
+								_effect = '{{ effect }} ';
+
+						$extraslider.on("initialized.owl.carousel2", function () {
+							var $item_active = $(".owl2-item.active", $element);
+							if ($item_active.length > 1 && _effect != "none") {
+								_getAnimate($item_active);
+							}
+							else {
+								var $item = $(".owl2-item", $element);
+								$item.css({"opacity": 1, "filter": "alpha(opacity = 100)"});
+							}
+							{% if dots  ==  "true" %} 
+							if ($(".owl2-dot", $element).length < 2) {
+								$(".owl2-prev", $element).css("display", "none");
+								$(".owl2-next", $element).css("display", "none");
+								$(".owl2-dot", $element).css("display", "none");
+							}
+							{% endif %}
+
+							{% if button_page  ==  "top" %} 
+								$(".owl2-controls", $element).insertBefore($extraslider);
+								$(".owl2-dots", $element).insertAfter($(".owl2-prev", $element));
+							{% else %}  
+								$(".owl2-nav", $element).insertBefore($extraslider);
+								$(".owl2-controls", $element).insertAfter($extraslider);
+							{% endif %}
+
+						});
+
+						$extraslider.owlCarousel2({
+							rtl: {{ direction}},
+							margin: {{ margin }},
+							slideBy: {{ slideBy }},
+							autoplay: {{ autoplay }},
+							autoplayHoverPause: {{ autoplayHoverPause  }},
+							autoplayTimeout: {{ autoplayTimeout }} ,
+							autoplaySpeed: {{ autoplaySpeed }} ,
+							startPosition: {{ startPosition }} ,
+							mouseDrag: {{ mouseDrag }},
+							touchDrag: {{ touchDrag }} ,
+							autoWidth: false,
+							responsive: {
+								0: 	{ items: {{ nb_column4 }} } ,
+								480: { items: {{ nb_column3 }} },
+								768: { items: {{ nb_column2 }} },
+								992: { items: {{ nb_column1 }} },
+								1200: {items: {{ nb_column0 }}}
+							},
+							dotClass: "owl2-dot",
+							dotsClass: "owl2-dots",
+							dots: {{ dots }} ,
+							dotsSpeed:{{ dotsSpeed }} ,
+							nav: {{ nav }} ,
+							loop: {{ loop }} ,
+							navSpeed: {{ navSpeed }} ,
+							navText: ["{{ btn_prev }} ", "{{ btn_next }} "],
+							navClass: ["owl2-prev", "owl2-next"]
+
+						});
+
+						$extraslider.on("translate.owl.carousel2", function (e) {
+							{% if dots  ==  "true" %} 
+							if ($(".owl2-dot", $element).length < 2) {
+								$(".owl2-prev", $element).css("display", "none");
+								$(".owl2-next", $element).css("display", "none");
+								$(".owl2-dot", $element).css("display", "none");
+							}
+							{% endif %} 
+
+							var $item_active = $(".owl2-item.active", $element);
+							_UngetAnimate($item_active);
+							_getAnimate($item_active);
+						});
+
+						$extraslider.on("translated.owl.carousel2", function (e) {
+
+							{% if dots  ==  "true" %} 
+							if ($(".owl2-dot", $element).length < 2) {
+								$(".owl2-prev", $element).css("display", "none");
+								$(".owl2-next", $element).css("display", "none");
+								$(".owl2-dot", $element).css("display", "none");
+							}
+							{% endif %} 
+
+							var $item_active = $(".owl2-item.active", $element);
+							var $item = $(".owl2-item", $element);
+
+							_UngetAnimate($item);
+
+							if ($item_active.length > 1 && _effect != "none") {
+								_getAnimate($item_active);
+							} else {
+
+								$item.css({"opacity": 1, "filter": "alpha(opacity = 100)"});
+
+							}
+						});
+
+						function _getAnimate($el) {
+							if (_effect == "none") return;
+							//if ($.browser.msie && parseInt($.browser.version, 10) <= 9) return;
+							$extraslider.removeClass("extra-animate");
+							$el.each(function (i) {
+								var $_el = $(this);
+								$(this).css({
+									"-webkit-animation": _effect + " " + _duration + "ms ease both",
+									"-moz-animation": _effect + " " + _duration + "ms ease both",
+									"-o-animation": _effect + " " + _duration + "ms ease both",
+									"animation": _effect + " " + _duration + "ms ease both",
+									"-webkit-animation-delay": +i * _delay + "ms",
+									"-moz-animation-delay": +i * _delay + "ms",
+									"-o-animation-delay": +i * _delay + "ms",
+									"animation-delay": +i * _delay + "ms",
+									"opacity": 1
+								}).animate({
+									opacity: 1
+								});
+
+								if (i == $el.size() - 1) {
+									$extraslider.addClass("extra-animate");
+								}
+							});
+						}
+
+						function _UngetAnimate($el) {
+							$el.each(function (i) {
+								$(this).css({
+									"animation": "",
+									"-webkit-animation": "",
+									"-moz-animation": "",
+									"-o-animation": "",
+									"opacity": 1
+								});
+							});
+						}
+
+					})("#{{ tag_id  }} ");
+				});
+				//]]>
+			</script>
+
+			</div>
+		{% endif %}
+	
+	</div> 
+	{% if post_text|trim is not empty  %} 
+		<div class="form-group">
+			{{ post_text  }}
+		</div>
+	{% endif %}
+
+</div>

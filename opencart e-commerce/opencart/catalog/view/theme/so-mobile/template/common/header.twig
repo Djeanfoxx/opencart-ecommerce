@@ -1,0 +1,123 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0"> 
+{% if description %}<meta name="description" content="{{ description }}" />{% endif %}
+{% if keywords %}<meta name="keywords" content="{{ keywords }}" />{% endif %}
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+
+{# =========== Begin General CSS ==============#}
+{% if direction=='ltr' %} {{soconfig.addCss('catalog/view/javascript/bootstrap/css/bootstrap.min.css')}}
+{% elseif direction=='rtl' %}{{soconfig.addCss('catalog/view/javascript/soconfig/css/bootstrap/bootstrap.rtl.min.css')}} 
+{% else %}{{soconfig.addCss('catalog/view/javascript/bootstrap/css/bootstrap.min.css')}} {% endif %}
+
+{{soconfig.addCss('catalog/view/javascript/font-awesome/css/font-awesome.min.css')}}
+{{soconfig.addCss('catalog/view/javascript/soconfig/css/lib.css')}}
+
+{% if direction=='rtl' %}{{soconfig.addCss('catalog/view/javascript/soconfig/css/ratchet/ratchet-rtl.css')}} 
+{% else %}{{soconfig.addCss('catalog/view/javascript/soconfig/css/ratchet/ratchet.css')}} {% endif %}
+
+{% for style in styles %}{{ soconfig.addCss(style.href)}}{% endfor %}
+
+{# =========== Begin General Scripts ==============#}
+{{soconfig.addJs('catalog/view/javascript/jquery/jquery-2.1.1.min.js')}}
+{{soconfig.addJs('catalog/view/javascript/bootstrap/js/bootstrap.min.js')}}
+{{soconfig.addJs('catalog/view/javascript/soconfig/js/libs.js')}}
+{{soconfig.addJs('catalog/view/javascript/lazysizes/lazysizes.min.js')}}
+
+{% if soconfig.get_settings('barnav') %}
+	{{soconfig.addJs('catalog/view/javascript/soconfig/js/mobile/topnav.js')}}
+{% endif %} 
+{{soconfig.addJs('catalog/view/javascript/soconfig/js/mobile/so.mobile.js')}}
+{{soconfig.addJs('catalog/view/javascript/soconfig/js/ratchet/ratchet.js')}}
+
+
+{{soconfig.addJs('catalog/view/theme/'~theme_directory~'/js/so.custom.js')}}
+{{soconfig.addJs('catalog/view/theme/'~theme_directory~'/js/common.js')}}
+{% for script in scripts %} {{soconfig.addJs(script)}} {% endfor %}
+
+
+{# =========== Begin Other CSS & JS  ==============#}
+{{soconfig.scss_compassMobile}}
+{{soconfig.css_out(soconfig.get_settings('cssExclude'))}}
+{{soconfig.js_out(soconfig.get_settings('jsExclude'))}}
+
+
+{# =========== Begin Google Font ==============#}
+{% if soconfig.get_settings('murl_body')  and  soconfig.get_settings('mbody_status') ==  'google' %} <link href='{{ soconfig.get_settings('murl_body') }}' rel='stylesheet' type='text/css'> {% endif %} 	
+{% if soconfig.get_settings('murl_heading')  and  soconfig.get_settings('mheading_status') ==  'google' %} <link href='{{ soconfig.get_settings('murl_heading') }}' rel='stylesheet' type='text/css'> {% endif %} 	
+{% if mselector_body %}
+	<style type="text/css">
+		{% if soconfig.get_settings('mbody_status') == 'google' %} {{ (mselector_body~'{font-family:'~ soconfig.get_settings('mfamily_body')~'}') }}
+		{% else %}  {{ mselector_body~'{font-family:'~ soconfig.get_settings('mnormal_body')~'}' }}{% endif %} 
+	</style>
+{% endif %} 
+
+
+{% if mselector_heading %}
+	<style type="text/css">
+		{% if soconfig.get_settings('mheading_status') == 'google' %} {{ (mselector_heading~'{font-family:'~ soconfig.get_settings('mfamily_heading')~'}') }}
+		{% else %}  {{ mselector_heading~'{font-family:'~ soconfig.get_settings('mnormal_heading')~'}' }}{% endif %} 
+	</style>
+{% endif %} 
+
+
+
+{# =========== Begin Google Analytics ==============#}
+{% for link in links %}<link href="{{ link.href }}" rel="{{ link.rel }}" />{% endfor %}
+	{% for analytic in analytics %}
+	{{ analytic }}
+{% endfor %}
+
+
+</head>
+
+{# =========== Add class Body ==============#}
+{% set cls_body = class ~ ' ' %}
+{% set cls_body = cls_body ~ direction %}
+{% set cls_body = cls_body ~ ' mobilelayout-'~soconfig.get_settings('mobilelayout')%}
+	
+<body class="{{cls_body}}">
+{% include theme_directory~'/template/soconfig/panel_left.twig' %}
+
+<div id="wrapper">  
+{# =========== Show Panel Bar==============#}
+{% if soconfig.get_settings('bottombar_status') %}
+	{% include theme_directory~'/template/soconfig/panel_bar.twig' with {typeheader: soconfig.get_settings('mtypeheader')} %}
+{% endif %}
+{# =========== Show Header==============#}
+{% if soconfig.get_settings('barnav') %}
+	{% if soconfig.get_settings('mtypeheader') =='1'%}
+		{% include theme_directory~'/template/header/header1.twig' with {typeheader: soconfig.get_settings('mtypeheader')} %}
+	{% elseif soconfig.get_settings('mtypeheader') =='2'%}
+		{% include theme_directory~'/template/header/header2.twig' with {typeheader: soconfig.get_settings('mtypeheader')} %}
+	{% elseif soconfig.get_settings('mtypeheader') == '3' %}
+		{% include theme_directory~'/template/header/header3.twig' with {typeheader: soconfig.get_settings('mtypeheader')} %}
+	{% endif %}
+{% endif %}
+
+<!-- Begin Main Content -->
+<div class="content">
+
+{# =========== Show Header==============#}
+{% if soconfig.get_settings('barnav') == 0 %}
+	{% if soconfig.get_settings('mtypeheader') =='1'%}
+		{% include theme_directory~'/template/header/header1.twig' with {typeheader: soconfig.get_settings('mtypeheader')} %}
+	{% elseif soconfig.get_settings('mtypeheader') =='2'%}
+		{% include theme_directory~'/template/header/header2.twig' with {typeheader: soconfig.get_settings('mtypeheader')} %}
+	{% elseif soconfig.get_settings('mtypeheader') == '3' %}
+		{% include theme_directory~'/template/header/header3.twig' with {typeheader: soconfig.get_settings('mtypeheader')} %}
+	{% endif %}
+{% endif %}

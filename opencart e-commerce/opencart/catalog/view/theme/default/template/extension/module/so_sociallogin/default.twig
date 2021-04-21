@@ -1,0 +1,61 @@
+{% if setting is defined and setting.so_sociallogin_enable %}
+    <div class="container">
+        {% if warning is defined and warning is not empty %}
+        <div class="alert alert-warning"><i class="fa fa-check-circle"></i> {{ warning }}</div>
+        {% endif %}
+        <h3>{{ text_title_login_with_social }}</h3>
+        <div class="social_login" id="so_sociallogin">
+            {% if setting.so_sociallogin_fbstatus %}
+                {% if setting.so_sociallogin_button == 'image' %}
+                    <a class="social-icon"  href="{{ fblink }}">
+                        <img class="img-responsive" src="{{ fbimage }}" 
+                            data-toggle="tooltip" alt="{{ setting.so_sociallogin_fbtitle }}" 
+                            title="{{ setting.so_sociallogin_fbtitle }}"
+                        />
+                    </a>
+                {% else %}
+                    <a href="{{ fblink }}" class="btn btn-social-icon btn-sm btn-facebook" data-toggle="tooltip" title="{{ setting.so_sociallogin_fbtitle }}"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></a>
+                {% endif %}
+            {% endif %}
+            
+            {% if setting.so_sociallogin_twitstatus %}
+                {% if setting.so_sociallogin_button == 'image' %}
+                    <a class="social-icon"  href="{{ twitlink }}">
+                        <img class="img-responsive" src="{{ twitimage }}" 
+                            data-toggle="tooltip" alt="{{ setting.so_sociallogin_twittertitle }}" 
+                            title="{{ setting.so_sociallogin_twittertitle }}"
+                        />
+                    </a>
+                {% else %}
+                    <a href="{{ twitlink }}" class="btn btn-social-icon btn-sm btn-twitter" data-toggle="tooltip" title="{{ setting.so_sociallogin_twittertitle }}"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></a>
+                {% endif %}
+            {% endif %}
+            
+            {% if setting.so_sociallogin_googlestatus %}
+                {% if setting.so_sociallogin_button == 'image' %}
+                    <a class="social-icon"  href="{{ googlelink }}">
+                        <img class="img-responsive" src="{{ googleimage }}" 
+                            data-toggle="tooltip" alt="{{ setting.so_sociallogin_googletitle }}" 
+                            title="{{ setting.so_sociallogin_googletitle }}" 
+                        />
+                    </a>
+                {% else %}
+                    <a href="{{ googlelink }}" class="btn btn-social-icon btn-sm btn-google-plus" data-toggle="tooltip" title="{{ setting.so_sociallogin_googletitle }}" ><i class="fa fa-google fa-fw" aria-hidden="true"></i></a>
+                {% endif %}
+            {% endif %}
+            
+            {% if setting.so_sociallogin_linkstatus %}
+                {% if setting.so_sociallogin_button == 'image' %}
+                    <a class="social-icon"  href="{{ linkdinlink }}">
+                        <img class="img-responsive" src="{{ linkdinimage }}" 
+                            data-toggle="tooltip" alt="{{ setting.so_sociallogin_linkedintitle }}" 
+                            title="{{ setting.so_sociallogin_linkedintitle }}"
+                        />
+                    </a>
+                {% else %}
+                    <a href="{{ linkdinlink }}" class="btn btn-social-icon btn-sm btn-linkdin" data-toggle="tooltip" title="{{ setting.so_sociallogin_linkedintitle }}"><i class="fa fa-linkedin fa-fw" aria-hidden="true"></i></a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

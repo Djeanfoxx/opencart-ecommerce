@@ -1,0 +1,226 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/************************************************************************************************
+  FOOTER DEFFAULT
+*************************************************************************************************/
+footer.typefooter-14{
+	background: transparent;
+	
+	.footer-top{
+		text-align: center;
+		border-bottom: 1px solid #000000;
+		padding-top: 75px;
+		padding-bottom: 30px;
+		margin: 0;
+		background-color: rgba(33,33,33,1);
+	}
+
+	// NEW LETER
+	.news-letter{
+		float: none;
+	    padding: 33px 0;
+	    text-align: center;
+	    padding-bottom: 30px;
+	    .title-block{
+	    	display: block;
+	    	padding-top: 10px;
+	    	white-space: normal;
+	    	 .page-heading{
+				display: none;
+			}
+			.newsletter_promo{
+				color: #c4c4c4;
+			    display: block;
+			    font-size: 14px;
+			    line-height: 20px;
+			}
+	    }
+		
+		.block_content{
+			display: block;
+			.alert{
+				width: 398px;
+				 display: inline-block;
+				    float: none;
+				    margin-left: -174px;
+
+				@include breakpoint(lg){
+			    	width: 640px;
+				    display: inline-block;
+				    float: none;
+				    margin-left: -174px;
+			    }
+			    @include breakpoint(xs){
+					width: 100%;
+					margin: 0;
+			    }
+			}
+			form{
+				display: inline-block;
+				@include if-ltr{
+					width: 100%;
+				}
+				@include if-rtl{
+					width: auto;
+				}
+				 @include breakpoint(xs){
+					.input-group{
+						width: 100%;
+					}
+			    }
+				
+				 .input-box input{
+				 	padding-top: 6px;
+				 	margin: 0; 
+				    width: auto;
+				    height: 42px;
+				    color: #8c8c8c;
+				    padding-#{$left}: 20px;
+				   	@include border-radius(4px);
+				    background: #fff;
+				    border: 1px solid #a7a7a7;
+				    @include breakpoint(lg){
+				    	width: 640px;
+				    }
+				     @include breakpoint(xs){
+						width: 100%;
+				    }
+				}
+
+				.send-mail{
+					width: 100%;
+				}
+				.subcribe{
+					float: $left;
+					@include if-rtl{
+						position: relative;
+					}
+				}
+				.subcribe button{
+					position: relative;
+					z-index: 9;
+					@include border-radius(4px);
+					float: $left;
+				    margin-#{$left}: 10px;
+				    background-color: $background;
+				    color: #fff;
+				    font-weight: 700;
+				    padding: 0px 45px !important;
+				    height: 42px;
+				    &:hover{
+				    	background: darken($background, 10%);
+				    }
+				}
+			}
+			.input-group{
+				&:before{
+					position: absolute;
+					top: -29px;
+					#{$left}: -113px;
+					content: "";
+					background: $background url("#{$imgPath}icon-letter.png")  no-repeat;
+					background-position: 0px 0px;
+					width: 96px;
+					height: 78px;
+				}
+			}
+		}
+	}
+
+	.socials-wrap{
+		float: none !important;
+		.title-follow{
+			display: none;
+		}
+		 ul li a:hover{
+			background: $background;
+			color: #fff !important;
+		 }
+	}
+
+	.module{
+	  .footer-block-title h3, h3.footertitle{
+		color: #fefefe;
+		font-size: 16px;
+		font-weight: 600;
+	  }
+	  ul.links-footer li a:before, ul.menu li a:before{
+	  	display: none;
+	  }
+	  ul.links-footer li a,  ul.menu li a{
+	  	color: #fefefe;
+	  }
+	}
+	.footer-center{
+		padding-top: 35px;
+		padding-bottom: 40px;
+		border-bottom: 1px solid #000000;
+		margin: 0;
+		.module ul.links-footer li a:after, .module ul.menu li a:after{
+			display: none;
+		}
+	 	.footer-contact{
+		 	 ul > li{
+			 	  span{
+					color: #fefefe;
+				}
+				&:hover{
+					i{
+						background: $background;
+					}
+				}
+			}
+			.email{
+				color: #fefefe;
+			}
+		}
+	}
+	.footer-midle{
+		margin: 0;
+	    padding: 45px 100px;
+	    text-align: center;
+	    a{
+	    	color: #888888;
+	    	&:hover{
+	    		color: $linkColor;
+	    	}
+	    }
+	}
+	.footer-bottom{ padding:0; background:none;
+		.bottom-contain{
+			background: #212121;
+			margin: 0;
+			.copyright{
+				color: #fff;
+				font-size: 14px;
+				margin: 0;
+				padding-bottom: 35px;
+				a{
+					color: #fff;
+					&:hover{
+						color: $linkColor;
+					}
+				}
+			}
+		}
+	}
+}

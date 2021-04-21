@@ -1,0 +1,178 @@
+{{ header }}
+{{ column_left }}
+<div id="content">
+  	<div class="page-header">
+    	<div class="container-fluid">
+      		<div class="pull-right">
+        		<button type="submit" form="form-so-tools" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ button_save }}</button>
+        		<a class="btn btn-success" onclick="$('#action').val('save_edit');$('#form-so-tools').submit();" data-toggle="tooltip" title="{{ button_savestay }}" ><i class="fa fa-pencil-square-o"></i> {{ button_savestay }}</a>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i> {{ button_cancel }}</a>
+        	</div>
+			<h1>{{ heading_title_so }}</h1>
+      		<ul class="breadcrumb">
+        		{% for breadcrumb in breadcrumbs %}
+        			<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        		{% endfor %}
+      		</ul>
+    	</div>
+  	</div>
+  	<div class="container-fluid">
+  		{% if error_warning %}
+    		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      			<button type="button" class="close" data-dismiss="alert">&times;</button>
+    		</div>
+    	{% endif %}
+    	{% if success %}
+    		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+      			<button type="button" class="close" data-dismiss="alert">&times;</button>
+    		</div>
+            <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+    	{% endif %}
+    	<div class="panel panel-default">
+      		<div class="panel-heading">
+        		<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      		</div>
+      		<div class="panel-body">
+	   			<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-so-tools" class="form-horizontal">
+	   				<input type="hidden" name="action" id="action" value=""/>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-status"><span data-toggle="tooltip" title="" data-original-title="{{ text_status_help }}">{{ text_status }}</span></label>
+						<div class="col-sm-3">
+							<select name="status" id="input-status" class="form-control">
+								{% if status is defined and status == 1 %}
+	                				<option value="1" selected="selected">{{ text_enabled }}</option>
+	                				<option value="0">{{ text_disabled }}</option>
+	                			{% else %}
+	                				<option value="1">{{ text_enabled }}</option>
+	                				<option value="0" selected="selected">{{ text_disabled }}</option>
+	                			{% endif %}
+	                		</select>
+		  				</div>
+					</div>
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="input-name"><span data-toggle="tooltip" title="" data-original-title="{{ text_name_help }}">{{ text_name }}</span></label>
+                        <div class="col-sm-3">
+                            <input type="text" id="input-name" name="name" value="{{ name }}" id="input-name" class="form-control" />
+                            {% if error_name %}
+                                <div class="text-danger">{{ error_name }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-position"><span data-toggle="tooltip" title="" data-original-title="{{ text_position_help }}">{{ text_position }}</span></label>
+                        <div class="col-sm-3">
+                            <select name="position" id="input-position" class="form-control">
+                                {% if position is defined and position == 'left' %}
+                                    <option value="left" selected="selected">{{ text_left }}</option>
+                                    <option value="right">{{ text_right }}</option>
+                                {% else %}
+                                    <option value="left">{{ text_left }}</option>
+                                    <option value="right" selected="selected">{{ text_right }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-top"><span data-toggle="tooltip" title="" data-original-title="{{ text_top_help }}">{{ text_top }}</span></label>
+                        <div class="col-sm-3">
+                            <input type="text" id="input-top" name="top" value="{{ top }}" id="input-top" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-show_category"><span data-toggle="tooltip" title="" data-original-title="{{ text_show_category_help }}">{{ text_show_category }}</span></label>
+                        <div class="col-sm-3">
+                            <select name="show_category" id="input-show_category" class="form-control">
+                                {% if show_category is defined and show_category == 1 %}
+                                    <option value="1" selected="selected">{{ text_yes }}</option>
+                                    <option value="0">{{ text_no }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_yes }}</option>
+                                    <option value="0" selected="selected">{{ text_no }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-show_cart"><span data-toggle="tooltip" title="" data-original-title="{{ text_show_cart_help }}">{{ text_show_cart }}</span></label>
+                        <div class="col-sm-3">
+                            <select name="show_cart" id="input-show_cart" class="form-control">
+                                {% if show_cart is defined and show_cart == 1 %}
+                                    <option value="1" selected="selected">{{ text_yes }}</option>
+                                    <option value="0">{{ text_no }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_yes }}</option>
+                                    <option value="0" selected="selected">{{ text_no }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-show_account"><span data-toggle="tooltip" title="" data-original-title="{{ text_show_account_help }}">{{ text_show_account }}</span></label>
+                        <div class="col-sm-3">
+                            <select name="show_account" id="input-show_account" class="form-control">
+                                {% if show_account is defined and show_account == 1 %}
+                                    <option value="1" selected="selected">{{ text_yes }}</option>
+                                    <option value="0">{{ text_no }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_yes }}</option>
+                                    <option value="0" selected="selected">{{ text_no }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-show_search"><span data-toggle="tooltip" title="" data-original-title="{{ text_show_search_help }}">{{ text_show_search }}</span></label>
+                        <div class="col-sm-3">
+                            <select name="show_search" id="input-show_search" class="form-control">
+                                {% if show_search is defined and show_search == 1 %}
+                                    <option value="1" selected="selected">{{ text_yes }}</option>
+                                    <option value="0">{{ text_no }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_yes }}</option>
+                                    <option value="0" selected="selected">{{ text_no }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-show_recent_product"><span data-toggle="tooltip" title="" data-original-title="{{ text_show_recent_product_help }}">{{ text_show_recent_product }}</span></label>
+                        <div class="col-sm-3">
+                            <select name="show_recent_product" id="input-show_recent_product" class="form-control">
+                                {% if show_recent_product is defined and show_recent_product == 1 %}
+                                    <option value="1" selected="selected">{{ text_yes }}</option>
+                                    <option value="0">{{ text_no }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_yes }}</option>
+                                    <option value="0" selected="selected">{{ text_no }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-limit-product"><span data-toggle="tooltip" title="" data-original-title="{{ text_limit_product_help }}">{{ text_limit_product }}</span></label>
+                        <div class="col-sm-3">
+                            <input type="text" id="input-limit-product" name="limit_product" value="{{ limit_product }}" id="input-top" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-show_backtop"><span data-toggle="tooltip" title="" data-original-title="{{ text_show_backtop_help }}">{{ text_show_backtop }}</span></label>
+                        <div class="col-sm-3">
+                            <select name="show_backtop" id="input-show_backtop" class="form-control">
+                                {% if show_backtop is defined and show_backtop == 1 %}
+                                    <option value="1" selected="selected">{{ text_yes }}</option>
+                                    <option value="0">{{ text_no }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_yes }}</option>
+                                    <option value="0" selected="selected">{{ text_no }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+	   			</form>
+	   		</div>
+	   	</div>
+	</div>
+</div>
+{{ footer }}

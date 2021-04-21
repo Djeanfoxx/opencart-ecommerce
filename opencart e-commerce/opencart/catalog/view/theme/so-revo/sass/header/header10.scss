@@ -1,0 +1,261 @@
+/*============HEADER V1 ==================*/
+
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/*===============================================
+    [SASS DIRECTORY ]
+    
+    [1] BLOCK HEADER
+    [2] BLOCK FOOTER
+    
+==============================================*/
+@media (min-width: 992px){
+    .common-home{
+        .horizontal ul.megamenu > li.menu-home{
+            background:  #030303;
+            i{color: #fff;}
+           
+        }
+    }
+}
+.typeheader-10{
+    
+    // .megamenu-wrapper{
+    //     position: static;
+    // }
+    .horizontal ul.megamenu > li.content-full > .sub-menu{
+        #{$left}: 0 !important;
+        #{$right}: inherit !important;
+    }
+    .header-top{
+        background: #030303;
+        padding: 9px 0;
+        .header-top-inner{padding: 0 50px;}
+        .navbar-logo{
+            float: $left;
+        }
+        .header-top-right{
+            float: $right;
+            ul.top-link{
+                float: $right;
+                padding-top: 7px;
+                 > li{
+                    padding: 0 10px;
+                    float: $left;
+                    &.language{
+                        margin-top: -3px;
+                    }
+                    &.message{color: #fff;}
+                    &.language,
+                    &.currency{
+                        margin-top: -2px;
+                    }
+                     > a{
+                        color: #fff;
+                        // &:hover{
+                        //     color: $linkColor;
+                        // }
+                        i{margin-#{$right}: 5px;}
+                    }
+                    position: relative;
+                    &:before{
+                        content: '';
+                        position: absolute;
+                        top: 7px;
+                        #{$left}: -1px;
+                        width: 1px;
+                        height: 16px;
+                        background-color: rgba(255,255,255,.2);
+                    }
+                    &:first-child{
+                        &:before{
+                            display: none;
+                        }
+                    }
+                    button.btn-blockn:hover{
+                        background: #f7f7f7;
+                        color: $linkColor;
+
+                    }
+                }
+            }
+        }
+    }
+    .btn-group{
+        .btn-link{
+            color: #fff;
+            padding: 0;
+            // &:hover{
+            //     color: $linkColor;
+            // }
+        }
+    }
+     /*BLOCK CART*/
+    .block-cart{   
+        cursor: pointer;
+        position: relative;
+        padding: side-values(8px 10px 10px 5px);
+        display: inline-block;
+        float: $right;
+    }
+    .shopping_cart{
+        text-align: center;
+        border-radius: 50%;
+        width: 36px;
+        height: 32px;
+        background: url("#{$imgPath}/icon-image.png") no-repeat -114px -135px;
+        position: relative;
+        h2{display: none; color: #444444;font-size: 12px; margin: 0; font-weight: bold;}
+        .btn-shopping-cart{display: block;font-size: 13px; cursor: pointer;width: auto; padding: 0;
+            a.top_cart{padding: 0px; color: #fff;height: 20px;width: 16px;
+                .shopcart .text-shopping-cart{padding: 0px; color: #fff;font-size: 12px; text-transform: uppercase; font-weight: bold; float: $left;margin: 0;}
+                &:hover{ color: $linkColor;
+                    .shopcart .text-shopping-cart{color: $linkColor;}
+                }
+            } 
+            &:before{
+                display: none;
+            }
+            .total-shopping-cart{
+                width: 22px;
+                height: 22px;
+                line-height: 22px;
+                border-radius: 100%;
+                -moz-border-radius: 100%;
+                -webkit-border-radius: 100%;
+                background-color: $background;
+                position: absolute;
+                top: -12px;
+                color: #fff;
+                overflow: hidden;
+                text-align: center;
+                font-size: 12px;  
+                #{$right}: -18px;  
+                 @include if-rtl{
+                    font-size: 15px; 
+                }
+            }                    
+        } 
+        .dropdown-menu{margin: 5px 0; top: 20px; #{$right}: -11px; #{$left}: auto;}
+        .shoppingcart-box:before{#{$right}: 50px;}
+    }  
+    .horizontal{
+        @media (min-width:992px) {
+            margin-#{$left}: -50px;
+        }
+        .megamenu-pattern{
+            .container{
+                width: auto;
+                padding: 0;
+            }
+        }
+        
+         ul.megamenu > li{
+
+              > a{
+                color: #1c1c1c;
+                strong{
+                    font-weight: bold;
+
+                }
+                &:hover{
+                    background: #ebebeb;
+                }
+            }
+            &.style-page{
+                position: relative;
+                > .sub-menu{
+                    max-width: 300px !important;
+                    .content{
+                        height: 170px;
+                    }
+                }
+            }
+            &.content-full{
+                .sub-menu{
+                    $left: 0 !important;
+                }
+            }
+
+            @media (min-width: 992px){
+                &.menu-home{
+                     padding-#{$left}: 27px;
+                    > a{padding: side-values(6px 23px 2px 50px);font-size: 0 !important;
+                        &:hover{
+                            background:  #030303 !important;
+                        }
+                        i{font-size: 23px !important;padding: 0 !important; display: inline-block !important;margin-top: 4px;}
+                    }
+                    .caret{display: none;}
+                }
+            }
+        }
+    }  
+     .navbar-default{
+        background: transparent;
+    }
+    /*HEADER SEARCH*/
+    #sosearchpro.so-search{ margin:6px 0 0; width: 100%; padding: 0;
+        .search { background: #fff; border-radius: 28px; border: none;margin-bottom: 0;}
+        .select_category { display: none;
+        }
+        .autosearch-input { border: 1px solid #e1e1e1; height: 34px; background: #fff;border-#{$right}: none; @include border-radius(17px 0  0 17px);
+             @include if-rtl {
+               @include border-radius(0 17px 17px 0);
+            }
+        }
+        .button-search { background: #444444; border: 0; font-size: 16px; height: 34px; padding: 0 8px; min-width: 60px; text-align: center;
+            border-radius: 0 17px 17px 0;
+            line-height: 9px;
+            @include if-rtl {
+                border-radius: 17px 0  0 17px ;
+            }
+           i {  color: #fff; font-size: 14px; }
+           &:hover{ background: $background; }
+        }       
+    }
+    .header-center{
+        padding:0 50px;
+        .header_search{
+            float: $right;
+            max-width: 239px;
+        }
+        .contain{
+            position: relative;
+            
+            .header-menu,ul.megamenu,
+            .megamenu-style-dev{
+                position: static;
+            }
+        }
+    }
+     &.navbar-compact{
+        .header-center {
+            .header-menu{
+                padding-left: 65px;
+                @include if-rtl{
+                      padding-right: 65px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,243 @@
+/*============HEADER V1 ==================*/
+
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/*===============================================
+    [SASS DIRECTORY ]
+    
+    [1] BLOCK HEADER
+    [2] BLOCK FOOTER
+    
+==============================================*/
+
+.typeheader-7{
+    .header-top{ background-color: #fff; min-height: 45px;  color: #545454; 
+    .header-top-inner{
+        border-bottom: 1px solid #f6eadc;
+    }
+    .header-top-left{ line-height: 45px;
+    }
+    .header-top-right {text-align:$right;
+        ul.top-link{list-style: none;margin:0; vertical-align:top;
+            > li{ padding: 0 13px; display: inline-block; position: relative; list-style: outside none none; line-height: 45px;float: $left;
+                &:before{
+                    content: "";
+                    width: 1px;
+                    height: 16px;
+                    background: #b3b3b3;
+                    position: absolute;
+                    top: 14px;
+                    #{$right}: 0px;
+                }
+                .contact-us{
+                    .text,
+                    .phone,
+                    br{ display: none; }
+                }
+                &.account{
+                    padding-#{$right}: 20px;   
+                }
+                &.currency{
+                    padding-#{$right}: 0;
+                }
+                &:last-child:before{ display: none; }
+                > a{display: block; padding: 0; position: relative; color: #545454; font-size: 12px; line-height: 45px;
+                    &:before{font-family: 'FontAwesome'; margin-#{$right}: 7px;}
+                    span.fa-angle-down{position: relative; #{$left}: 5px;}
+                }
+                &.log{ border: none; } 
+                &.logout    > a:before{content: "\f09c";} 
+                &.login     > a:before{content: "\f023";} 
+                &.account   > a:before{content: "\f007";} 
+                &.wishlist  > a:before{content: "\f004";}
+                &.checkout  > a:before{content: "\f045";}
+                &:hover{
+                    > a{color: $linkColor;}
+                }
+                .btn-group{ 
+                    display: block;     
+                    display: block;
+                    font-size: 12px;
+                    .btn-link{ padding: 0; border: none; color:#545454;    
+                        &:hover{ color: $linkColor; } 
+                    }
+                }
+                ul.dropdown-link{position: absolute; background: #fff; box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);  opacity: 0; padding: 0px 10px; 
+                    top: 33px;  transition:top 0.3s ease 0s, opacity 0.3s ease 0s; width: 200px; z-index: -1; text-align: $left; #{$left}: 0;
+                    li{display: block; border-#{$left}: 0;
+                    a{display: block; padding: 5px 0 4px; border-bottom: solid 1px #efefef; font-size: 11px; line-height: 18px; color: #545454;border-#{$right}: 0;
+                        &:hover{color: $linkColor;}
+                        &:after{display: none;}
+                    }
+                    
+                    &:last-child a{border-bottom: 0;}
+                    }
+                }
+                &.account:hover  {
+                    ul.dropdown-link {top: 34px; z-index: 9999; opacity: 1; border-top: 1px solid rgba(200, 199, 199, 0.3);}
+                }
+                .dropdown-menu{
+                    line-height: 20px;
+                    color: #222;
+                }
+            }
+        }
+    }
+    }
+    .header-center{padding: 25px 0 30px; background: #fff;
+        .header-center-right{ margin-top: 13px; }
+        .inner-top-right{
+            position: absolute;
+            top: 8px;
+            #{$right}: 22px;
+        }
+        
+    }
+    .header-bottom{ background-color: $background; box-shadow: -1px 3px 3px 0 rgba(0,0,0,0.2); position: relative; z-index: 8;
+    }
+    &.navbar-compact{
+        .header-top{display: none;}
+        .header-bottom{margin: 0; }
+        .header-center{
+            padding: 15px 0 10px;
+            .navbar-logo{ img{max-width: 110px;} }
+            .megamenu-style-dev .horizontal ul.megamenu > li > a{
+                padding: 5px 15px 5px;
+            }
+        }
+    }
+
+    .header_search{
+
+        margin-top: -2px;
+        position: relative;
+        float: $right;
+        text-align: center;
+        padding-#{$right}: 30px;
+        &:before{
+            content: "";
+            width: 1px;
+            height: 20px;
+            top: 8px;
+            background: #f6eadc;
+            position: absolute;
+            #{$right}: 13px;;
+        }
+        .btn-search.active:before {
+            content: '\f00d';
+            display: inline-block;
+            font-family: FontAwesome;
+            text-align: center;
+            font-size: 18px;
+        }
+        .btn-search:before {
+            content: '\f002';
+            display: inline-block;
+            font-family: FontAwesome;
+            text-align: center;
+            font-size: 18px;
+            position: relative;
+            top: 5px;
+            color: #d7d7d7;
+        }
+    }
+    #sosearchpro.so-search{
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        width: 250px !important;
+        z-index: 9;
+        display: none;
+        #{$right}: 55px;
+        .search { border: none; background: #fff; border-radius: 28px; }
+        .select_category { display: none;
+            select{ height: 38px; line-height: 38px;cursor: pointer; }
+            &:after { content: "\f0d7"; background-color: transparent; line-height: 38px; width: 20px; color: #444; #{$right}: 10px;  #{$left}: auto;}
+        }
+        .autosearch-input { border: 0; height: 38px; background: #fff; border: 1px solid #ddd; }
+        .button-search { background: $background; border: 0; font-size: 16px; height: 38px; padding: 0 8px; text-align: center;
+           i {  color: #fff!important; font-size: 16px; }
+           &:hover{ background: darken($background,10%); color: #fff;}
+        }       
+    }
+    /*BLOCK CART*/
+    .header-cart{
+        float: $right;
+        position: relative;
+        top: 2px;
+        vertical-align: top;
+    }
+    .shopping_cart{
+        .handle {  
+            &:before{
+                display: inline-block;
+                content: '';
+                height: 24px;
+                width: 30px;
+                background: url("#{$imgPath}icon/minicarth7.png")  no-repeat center;
+            }
+        }
+        .total-shopping-cart{
+            display: block;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            top: -10px;
+            line-height: 20px;
+            color: #fff;
+            text-align: center;
+            #{$right}: -5px;
+            overflow: hidden;
+            .items_cart1,
+            .items_cart2{ display: none; }
+        }
+        
+        .dropdown-menu{margin: 5px 0; top: 29px; #{$right}: -11px; #{$left}: auto;}
+    }
+    /*MENU MEGA*/
+    .megamenu-style-dev{
+        .navbar-default{ background: transparent; }
+        .horizontal{
+            ul.megamenu > li.active > a, ul.megamenu > li:hover > a{ background: transparent;position: relative; }
+            ul.megamenu > li > a > strong{ position: relative; 
+                img{ top:-20px; #{$right}: -40px; }
+            }
+            li.hidden.hot-home7{ display: block; }
+            ul.megamenu > li:first-child{ > a{ padding-#{$left}: 0; } }
+            ul.megamenu > li > a{
+                color: #1c1c1c; font-size: 14px; height: auto; padding: 13px 20px 12px;
+                text-transform: uppercase; text-shadow: none;  font-weight: bold; 
+                strong{ font-weight: bold; }
+            }
+        }
+    }
+}
+
+
+#header{
+    .header-center:hover ~ .select_category > select{
+        display: none;
+    }
+
+}

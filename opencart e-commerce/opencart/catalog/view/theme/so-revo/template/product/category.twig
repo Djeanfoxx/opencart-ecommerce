@@ -1,0 +1,102 @@
+
+{{ header }}
+{#====  Loader breadcrumbs ==== #}
+{% include theme_directory~'/template/soconfig/breadcrumbs.twig' %}
+
+
+{#====  Variables url parameter ==== #}
+{% if url_asidePosition %}{% set col_position = url_asidePosition %}
+{% else %}{% set col_position = soconfig.get_settings('catalog_col_position') %} {% endif %}
+
+{% if url_asideType %} {% set col_canvas = url_asideType %}
+{% else %}{% set col_canvas = soconfig.get_settings('catalog_col_type') %}{% endif %}
+{% set desktop_canvas = col_canvas =='off_canvas' ? 'desktop-offcanvas' : '' %}
+
+
+{% if col_position == 'inside' %}
+<div class="container">
+	{% include theme_directory~'/template/soconfig/subcategory.twig' %}
+	
+</div>
+{% endif %}
+
+<div class="container product-listing content-main {{desktop_canvas}}">
+  
+  <div class="row">{{ column_left }}
+     {% if col_canvas =='off_canvas' %}
+    	{% set class = 'col-sm-12' %}
+    {% elseif column_left and column_right %}
+    	{% set class = 'col-md-6 col-sm-12 col-xs-12 fluid-allsidebar' %}
+    {% elseif column_left or column_right %}
+    	{% set class = 'col-md-9 col-sm-12 col-xs-12 fluid-sidebar' %}
+    {% else %}
+    	{% set class = 'col-sm-12' %}
+    {% endif %}
+
+    <div id="content" class="{{ class }}">
+
+    	{{ content_top }}
+		<div class="products-category clearfix">
+
+			{% if col_position== 'outside' %}
+				
+				{% include theme_directory~'/template/soconfig/subcategory.twig' %}
+			{% endif %}
+	  
+			{% if products %}
+				{#==== Product Listing ==== #}
+				{% include theme_directory~'/template/soconfig/listing.twig' with {listingType: listingType} %}
+				
+			{% endif %}
+		  
+			{% if not categories and not products %}
+			  <p>{{ text_empty }}</p>
+			  <div class="buttons">
+				<div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+			  </div>
+			{% endif %}
+
+	      	{{ content_bottom }}
+
+	  	</div>
+	 </div>
+
+    {{ column_right }}
+
+    {% if url_sidebarsticky %} {% set sidebar_sticky = url_sidebarsticky %}
+	{% else %} {% set sidebar_sticky = soconfig.get_settings('catalog_sidebar_sticky') %}{% endif %}
+    <script type="text/javascript"><!--
+		$(window).load(sidebar_sticky_update);
+		$(window).resize(sidebar_sticky_update);
+
+    	function sidebar_sticky_update(){
+    		 var viewportWidth = $(window).width();
+    		 if (viewportWidth > 1200) {
+	    		// Initialize the sticky scrolling on an item 
+				sidebar_sticky = '{{sidebar_sticky}}';
+				
+				if(sidebar_sticky=='left'){
+					$(".left_column").stick_in_parent({
+					    offset_top: 10,
+					    bottoming   : true
+					});
+				}else if (sidebar_sticky=='right'){
+					$(".right_column").stick_in_parent({
+					    offset_top: 10,
+					    bottoming   : true
+					});
+				}else if (sidebar_sticky=='all'){
+					$(".content-aside").stick_in_parent({
+					    offset_top: 10,
+					    bottoming   : true
+					});
+				}
+			}
+    	}
+		
+		
+	//--></script> 
+
+	</div>
+</div>
+{{ footer }} 

@@ -1,0 +1,48 @@
+<div class="category-wrap-cat">
+    {% if category_parent is not empty and display_slide_category == 1 %}
+        <div class="title-imageslider  sp-cat-title-parent">
+            <a title="{{ category_parent.name }}"
+               href="{{ category_parent.link }}"
+                target="{{ item_link_target }}">
+                {{ category_title_maxlength != 0 and category_parent.name|length > category_title_maxlength ? category_parent.name|striptags|slice(0, category_title_maxlength) ~ '..' : category_parent.name }}
+            </a>
+        </div>
+    {% endif %}
+
+    {% if category_tree is not empty and category_tree|length %}
+        <div id="{{ tag }}" class="slider">
+            {% if category_tree is defined and category_tree|length > 0 %}
+                {% if category_parent is not empty and display_slide_category == 1 %}
+                    {% if show_category_type == 0 %}
+                        {% set cls_type = " so_category_type_default" %}
+                    {% else %}
+                        {% set cls_type = "" %}
+                    {% endif %}
+                    <div class="cat_slider_inner{{ cls_type }}">
+                        {% for cat_tree in category_tree if category_parent.name != cat_tree.name %}					       
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="cat_slider_image">
+                                        <a href="{{ cat_tree.link }}"
+                                           title="{{ cat_tree.name }}" target="{{ item_link_target }}">
+                                            <img src="{{ cat_tree.image }}" alt="{{ cat_tree.name }}">
+                                        </a>
+                                    </div>
+
+                                    {% if display_title_sub_category and category_tree|length > 1 %}
+                                        <div class="cat_slider_title">
+                                            <a href="{{ cat_tree.link }}"
+                                               title="{{ cat_tree.name }}" target="{{ item_link_target }}">
+                                                {{ cat_tree.name_maxlength }}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
+</div>

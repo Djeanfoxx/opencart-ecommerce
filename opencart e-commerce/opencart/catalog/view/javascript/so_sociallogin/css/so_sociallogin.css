@@ -1,0 +1,341 @@
+/*added by dulv_06022017*/
+body .block-popup-login {
+    margin-top: 170px;
+    width: 600px;
+    padding: 0 20px 0;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    text-align: left;
+}
+body .block-popup-login .close-login {
+    display: inline-block;
+    background: url(../images/btn-close-login.png) no-repeat top left;
+    width: 26px;
+    height: 26px;
+    overflow: hidden;
+    text-indent: -9999px;
+    right: 10px;
+    top: 3px;
+    position: absolute;
+    opacity: 1;
+}
+body .block-popup-login .tt_popup_login {
+    height: 36px;
+    border-bottom: 3px solid #ea3a3c;
+    background-color: #242424;
+    margin: 0 -20px;
+}
+body .block-popup-login .tt_popup_login strong {
+    line-height: 37px;
+    display: inline-block;
+    padding-left: 55px;
+    text-transform: uppercase;
+    font-size: 133.33%;
+    color: #fff;
+    background-image: url(../images/icon-login-popup.png);
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    position: relative;
+    padding-right: 10px;
+    top: -4px;
+    background-color: #ea3a3c;
+    font-weight: 600;
+}
+body .block-popup-login .tt_popup_login strong:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    right: -20px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-right: 20px solid transparent;
+    border-bottom: 37px solid #ea3a3c;
+}
+body .block-popup-login .block-content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: normal;
+}
+body .block-popup-login .block-content .col-reg {
+    width: 50%;
+    float: left;
+    min-height: 188px;
+}
+body .block-popup-login .block-content .col-reg.registered-account {
+    padding-right: 30px;
+    border-right: 1px solid #ddd;
+}
+body .block-popup-login .block-content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: normal;
+}
+body .block-popup-login .email-input, body .block-popup-login .pass-input {
+    position: relative;
+    margin: 0 0 14px;
+}
+body .block-popup-login .fieldset>.field:not(.choice)>.control {
+    width: 100%;
+}
+body .block-popup-login .input-text {
+    border: 0;
+    margin-bottom: 0;
+    width: 100%;
+    padding: 0 5px 0 52px;
+    height: 40px;
+    border: 1px solid #d1d1d1;
+    background-color: #f7f7f7;
+    color: #909090;
+}
+body .block-popup-login .email-input:before {
+    background: url(../images/icon-username.png) no-repeat top left #f7f7f7;
+    content: "";
+    display: inline-block;
+    width: 42px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+body .block-popup-login .pass-input:before {
+    background: url(../images/icon-pass.png) no-repeat top left #f7f7f7;
+    content: "";
+    display: inline-block;
+    width: 42px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+body .block-popup-login .secondary {
+    width: 100%;
+    display: block;
+    text-align: left;
+    margin-bottom: 10px;
+}
+body .block-popup-login .action.login {
+    background-repeat: no-repeat;
+    background-position: 25px center;
+    padding: 0 25px 0 48px;
+    height: 42px;
+    font-size: 116.67%;
+    font-weight: bold;
+    background-image: url(../images/icon-btn-login.png);
+    background-color: #666;
+    color: #fff;
+    border: 0px;
+    text-transform: uppercase;
+}
+body .block-popup-login .action.login:hover {
+    background-color: #ea3a3c;
+}
+body .block-popup-login .block-content .col-reg.login-customer {
+    padding-left: 30px;
+}
+body .block-popup-login .block-content .btn-reg-popup {
+    height: 42px;
+    line-height: 42px;
+    padding: 0 42px;
+    text-transform: uppercase;
+    display: inline-block;
+    font-size: 116.67%;
+    margin-top: 15px;
+    color: #fff;
+    font-weight: bold;
+    background-color: #ea3a3c;
+}
+body .block-popup-login .block-content .btn-reg-popup:hover {
+    background-color: #d23436;
+}
+body .block-popup-login .block-content .col-reg .list-log {
+    margin: 0;
+    list-style-type: none;
+}
+body .block-popup-login .block-content .list-log li {
+    padding: 2px 0 2px 14px;
+    position: relative;
+    list-style-type: none;
+}
+body .block-popup-login .block-content .list-log li:before {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    background-color: #666;
+    position: absolute;
+    left: 0;
+    top: 10px;
+}
+#so_sociallogin a.btn-social-icon {
+    padding: 9px 10px;
+}
+#so_sociallogin .btn-facebook{
+    color:#fff;
+    background-color:#3b5998;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-facebook:hover,
+#so_sociallogin .btn-facebook:focus,
+#so_sociallogin .btn-facebook:active,
+#so_sociallogin .btn-facebook.active,
+#so_sociallogin .open>.dropdown-toggle.btn-facebook{
+    color:#fff;
+    background-color:#2d4373;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-facebook:active,
+#so_sociallogin .btn-facebook.active,
+#so_sociallogin .open>.dropdown-toggle.btn-facebook{
+    background-image:none;
+}
+#so_sociallogin .btn-facebook.disabled,
+#so_sociallogin .btn-facebook[disabled],
+#so_sociallogin fieldset[disabled] .btn-facebook,
+#so_sociallogin .btn-facebook.disabled:hover,
+#so_sociallogin .btn-facebook[disabled]:hover,
+#so_sociallogin fieldset[disabled] .btn-facebook:hover,
+#so_sociallogin .btn-facebook.disabled:focus,
+#so_sociallogin .btn-facebook[disabled]:focus,
+#so_sociallogin fieldset[disabled] .btn-facebook:focus,
+#so_sociallogin .btn-facebook.disabled:active,
+#so_sociallogin .btn-facebook[disabled]:active,
+#so_sociallogin fieldset[disabled] .btn-facebook:active,
+#so_sociallogin .btn-facebook.disabled.active,
+#so_sociallogin .btn-facebook[disabled].active,
+#so_sociallogin fieldset[disabled] .btn-facebook.active{
+    background-color:#3b5998;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-facebook .badge{
+    color:#3b5998;
+    background-color:#fff;
+}
+
+#so_sociallogin .btn-google-plus{
+    color:#fff;
+    background-color:#dd4b39;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-google-plus:hover,
+#so_sociallogin .btn-google-plus:focus,
+#so_sociallogin .btn-google-plus:active,
+#so_sociallogin .btn-google-plus.active,
+#so_sociallogin .open>.dropdown-toggle.btn-google-plus{
+    color:#fff;
+    background-color:#c23321;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-google-plus:active,
+#so_sociallogin .btn-google-plus.active,
+#so_sociallogin .open>.dropdown-toggle.btn-google-plus{
+    background-image:none;
+}
+#so_sociallogin .btn-google-plus.disabled,
+#so_sociallogin .btn-google-plus[disabled],
+#so_sociallogin fieldset[disabled] .btn-google-plus,
+#so_sociallogin .btn-google-plus.disabled:hover,
+#so_sociallogin .btn-google-plus[disabled]:hover,
+#so_sociallogin fieldset[disabled] .btn-google-plus:hover,
+#so_sociallogin .btn-google-plus.disabled:focus,
+#so_sociallogin .btn-google-plus[disabled]:focus,
+#so_sociallogin fieldset[disabled] .btn-google-plus:focus,
+#so_sociallogin .btn-google-plus.disabled:active,
+#so_sociallogin .btn-google-plus[disabled]:active,
+#so_sociallogin fieldset[disabled] .btn-google-plus:active,
+#so_sociallogin .btn-google-plus.disabled.active,
+#so_sociallogin .btn-google-plus[disabled].active,
+#so_sociallogin fieldset[disabled] .btn-google-plus.active{
+    background-color:#dd4b39;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-google-plus .badge{
+    color:#dd4b39;
+    background-color:#fff;
+}
+
+#so_sociallogin .btn-twitter{
+    color:#fff;
+    background-color:#55acee;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-twitter:hover,
+#so_sociallogin .btn-twitter:focus,
+#so_sociallogin .btn-twitter:active,
+#so_sociallogin .btn-twitter.active,
+#so_sociallogin .open>.dropdown-toggle.btn-twitter{
+    color:#fff;
+    background-color:#2795e9;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-twitter:active,
+#so_sociallogin .btn-twitter.active,
+#so_sociallogin .open>.dropdown-toggle.btn-twitter{
+    background-image:none;
+}
+#so_sociallogin .btn-twitter.disabled,
+#so_sociallogin .btn-twitter[disabled],
+#so_sociallogin fieldset[disabled] .btn-twitter,
+#so_sociallogin .btn-twitter.disabled:hover,
+#so_sociallogin .btn-twitter[disabled]:hover,
+#so_sociallogin fieldset[disabled] .btn-twitter:hover,
+#so_sociallogin .btn-twitter.disabled:focus,
+#so_sociallogin .btn-twitter[disabled]:focus,
+#so_sociallogin fieldset[disabled] .btn-twitter:focus,
+#so_sociallogin .btn-twitter.disabled:active,
+#so_sociallogin .btn-twitter[disabled]:active,
+#so_sociallogin fieldset[disabled] .btn-twitter:active,
+#so_sociallogin .btn-twitter.disabled.active,
+#so_sociallogin .btn-twitter[disabled].active,
+#so_sociallogin fieldset[disabled] .btn-twitter.active{
+    background-color:#55acee;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-twitter .badge{
+    color:#55acee;
+    background-color:#fff;
+}
+#so_sociallogin .btn-linkdin {
+    color:#fff;
+    background-color:#0e76a8;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-linkdin:hover,
+#so_sociallogin .btn-linkdin:focus,
+#so_sociallogin .btn-linkdin:active,
+#so_sociallogin .btn-linkdin.active,
+#so_sociallogin .open>.dropdown-toggle.btn-linkdin{
+    color:#fff;
+    background-color:#04669A;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-linkdin:active,
+#so_sociallogin .btn-linkdin.active,
+#so_sociallogin .open>.dropdown-toggle.btn-linkdin{
+    background-image:none;
+}
+#so_sociallogin .btn-linkdin.disabled,
+#so_sociallogin .btn-linkdin[disabled],
+#so_sociallogin fieldset[disabled] .btn-linkdin,
+#so_sociallogin .btn-linkdin.disabled:hover,
+#so_sociallogin .btn-linkdin[disabled]:hover,
+#so_sociallogin fieldset[disabled] .btn-linkdin:hover,
+#so_sociallogin .btn-linkdin.disabled:focus,
+#so_sociallogin .btn-linkdin[disabled]:focus,
+#so_sociallogin fieldset[disabled] .btn-linkdin:focus,
+#so_sociallogin .btn-linkdin.disabled:active,
+#so_sociallogin .btn-linkdin[disabled]:active,
+#so_sociallogin fieldset[disabled] .btn-linkdin:active,
+#so_sociallogin .btn-linkdin.disabled.active,
+#so_sociallogin .btn-linkdin[disabled].active,
+#so_sociallogin fieldset[disabled] .btn-linkdin.active{
+    background-color:#04669A;
+    border-color:rgba(0,0,0,0.2);
+}
+#so_sociallogin .btn-linkdin .badge{
+    color:#04669A;
+    background-color:#fff;
+}

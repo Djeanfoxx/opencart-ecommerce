@@ -1,0 +1,52 @@
+
+{#==== Gallery - Large image  ==== #}
+
+<div id="thumb-slider" class="gallery-slider contentslider contentslider--default" data-rtl="{{direction}}" data-autoplay="no"  data-pagination="no" data-delay="4" data-speed="0.6" data-margin="0"  data-items_column0="3" data-items_column1="3" data-items_column2="3" data-items_column3="1" data-items_column4="1" data-arrows="yes" data-loop="yes" data-center="yes" data-loop="yes" data-hoverpause="yes">
+	{% for key,image in images %}
+		<a class="thumbnail-2" title="{{ heading_title }}">
+			<img src="{{ image.popup }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+		</a>
+	{% endfor %}
+	
+</div>
+<div class="gallery-button text-center form-group">
+	<div class="gallery-zoom"><i class="fa fa-search"></i> {{text_gallery_in_zoom}}</div>
+</div>
+
+
+<script type="text/javascript"><!--
+	$(document).ready(function() {
+		$(".gallery-zoom").hover(
+			function() {
+		        $(this).html('<i class="fa fa-search"></i> {{text_gallery_out_zoom}}');
+		    },
+		    function() {
+		        $(this).html('<i class="fa fa-search"></i> {{text_gallery_in_zoom}}');
+		});
+
+		{% if images %}
+		$('.gallery-zoom').magnificPopup({
+			items: [
+			{% for   image in images %}
+				{src: '{{image.popup}}'},
+			{% endfor %}
+			],
+			gallery: { enabled: true, preload: [0,2] },
+			type: 'image',
+			mainClass: 'mfp-fade',
+  			callbacks: {
+				open: function() {
+					{% if images %}
+						var activeIndex = 0;
+					{% else %}
+						var activeIndex = 0;
+					{% endif %}
+					var magnificPopup = $.magnificPopup.instance;
+					magnificPopup.goTo(activeIndex);
+				}
+			}
+
+		});
+		{% endif %}
+	});
+//--></script>

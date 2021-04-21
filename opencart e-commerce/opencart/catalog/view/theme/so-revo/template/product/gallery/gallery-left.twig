@@ -1,0 +1,112 @@
+
+<div id="thumb-slider" class="thumb-vertical-outer">
+	<ul class="thumb-vertical">
+		{% for key,image in images %}
+		<li class="image-additional">
+			<a data-index="{{key}}" class="img thumbnail" data-image="{{image.popup}}" title="{{ heading_title }}">
+				<img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+			</a>
+		</li>
+		{% endfor %}
+		
+	</ul>
+
+</div>
+{#==== Gallery - Large image  ==== #}
+<div class="large-image  {{class_honizol}}">
+	<img itemprop="image" class="product-image-zoom" src="{{popup}}" data-zoom-image="{{popup}}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+	
+</div>
+
+
+
+<script type="text/javascript"><!--
+	$(document).ready(function() {
+		var zoomCollection = '.large-image img';
+		$( zoomCollection ).elevateZoom({
+			//value zoomType (window,inner,lens)
+			{% if soconfig.get_settings('product_enablezoom')%}
+			zoomType        : "inner",
+			{% else %}
+			zoomType        :"none",
+			{% endif %}
+			lensSize    :'250',
+			easing:true,
+			scrollZoom : true,
+			gallery:'thumb-slider',
+			cursor: 'pointer',
+			galleryActiveClass: "active",
+		});
+		$(zoomCollection).bind('touchstart', function(){
+		    $(zoomCollection).unbind('touchmove');
+		});
+		
+		$(".thumb-vertical-outer .thumb-vertical").lightSlider({
+			item: 5,
+			autoWidth: false,
+			vertical:true,
+			slideMargin: 10,
+			verticalHeight:365,
+			pager: false,
+			controls: true,
+			prevHtml: '<i class="fa fa-angle-up"></i>',
+			nextHtml: '<i class="fa fa-angle-down"></i>',
+			responsive: [
+				{
+					breakpoint: 1199,
+					settings: {
+						verticalHeight: 260,
+						item: 3,
+					}
+				},{
+					breakpoint: 1024,
+					settings: {
+						verticalHeight: 500,
+						item: 7,
+						slideMargin: 5,
+					}
+				},{
+					breakpoint: 768,
+					settings: {
+						verticalHeight: 360,
+						item: 3,
+					}
+				},{
+					breakpoint: 480,
+					settings: {
+						verticalHeight: 260,
+						item: 3,
+					}
+				}
+				
+			]
+							
+        });
+		
+		{% if images %}
+		$('.large-image img').magnificPopup({
+			items: [
+			{% for   image in images %}
+				{src: '{{image.popup}}'},
+			{% endfor %}
+			],
+			gallery: { enabled: true, preload: [0,2] },
+			type: 'image',
+			mainClass: 'mfp-fade',
+			callbacks: {
+				open: function() {
+					{% if images %}
+						var activeIndex = parseInt($('#thumb-slider .img.active').attr('data-index'));
+					{% else %}
+						var activeIndex = 0;
+					{% endif %}
+					var magnificPopup = $.magnificPopup.instance;
+					magnificPopup.goTo(activeIndex);
+				}
+			}
+
+		});
+		{% endif %}
+		
+	});
+//--></script>

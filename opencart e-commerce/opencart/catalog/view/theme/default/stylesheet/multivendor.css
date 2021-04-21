@@ -1,0 +1,108 @@
+
+/* ***********************************************************************************************
+   LTR Languages
+*************************************************************************************************/
+.seller--profile .modcontent{ padding:  20px; }
+.store_top_div .products-list.grid .product-layout .product-item-container .right-block .caption h4{
+  margin-top:5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.store_top_div .content-aside .module .modcontent{padding:15px 0;}
+
+
+.store_top_div .seller-name h3{font-size: 14px; margin-bottom: 5px;}
+.store_top_div .ratings{margin-bottom: 0;}
+.store_top_div .seller-infor--title{font-size: 14px;margin-top: 30px; font-weight: normal; text-transform: capitalize;}
+.store_top_div .seller-infor--list{margin-top: 10px;}
+.store_top_div .seller-infor--list li{ margin-bottom: 5px; padding-bottom: 5px;   border-bottom: 1px solid #ececec; }
+.store_top_div .seller-infor--list li .fa{font-size: 14px; margin-right: 5px;}
+.store_top_div .list-inline{margin: 0 -5px;}
+.store_top_div .seller-infor--list li:last-child{border: none;}
+
+.seller-description{margin: 5px 0 20px;}
+.seller-description ul.socials{margin: 0 0 10px 0;}
+.seller-description ul.socials li{display: inline-block;}
+.seller-description ul.socials li a {
+  background-color: #777;
+  color: #fff;
+  display: inline-block;
+  font-size: 14px !important;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  width: 32px;
+  border-radius: 3px;
+ 
+}
+.seller-description ul.socials li a:hover {background-color: #666;}
+
+
+.seller-usergroup {    background-color: #efefef; margin-bottom: 30px; padding: 20px 0;}
+.seller-usergroup .seller_logo{margin-right: 20px;}
+.seller-usergroup .seller_name--title{font-size: 16px;margin-bottom: 5px;}
+.seller-usergroup ul.socials{margin: 0 0 10px 0;}
+.seller-usergroup ul.socials li{display: inline-block;}
+.seller-usergroup ul.socials li a {
+  background-color: #777;
+  color: #fff;
+  display: inline-block;
+  font-size: 14px !important;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  width: 32px;
+  border-radius: 3px;
+ 
+}
+.seller-usergroup  ul.socials li a:hover {background-color: #666;}
+.seller-usergroup .seller-email,
+.seller-usergroup .seller-address{margin-bottom: 5px;}
+.product-view .content-product-right .product-box-desc .inner-box-desc a{  color: #d2180b; padding: 0 5px;}
+.product-view .content-product-right .product-box-desc .inner-box-desc a:hover{  color: #333;}
+.product-view .content-product-right .product-box-desc span{min-width: auto;}
+.product-layout .product-item-container .seller_logo img{  
+    width: 30px;
+    display: inline-block;
+    border-radius: 50%;
+}
+.products-list.list .product-layout .product-item-container .seller_user span{padding: 0 5px;}
+.products-list.list .product-layout .product-item-container .seller_logo{
+	position: static;transform: translateY(0px); margin-bottom: 10px;   
+	display: inline-block;
+    vertical-align: middle;
+}
+
+/* ***********************************************************************************************
+   RTL Languages
+*************************************************************************************************/
+
+.rtl  .store_top_div .seller-infor--list li .fa{margin: 0 0 0 5px;}
+.rtl .product-layout .product-item-container .seller_logo{right: auto;left: 15px;}
+.rtl .seller-usergroup .seller_logo{margin: 0 0 0 20px;}
+
+
+/* ***********************************************************************************************
+   Resonsive
+*************************************************************************************************/
+
+@media (min-width: 1200px) {
+  
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+    .store_top_div .products-list .product-layout:nth-child(2n+1){clear: both !important;}
+}
+
+@media (max-width: 768px){
+  .seller--profile .modcontent{padding: 0;}
+  .seller-usergroup{padding: 20px; margin-bottom: 10px;}
+  .seller-usergroup .seller_logo{margin-bottom: 10px; text-align: center; }
+  .product-layout .product-item-container .seller_logo{
+      position: static;transform: inherit; width: auto; margin-bottom: 10px; border-radius:0;
+    }
+    .product-layout .product-item-container .seller_logo img{
+        width: 30px;display: inline-block;
+    }
+    .product-list .product-item-container .seller_logo{ display: none; }
+}

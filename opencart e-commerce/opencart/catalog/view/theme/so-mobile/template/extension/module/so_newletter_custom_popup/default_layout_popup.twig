@@ -1,0 +1,170 @@
+{% set width_popup =  width ? width : '50%' %}
+{% if image_bg_display %}
+    {% set bg   =  'background: url(image/'~image~')' %}
+{% else %} 
+   {%  set  bg  =  'background-color: #'~color_bg~'' %}
+{% endif %}
+
+
+<div id="container-module-newletter" class="hidden-md hidden-sm hidden-xs">
+	<div class="so_newletter_custom_popup_bg"></div>
+	<div class="module custom-pop {{ class_suffix }} so_newletter_custom_popup so_newletter_oca_popup" id="so_newletter_custom_popup">
+	    <div class="so-custom-popup so-custom-oca-popup" style="width: {{ width_popup }} ; {{ bg }} ;  ">
+			
+			{% if disp_title_module %} 
+				<h3 class="modtitle">{{ head_name }} </h3>
+			{% endif %} 
+
+			{% if pre_text != ''%}
+				<div class="form-group">
+					{{ pre_text }}
+				</div>
+			{% endif %}
+			
+			<div class="modcontent">
+				<div class="oca_popup" id="test-popup">
+					<div class="popup-content">
+						<p class="newsletter_promo font-ct">{{ newsletter_promo  }}</p>
+						{% if title_display %}
+						<div class="popup-title">
+							{{ title }}
+						</div>
+						{% endif %}
+						<form method="post"  name="signup" class="form-group signup send-mail">
+							<div class="input-control">
+								<div class="email">
+									<input type="email" placeholder="{{ newsletter_placeholder  }}" value="" class="form-control" id="{{ txtemail_id }}" name="txtemail">
+								</div>
+								<button class="btn btn-primary btn-default" type="submit" onclick="return subscribe_newsletter_popup();" name="submit">
+									{{ newsletter_button  }}
+								</button>
+							</div>
+						</form>
+
+						<label class="hidden-popup">
+							<input type="checkbox" value="1" name="hidden-popup">
+							<span class="inline">&nbsp;&nbsp;{{ input_check }}</span>
+						</label>
+
+	                   
+					</div>
+				</div>
+			</div> <!--/.modcontent-->
+	        <button title="Close" type="button" class="popup-close">&times;</button>
+			{% if post_text  !='' %}
+				<div class="form-group">
+					{{ post_text }}
+				</div>
+			{% endif %}
+			
+	    </div>
+	</div>
+
+<script type="text/javascript">
+    (function($) {
+        $(window).load(function () {
+            $('.common-home').addClass('hidden-scorll');
+            $('.so_newletter_custom_popup_bg').addClass('popup_bg');
+            $('input[name=\'hidden-popup\']').on('change', function(){
+                if ($(this).is(':checked')) {
+                    checkCookie();
+                } else {
+                    unsetCookie("so_newletter_custom_popup");
+                }
+            });
+            function unsetCookie( name ) {
+                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            }
+            $('.popup-close').click(function(){
+                var this_close = $('.popup-close');
+                this_close.parents().find('.common-home').removeClass('hidden-scorll');
+                this_close.parents().find('#container-module-newletter').remove();
+            });
+        });
+    })(jQuery);
+	function setCookie(cname, cvalue, exdays) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		var expires = "expires="+d.toUTCString();
+		document.cookie = cname + "=" + cvalue + "; " + expires;
+	}
+	function getCookie(cname) {
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0; i<ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') c = c.substring(1);
+			if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+		}
+		return "";
+	}
+	function checkCookie() {
+		var check_cookie = getCookie("so_newletter_custom_popup");
+		if(check_cookie == ""){
+			setCookie("so_newletter_custom_popup", "Newletter Popup", {{expired}});
+		}
+	}
+    function subscribe_newsletter_popup()
+    {
+		//alert(email);
+        var emailpattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var email = $({{txtemail_id}}).val();
+		
+        var d = new Date();
+        var createdate = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+        var status   = 0;
+        var dataString = 'email='+email+'&createdate='+createdate+'&status='+status;
+		
+        if(email != "")
+        {
+
+            if(!emailpattern.test(email))
+            {
+                $('.show-error').remove();
+                $('.send-mail').after('<div class="alert alert-danger " role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Invalid Email </div>')
+                return false;
+            }
+            else
+            {
+                $.ajax({
+                    url: 'index.php?route=extension/module/so_newletter_custom_popup/newsletter',
+                    type: 'post',
+                    data: dataString,
+                    dataType: 'json',
+
+                    success: function(json) {
+                        $('.show-error').remove();
+                        if(json.message == "Subscription Successfull") {
+							checkCookie();
+                            $('.send-mail').after('<div class="alert alert-success" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> ' + json.message + '</div>');
+                            setTimeout(function () {
+                                var this_close = $('.popup-close');
+                                this_close.parent().css('display', 'none');
+                                this_close.parents().find('.common-home').removeClass('hidden-scorll');
+                                this_close.parents().find('#container-module-newletter').remove();
+
+                            }, 3000);
+
+                        }else{
+                             $('.send-mail').after('<div class="alert alert-danger" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> ' + json.message + '</div>');
+                        }
+                        var x = document.getElementsByClassName('signup');
+                        for (i = 0; i < x.length; i++) {
+                            x[i].reset();
+                        }
+                    }
+                });
+                return false;
+            }
+        }
+        else
+        {
+            alert("Email Is Require");
+            $(email).focus();
+            return false;
+        }
+    }
+</script>
+
+
+</div>

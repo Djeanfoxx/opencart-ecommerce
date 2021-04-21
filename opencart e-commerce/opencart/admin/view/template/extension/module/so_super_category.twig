@@ -1,0 +1,1615 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+				<button type="submit" form="form-featured" data-toggle="tooltip" title="{{ objlang.get('entry_button_save') }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ objlang.get('entry_button_save') }}</button>
+				<a class="btn btn-success" onclick="$('#action').val('save_edit');$('#form-featured').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_edit') }}" ><i class="fa fa-pencil-square-o"></i> {{ objlang.get('entry_button_save_and_edit') }}</a>
+				<a class="btn btn-info" onclick="$('#action').val('save_new');$('#form-featured').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_new') }}" ><i class="fa fa-book"></i>  {{ objlang.get('entry_button_save_and_new') }}</a>
+				<a href="{{ cancel }}" data-toggle="tooltip" title="{{ objlang.get('entry_button_cancel') }}" class="btn btn-danger"><i class="fa fa-reply"></i>  {{ objlang.get('entry_button_cancel') }}</a>
+			</div>
+			<h1>{{ objlang.get('heading_title_so') }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid">
+		{% if error.warning is defined %}
+			<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error.warning }}
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+		{% endif %}
+		{% if success is defined and success %}
+			<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+			<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+		{% endif %}
+    	<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ subheading }}</h3>
+			</div>
+			<div class="panel-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
+	                <div class="row">
+	                  	<ul class="nav nav-tabs" role="tablist" style="padding-left: 15px;">
+		                    <li {% if selectedid == 0 %}class="active" {% endif %}> <a href="{{ link }}"> <span class="fa fa-plus"></span> {{ objlang.get('button_add_module') }}</a></li>
+		                    {% set i=1 %}
+		                    {% for key, module in moduletabs %}
+		                    	<li role="presentation" {% if module.module_id == selectedid %}class="active"{% endif %}>
+		                      		<a href="{{ link }}&module_id={{ module.module_id }}" aria-controls="bannermodule-{{ key }}"  >
+		                        		<span class="fa fa-pencil"></span> {{ module.name }}
+		                       		</a>
+		                      	</li>
+		                      	{% set i = i + 1 %}
+		                    {% endfor %}
+	                  	</ul>
+	                </div>	
+					<div class="row">
+						<div class="col-sm-12">
+							{% set module_row = 1 %}
+							{% for module in modules %}
+								{% if selectedid %}
+									<div class="pull-right">
+										<a href="{{ action }}&delete=1" class="remove btn btn-danger" > <span><i class="fa fa-remove"></i> {{ objlang.get('entry_button_delete') }}</span></a>
+									</div>
+								{% endif %}
+								<div  id="tab-module{{ module_row }}" class="col-sm-12">
+									<div class="form-group">
+										<input type="hidden" name="action" id="action" value=""/>
+										<label class="col-sm-3 control-label" for="input-name"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_name_desc') }}">{{ objlang.get('entry_name') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="name" value="{{ module.name }}" placeholder="{{ objlang.get('entry_name') }}" id="input-name" class="form-control" />
+											</div>
+											{% if error.name is defined %}
+												<div class="text-danger col-sm-12">{{ error.name }}</div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-head_name"><b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_head_name_desc') }}">{{ objlang.get('entry_head_name') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												{% set i = 0 %}
+												{% for language in languages %}
+													{% set i = i + 1 %}
+													<input type="text" name="module_description[{{ language.language_id }}][head_name]" placeholder="{{ objlang.get('entry_head_name') }}" id="input-head-name-{{ language.language_id }}" value="{{ module_description[language.language_id]['head_name'] is defined ? module_description[language.language_id]['head_name'] : '' }}" class="form-control {{ i>1 ? ' hide ' : ' first-name' }}" />
+													{% if i == 1 %}
+														<input type="hidden" class="form-control" id="input-head_name" placeholder="{{ objlang.get('entry_head_name') }}" value="{{ module_description[language.language_id]['head_name'] is defined ? module_description[language.language_id]['head_name'] : '' }}" name="head_name" />
+													{% endif %}
+												{% endfor %}
+											</div>
+											<div class="col-sm-3">
+												<select  class="form-control" id="language">
+													{% for language in languages %}
+														<option value="{{ language.language_id }}">{{ language.name }}</option>
+													{% endfor %}
+												</select>
+											</div>
+											{% if error.head_name is defined %}
+												<div class="text-danger col-sm-12">{{ error.head_name }}</div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-disp_title_module"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_title_module_desc') }}">{{ objlang.get('entry_display_title_module') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="disp_title_module" id="input-disp_title_module" class="form-control">
+													{% if module.disp_title_module %}
+														<option value="1" selected="selected">{{ objlang.get('text_yes') }}</option>
+														<option value="0">{{ objlang.get('text_no') }}</option>
+													{% else %}
+														<option value="1">{{ objlang.get('text_yes') }}</option>
+														<option value="0" selected="selected">{{ objlang.get('text_no') }}</option>
+													{% endif %}
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="input-status"><span data-toggle="tooltip" title="{{ objlang.get('entry_status_desc') }}">{{ objlang.get('entry_status') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="status" id="input-status" class="form-control">
+													{% if module.status %}
+														<option value="1" selected="selected">{{ objlang.get('text_enabled') }}</option>
+														<option value="0">{{ objlang.get('text_disabled') }}</option>
+													{% else %}
+														<option value="1">{{ objlang.get('text_enabled') }}</option>
+														<option value="0" selected="selected">{{ objlang.get('text_disabled') }}</option>
+													{% endif %}
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="tab-pane">
+									<ul class="nav nav-tabs" id="so_youtech">
+										<li>
+											<a href="#so_module" data-toggle="tab">
+												{{ objlang.get('entry_module') }}
+											</a>
+										</li>
+										<li>
+											<a href="#so_source_option" data-toggle="tab">
+												{{ objlang.get('entry_source_option') }}
+											</a>
+										</li>
+										<li>
+											<a href="#so_category_option" data-toggle="tab">
+												{{ objlang.get('entry_category_option') }}
+											</a>
+										</li>
+										<li>
+											<a href="#so_product_option" data-toggle="tab">
+												{{ objlang.get('entry_product_option') }}
+											</a>
+										</li>
+										<li>
+											<a href="#so_image_option" data-toggle="tab">
+												{{ objlang.get('entry_image_option') }}
+											</a>
+										</li>
+										<li>
+											<a href="#so_effect_option" data-toggle="tab">
+												{{ objlang.get('entry_effect_option') }}
+											</a>
+										</li>
+										<li>
+											<a href="#advanced_option" data-toggle="tab">
+												{{ objlang.get('entry_advanced_option') }}
+											</a>
+										</li>
+									</ul>
+									
+									<div class="tab-content">
+										<div class="tab-pane" id="so_module">
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-advanced_mod_class_suffix"> <span data-toggle="tooltip" title="{{ objlang.get('entry_advanced_mod_class_suffix_desc') }}">{{ objlang.get('entry_advanced_mod_class_suffix') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="advanced_mod_class_suffix" value="{{ module.advanced_mod_class_suffix }}" id="input-advanced_mod_class_suffix" class="form-control" />
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-open_link"> <span data-toggle="tooltip" title="{{ objlang.get('entry_open_link_desc') }}">{{ objlang.get('entry_open_link') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="item_link_target" id="input-open_link" class="form-control">
+															{% for option_id, option_value in item_link_targets %}
+																{% set selected = option_id == module.item_link_target ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+						
+										<div class="tab-pane" id="so_source_option">
+											<label class="col-sm-12"> 
+												<u style="color: #003399; font-weight: bold;">{{ objlang.get('label_for_category') }}</u>
+											</label>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category"> <b style="color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_category_desc') }}">{{ objlang.get('entry_category') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="category" id="input-category" class="form-control">
+															{% for item in module.categorys %}
+																{% set selected = item.category_id == module.category ? 'selected' : '' %}
+																<option value="{{ item.category_id }}" {{ selected }}>{{ item.name }}</option>
+															{% endfor %}
+														</select>
+													</div>
+													{% if error.category is defined %}
+														<div class="text-danger col-sm-12">{{ error.category }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category_depth"> <b style="color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_category_depth_desc') }}">{{ objlang.get('entry_category_depth') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="category_depth" value="{{ module.category_depth }}" id="input-category_depth" class="form-control" />
+													</div>
+													{% if error.category_depth is defined %}
+														<div class="text-danger col-sm-12">{{ error.category_depth }}</div>
+													{% endif %}
+												</div>
+											</div>											
+											<label class="col-sm-12">
+												<u style="color: #003399; font-weight: bold;">{{ objlang.get('label_for_field_products') }}</u>
+											</label>						
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-field_product_tab"> <b style="color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_field_product_tab_desc') }}">{{ objlang.get('entry_field_product_tab') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="field_product_tab" value="" placeholder="{{ objlang.get('entry_field_product_tab') }}" id="input-field_product_tab" class="form-control" />
+														<div id="featured-field_product_tab" class="well well-sm" style="height: 150px; overflow: auto;">
+															{% for field_product_tab in module.field_product_tabs %}
+																<div id="featured-field_product_tab{{ field_product_tab.product_id }}"><i class="fa fa-minus-circle"></i> {{ field_product_tab.name }}
+																	<input type="hidden" name="field_product_tab[]" value="{{ field_product_tab.product_id }}" />
+																</div>
+															{% endfor %}
+														</div>
+													</div>
+													{% if error.field_product_tab is defined %}
+														<div class="text-danger col-sm-12">{{ error.field_product_tab }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-field_preload"> <span data-toggle="tooltip" title="{{ objlang.get('entry_field_preload_desc') }}">{{ objlang.get('entry_field_preload') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="field_preload" id="input-field_preload" class="form-control">
+															{% for option in module.field_product_tabs %}
+																{% set selected = option.product_id == module.field_preload ? 'selected' : '' %}
+																<option value="{{ option.product_id }}" id="field_product{{ option.product_id }}" {{ selected }}>{{ option.name }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>	
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-limitation"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_limitation_desc') }}">{{ objlang.get('entry_limitation') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="limitation" value="{{ module.limitation }}" id="input-limitation" class="form-control" />
+													</div>
+													{% if error.limitation is defined %}
+														<div class="text-danger col-sm-12">{{ error.limitation }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_order"> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_order_desc') }}">{{ objlang.get('entry_product_order') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="product_ordering" id="input-product_order" class="form-control">
+															{% for option_id, option_value in product_orderings %}
+																{% set selected = option_id == module.product_ordering ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>						
+										</div>
+						
+										<div class="tab-pane" id="so_category_option">
+											<label class="col-sm-12"> 
+												<u style="color: #003399; font-weight: bold;">{{ objlang.get('label_for_category_slider') }}</u>
+											</label>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category_column0"> <span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column0_desc') }}">{{ objlang.get('entry_column') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="category_column0" id="input-category_column0" class="form-control">
+															{% for option_id, option_value in list_columns %}
+																{% set selected = option_id == module.category_column0 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category_column1"> <span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column1_desc') }}">{{ objlang.get('entry_column') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="category_column1" id="input-category_column1" class="form-control">
+															{% for option_id, option_value in list_columns %}
+																{% set selected = option_id == module.category_column1 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>						
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category_column2"> <span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column2_desc') }}">{{ objlang.get('entry_column') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="category_column2" id="input-category_column2" class="form-control">
+															{% for option_id, option_value in list_columns %}
+																{% set selected = option_id == module.category_column2 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>						
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category_column3"> <span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column3_desc') }}">{{ objlang.get('entry_column') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="category_column3" id="input-category_column3" class="form-control">
+															{% for option_id, option_value in list_columns %}
+																{% set selected = option_id == module.category_column3 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category_column4"> <span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column4_desc') }}">{{ objlang.get('entry_column') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="category_column4" id="input-category_column4" class="form-control">
+															{% for option_id, option_value in list_columns %}
+																{% set selected = option_id == module.category_column4 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category_title_maxlength"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_category_title_maxlength_desc') }}">{{ objlang.get('entry_category_title_maxlength') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="category_title_maxlength" value="{{ module.category_title_maxlength }}" id="input-category_title_maxlength" class="form-control" />
+													</div>
+													{% if error.category_title_maxlength is defined %}
+														<div class="text-danger col-sm-12">{{ error.category_title_maxlength }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-display_title_sub_category"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_title_sub_category_desc') }}">{{ objlang.get('entry_display_title_sub_category') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.display_title_sub_category %}
+																<input type="radio" name="display_title_sub_category" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="display_title_sub_category" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.display_title_sub_category %}
+																<input type="radio" name="display_title_sub_category" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="display_title_sub_category" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-display_slide_category"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_slide_category_desc') }}">{{ objlang.get('entry_display_slide_category') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.display_slide_category %}
+																<input type="radio" name="display_slide_category" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="display_slide_category" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.display_slide_category %}
+																<input type="radio" name="display_slide_category" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="display_slide_category" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-show_category_type"> <span data-toggle="tooltip" title="{{ objlang.get('entry_show_category_type_desc') }}">{{ objlang.get('entry_show_category_type') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.show_category_type %}
+																<input type="radio" name="show_category_type" value="1" checked="checked" />
+																{{ objlang.get('text_slide') }}
+															{% else %}
+																<input type="radio" name="show_category_type" value="1" />
+																{{ objlang.get('text_slide') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.show_category_type %}
+																<input type="radio" name="show_category_type" value="0" />
+																{{ objlang.get('text_default') }}
+															{% else %}
+																<input type="radio" name="show_category_type" value="0" checked="checked" />
+																{{ objlang.get('text_default') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-sub_category_title_maxlength"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_sub_category_title_maxlength_desc') }}">{{ objlang.get('entry_sub_category_title_maxlength') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="sub_category_title_maxlength" value="{{ module.sub_category_title_maxlength }}" id="input-sub_category_title_maxlength" class="form-control" />
+													</div>
+													{% if error.sub_category_title_maxlength is defined %}
+														<div class="text-danger col-sm-12">{{ error.sub_category_title_maxlength }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<label class="col-sm-12"> 
+												<u style="color: #003399; font-weight: bold;">{{ objlang.get('label_get_images_from_image') }}</u>
+											</label>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category_width"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_width_desc') }}">{{ objlang.get('entry_width') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="category_width" value="{{ module.category_width }}" id="input-category_width" class="form-control" />
+													</div>
+													{% if error.category_width is defined %}
+														<div class="text-danger col-sm-12">{{ error.category_width }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category_height"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_height_desc') }}">{{ objlang.get('entry_height') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="category_height" value="{{ module.category_height }}" id="input-category_height" class="form-control" />
+													</div>						
+													{% if error.category_height is defined %}
+														<div class="text-danger col-sm-12">{{ error.category_height }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-category_placeholder_path"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_placeholder_path_desc') }}">{{ objlang.get('entry_placeholder_path') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="category_placeholder_path" value="{{ module.category_placeholder_path }}" id="input-category_placeholder_path" class="form-control" />
+													</div>
+													{% if error.category_placeholder_path is defined %}
+														<div class="text-danger col-sm-12">{{ error.category_placeholder_path }}</div>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+						
+										<div class="tab-pane" id="so_product_option">
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_column0"> <span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column0_desc') }}">{{ objlang.get('entry_column') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="product_column0" id="input-product_column0" class="form-control">
+															{% for option_id, option_value in list_columns %}
+																{% set selected = option_id == module.product_column0 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_column1"> <span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column1_desc') }}">{{ objlang.get('entry_column') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="product_column1" id="input-product_column1" class="form-control">
+															{% for option_id, option_value in list_columns %}
+																{% set selected = option_id == module.product_column1 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>						
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_column2"> <span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column2_desc') }}">{{ objlang.get('entry_column') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="product_column2" id="input-product_column2" class="form-control">
+															{% for option_id, option_value in list_columns %}
+																{% set selected = option_id == module.product_column2 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>						
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_column3"> <span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column3_desc') }}">{{ objlang.get('entry_column') }} </span> </label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="product_column3" id="input-product_column3" class="form-control">
+															{% for option_id, option_value in list_columns %}
+																{% set selected = option_id == module.product_column3 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_column4"> <span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column4_desc') }}">{{ objlang.get('entry_column') }} </span> </label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="product_column4" id="input-product_column4" class="form-control">
+															{% for option_id, option_value in list_columns %}
+																{% set selected = option_id == module.product_column4 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-type_show"> <span data-toggle="tooltip" title="{{ objlang.get('entry_type_show_desc') }}">{{ objlang.get('entry_type_show') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="type_show" id="input-type_show" class="form-control">
+															{% for option_id, option_value in type_shows %}
+																{% set selected = option_id == module.type_show ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-row"> <span data-toggle="tooltip" title="{{ objlang.get('entry_row_desc') }}">{{ objlang.get('entry_row') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="rows" id="input-row" class="form-control">
+															{% for i in 1..10 %}
+																{% set selected = i == module.rows ? 'selected' : '' %}
+																<option value="{{ i }}" {{ selected }}>{{ i }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_display_title"> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_display_title_desc') }}">{{ objlang.get('entry_product_display_title') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.product_display_title %}
+																<input type="radio" name="product_display_title" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="product_display_title" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.product_display_title %}
+																<input type="radio" name="product_display_title" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="product_display_title" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_title_maxlength"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_title_maxlength_desc') }}">{{ objlang.get('entry_product_title_maxlength') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="product_title_maxlength" value="{{ module.product_title_maxlength }}" id="input-product_title_maxlength" class="form-control" />
+													</div>
+													{% if error.product_title_maxlength is defined %}
+														<div class="text-danger col-sm-12">{{ error.product_title_maxlength }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_display_description"> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_display_description_desc') }}">{{ objlang.get('entry_product_display_description') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.product_display_description %}
+																<input type="radio" name="product_display_description" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="product_display_description" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.product_display_description %}
+																<input type="radio" name="product_display_description" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="product_display_description" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_description_maxlength"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_description_maxlength_desc') }}">{{ objlang.get('entry_product_description_maxlength') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="product_description_maxlength" value="{{ module.product_description_maxlength }}" id="input-product_description_maxlength" class="form-control" />
+													</div>
+													{% if error.product_description_maxlength is defined %}
+														<div class="text-danger col-sm-12">{{ error.product_description_maxlength }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_display_price"> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_display_price_desc') }}">{{ objlang.get('entry_product_display_price') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.product_display_price %}
+																<input type="radio" name="product_display_price" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="product_display_price" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.product_display_price %}
+																<input type="radio" name="product_display_price" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="product_display_price" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-display_add_to_cart"> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_display_add_to_cart_desc') }}">{{ objlang.get('entry_product_display_add_to_cart') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.display_add_to_cart %}
+																<input type="radio" name="display_add_to_cart" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="display_add_to_cart" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.display_add_to_cart %}
+																<input type="radio" name="display_add_to_cart" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="display_add_to_cart" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-display_wishlist"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_wishlist_desc') }}">{{ objlang.get('entry_display_wishlist') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.display_wishlist %}
+																<input type="radio" name="display_wishlist" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="display_wishlist" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.display_wishlist %}
+																<input type="radio" name="display_wishlist" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="display_wishlist" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-display_compare"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_compare_desc') }}">{{ objlang.get('entry_display_compare') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.display_compare %}
+																<input type="radio" name="display_compare" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="display_compare" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.display_compare %}
+																<input type="radio" name="display_compare" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="display_compare" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-display_rating"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_rating_desc') }}">{{ objlang.get('entry_display_rating') }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.display_rating %}
+																<input type="radio" name="display_rating" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="display_rating" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.display_rating %}
+																<input type="radio" name="display_rating" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="display_rating" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-display_sale"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_sale_desc') }}">{{ objlang.get('entry_display_sale') }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.display_sale %}
+																<input type="radio" name="display_sale" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="display_sale" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.display_sale %}
+																<input type="radio" name="display_sale" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="display_sale" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-display_new"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_new_desc') }}">{{ objlang.get('entry_display_new') }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.display_new %}
+																<input type="radio" name="display_new" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="display_new" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.display_new %}
+																<input type="radio" name="display_new" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="display_new" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group" id="input-date_day_form">
+												<label class="col-sm-3 control-label" for="input-date_day"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_date_day_desc') }}">{{ objlang.get('entry_date_day') }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="date_day" value="{{ module.date_day }}" id="input-date_day" class="form-control" />
+													</div>
+													{% if error.date_day is defined %}
+														<div class="text-danger col-sm-12">{{ error.date_day }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_image_num"> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_image_num_desc') }}">{{ objlang.get('entry_product_image_num') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="product_image_num" id="input-product_image_num" class="form-control">
+															{% for option_id, option_value in product_image_nums %}
+																{% set selected = option_id == module.product_image_num ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+						
+										<div class="tab-pane" id="so_image_option">
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_image"> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_image_desc') }}">{{ objlang.get('entry_product_image') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.product_image %}
+																<input type="radio" name="product_image" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="product_image" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.product_image %}
+																<input type="radio" name="product_image" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="product_image" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_get_image_data"> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_get_image_data_desc') }}">{{ objlang.get('entry_product_get_image_data') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.product_get_image_data %}
+																<input type="radio" name="product_get_image_data" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="product_get_image_data" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.product_get_image_data %}
+																<input type="radio" name="product_get_image_data" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="product_get_image_data" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_get_image_image"> <span data-toggle="tooltip" title="{{ objlang.get('entry_product_get_image_image_desc') }}">{{ objlang.get('entry_product_get_image_image') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.product_get_image_image %}
+																<input type="radio" name="product_get_image_image" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="product_get_image_image" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.product_get_image_image %}
+																<input type="radio" name="product_get_image_image" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="product_get_image_image" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>					
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_width"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_width_desc') }}">{{ objlang.get('entry_width') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="product_width" value="{{ module.product_width }}" id="input-product_width" class="form-control" />
+													</div>
+													{% if error.product_width is defined %}
+														<div class="text-danger col-sm-12">{{ error.product_width }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_height"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_height_desc') }}">{{ objlang.get('entry_height') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="product_height" value="{{ module.product_height }}" id="input-product_height" class="form-control" />
+													</div>								
+													{% if error.product_height is defined %}
+														<div class="text-danger col-sm-12">{{ error.product_height }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_placeholder_path"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_placeholder_path_desc') }}">{{ objlang.get('entry_placeholder_path') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="product_placeholder_path" value="{{ module.product_placeholder_path }}" id="input-product_placeholder_path" class="form-control" />
+													</div>
+													{% if error.product_placeholder_path is defined %}
+														<div class="text-danger col-sm-12">{{ error.product_placeholder_path }}</div>
+													{% endif %}
+												</div>
+											</div>		
+										</div>
+						
+										<div class="tab-pane" id="so_effect_option">
+											<label class="col-sm-12"> 
+												<u style="color: #003399; font-weight: bold;">{{ objlang.get('label_for_item_product') }}</u>
+											</label>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-effect"> <span data-toggle="tooltip" title="{{ objlang.get('entry_effect_desc') }}">{{ objlang.get('entry_effect') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="effect" id="input-effect" class="form-control">
+															{% for option_id, option_value in effects %}
+																{% set selected = option_id == module.effect ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_duration"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_duration_desc') }}">{{ objlang.get('entry_duration') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="product_duration" value="{{ module.product_duration }}" id="input-product_duration" class="form-control" />
+													</div>
+													{% if error.product_duration is defined %}
+														<div class="text-danger col-sm-12">{{ error.product_duration }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-product_delay"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_delay_desc') }}">{{ objlang.get('entry_delay') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="product_delay" value="{{ module.product_delay }}" id="input-product_delay" class="form-control" />
+													</div>
+													{% if error.product_delay is defined %}
+														<div class="text-danger col-sm-12">{{ error.product_delay }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<label class="col-sm-12"> 
+												<u style="color: #003399; font-weight: bold;">{{ objlang.get('label_for_subcategory') }}</u>
+											</label>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_center"> <span data-toggle="tooltip" title="{{ objlang.get('entry_center_desc') }}">{{ objlang.get('entry_center') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.subcategory_center %}
+																<input type="radio" name="subcategory_center" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="subcategory_center" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.subcategory_center %}
+																<input type="radio" name="subcategory_center" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="subcategory_center" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_display_navigation"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_navigation_desc') }}">{{ objlang.get('entry_display_navigation') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.subcategory_display_navigation %}
+																<input type="radio" name="subcategory_display_navigation" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="subcategory_display_navigation" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.subcategory_display_navigation %}
+																<input type="radio" name="subcategory_display_navigation" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="subcategory_display_navigation" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_display_loop"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_loop_desc') }}">{{ objlang.get('entry_display_loop') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.subcategory_display_loop %}
+																<input type="radio" name="subcategory_display_loop" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="subcategory_display_loop" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.subcategory_display_loop %}
+																<input type="radio" name="subcategory_display_loop" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="subcategory_display_loop" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_margin_right"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_margin_right_subcategory_desc') }}">{{ objlang.get('entry_margin_right_subcategory') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="subcategory_margin_right" value="{{ module.subcategory_margin_right }}" id="input-subcategory_margin_right" class="form-control" />
+													</div>
+													{% if error.subcategory_margin_right is defined %}
+														<div class="text-danger col-sm-12">{{ error.subcategory_margin_right }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_slideby"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_subcategory_slideby_desc') }}">{{ objlang.get('entry_subcategory_slideby') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="subcategory_slideby" value="{{ module.subcategory_slideby }}" id="input-subcategory_slideby" class="form-control" />
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_auto_play"><span data-toggle="tooltip" title="{{ objlang.get('entry_auto_play_desc') }}">{{ objlang.get('entry_auto_play') }} </span> </label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.subcategory_auto_play %}
+																<input type="radio" name="subcategory_auto_play" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="subcategory_auto_play" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.subcategory_auto_play %}
+																<input type="radio" name="subcategory_auto_play" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="subcategory_auto_play" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_auto_interval_timeout"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_auto_interval_timeout_desc') }}">{{ objlang.get('entry_auto_interval_timeout') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="subcategory_auto_interval_timeout" value="{{ module.subcategory_auto_interval_timeout }}" id="input-subcategory_auto_interval_timeout" class="form-control" />
+													</div>
+													{% if error.subcategory_auto_interval_timeout is defined %}
+														<div class="text-danger col-sm-12">{{ error.subcategory_auto_interval_timeout }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_auto_hover_pause"> <span data-toggle="tooltip" title="{{ objlang.get('entry_auto_hover_pause_desc') }}">{{ objlang.get('entry_auto_hover_pause') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.subcategory_auto_hover_pause %}
+																<input type="radio" name="subcategory_auto_hover_pause" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="subcategory_auto_hover_pause" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.subcategory_auto_hover_pause %}
+																<input type="radio" name="subcategory_auto_hover_pause" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="subcategory_auto_hover_pause" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_auto_play_speed"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_auto_play_speed_desc') }}">{{ objlang.get('entry_auto_play_speed') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="subcategory_auto_play_speed" value="{{ module.subcategory_auto_play_speed }}" id="input-subcategory_auto_play_speed" class="form-control" />
+													</div>
+													{% if error.subcategory_auto_play_speed is defined %}
+														<div class="text-danger col-sm-12">{{ error.subcategory_auto_play_speed }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_navigation_speed"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_navigation_speed_desc') }}">{{ objlang.get('entry_navigation_speed') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="subcategory_navigation_speed" value="{{ module.subcategory_navigation_speed }}" id="input-subcategory_navigation_speed" class="form-control" />
+													</div>
+													{% if error.subcategory_navigation_speed is defined %}
+														<div class="text-danger col-sm-12">{{ error.subcategory_navigation_speed }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_start_position"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_start_position_subcategory_desc') }}">{{ objlang.get('entry_start_position_subcategory') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="subcategory_start_position" value="{{ module.subcategory_start_position }}" id="input-subcategory_start_position" class="form-control" />
+													</div>
+													{% if error.subcategory_start_position is defined %}
+														<div class="text-danger col-sm-12">{{ error.subcategory_start_position }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_mouse_drag"> <span data-toggle="tooltip" title="{{ objlang.get('entry_mouse_drag_desc') }}">{{ objlang.get('entry_mouse_drag') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.subcategory_mouse_drag %}
+																<input type="radio" name="subcategory_mouse_drag" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="subcategory_mouse_drag" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.subcategory_mouse_drag %}
+																<input type="radio" name="subcategory_mouse_drag" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="subcategory_mouse_drag" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-subcategory_touch_drag"> <span data-toggle="tooltip" title="{{ objlang.get('entry_touch_drag_desc') }}">{{ objlang.get('entry_touch_drag') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.subcategory_touch_drag %}
+																<input type="radio" name="subcategory_touch_drag" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="subcategory_touch_drag" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.subcategory_touch_drag %}
+																<input type="radio" name="subcategory_touch_drag" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="subcategory_touch_drag" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<label class="col-sm-12"> 
+												<u style="color: #003399; font-weight: bold;">{{ objlang.get('label_for_type_show_slider') }}</u>
+											</label>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-slider_auto_play"> <span data-toggle="tooltip" title="{{ objlang.get('entry_auto_play_desc') }}">{{ objlang.get('entry_auto_play') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.slider_auto_play %}
+																<input type="radio" name="slider_auto_play" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="slider_auto_play" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.slider_auto_play %}
+																<input type="radio" name="slider_auto_play" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="slider_auto_play" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-slider_display_navigation"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_navigation_desc') }}">{{ objlang.get('entry_display_navigation') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.slider_display_navigation %}
+																<input type="radio" name="slider_display_navigation" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="slider_display_navigation" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.slider_display_navigation %}
+																<input type="radio" name="slider_display_navigation" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="slider_display_navigation" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-slider_display_loop"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_loop_desc') }}">{{ objlang.get('entry_display_loop') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.slider_display_loop %}
+																<input type="radio" name="slider_display_loop" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="slider_display_loop" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.slider_display_loop %}
+																<input type="radio" name="slider_display_loop" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="slider_display_loop" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-slider_mouse_drag"> <span data-toggle="tooltip" title="{{ objlang.get('entry_mouse_drag_desc') }}">{{ objlang.get('entry_mouse_drag') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.slider_mouse_drag %}
+																<input type="radio" name="slider_mouse_drag" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="slider_mouse_drag" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.slider_mouse_drag %}
+																<input type="radio" name="slider_mouse_drag" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="slider_mouse_drag" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-slider_touch_drag"> <span data-toggle="tooltip" title="{{ objlang.get('entry_touch_drag_desc') }}">{{ objlang.get('entry_touch_drag') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.slider_touch_drag %}
+																<input type="radio" name="slider_touch_drag" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="slider_touch_drag" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.slider_touch_drag %}
+																<input type="radio" name="slider_touch_drag" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="slider_touch_drag" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-slider_auto_hover_pause"> <span data-toggle="tooltip" title="{{ objlang.get('entry_auto_hover_pause_desc') }}">{{ objlang.get('entry_auto_hover_pause') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.slider_auto_hover_pause %}
+																<input type="radio" name="slider_auto_hover_pause" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="slider_auto_hover_pause" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.slider_auto_hover_pause %}
+																<input type="radio" name="slider_auto_hover_pause" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="slider_auto_hover_pause" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-slider_auto_interval_timeout"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_auto_interval_timeout_desc') }}">{{ objlang.get('entry_auto_interval_timeout') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="slider_auto_interval_timeout" value="{{ module.slider_auto_interval_timeout }}" id="input-slider_auto_interval_timeout" class="form-control" />
+													</div>
+													{% if error.slider_auto_interval_timeout is defined %}
+														<div class="text-danger col-sm-12">{{ error.slider_auto_interval_timeout }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-slider_auto_play_speed"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_auto_play_speed_desc') }}">{{ objlang.get('entry_auto_play_speed') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="slider_auto_play_speed" value="{{ module.slider_auto_play_speed }}" id="input-slider_auto_play_speed" class="form-control" />
+													</div>
+													{% if error.slider_auto_play_speed is defined %}
+														<div class="text-danger col-sm-12">{{ error.slider_auto_play_speed }}</div>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+						
+										<div class="tab-pane" id="advanced_option">
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-pre_text"> <span data-toggle="tooltip" title="{{ objlang.get('entry_pre_text_desc') }}">{{ objlang.get('entry_pre_text') }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<textarea name="pre_text" id="input-pre_text" class="form-control">{{ module.pre_text }}</textarea>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-post_text"> <span data-toggle="tooltip" title="{{ objlang.get('entry_post_text_desc') }}">{{ objlang.get('entry_post_text') }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<textarea name="post_text" id="input-post_text" class="form-control">{{ module.post_text }}</textarea>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="input-use_cache">
+													<span data-toggle="tooltip" title="{{ objlang.get('entry_use_cache_desc') }}">{{ objlang.get('entry_use_cache') }}</span>
+												</label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.use_cache %}
+																<input type="radio" name="use_cache" value="1" checked="checked" />
+																{{ objlang.get('text_yes') }}
+															{% else %}
+																<input type="radio" name="use_cache" value="1" />
+																{{ objlang.get('text_yes') }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.use_cache %}
+																<input type="radio" name="use_cache" value="0" />
+																{{ objlang.get('text_no') }}
+															{% else %}
+																<input type="radio" name="use_cache" value="0" checked="checked" />
+																{{ objlang.get('text_no') }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group" id="input-cache_time_form">
+												<label class="col-sm-3 control-label" for="input-cache_time">
+													<span data-toggle="tooltip" title="{{ objlang.get('entry_cache_time_desc') }}">{{ objlang.get('entry_cache_time') }}</span>
+												</label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="cache_time" value="{{ module.cache_time }}" id="input-cache_time" class="form-control" />
+													</div>
+													{% if error.cache_time is defined %}
+														<div class="text-danger col-sm-12">{{ error.cache_time }}</div>
+													{% endif %}
+												</div>
+											</div>
+										</div>								
+									</div>
+								</div>
+								{% set module_row = module_row + 1 %}
+							{% endfor %}
+						</div>
+					</div>
+				</form>
+			</div>
+    	</div>	
+  	</div>
+	<script type="text/javascript"><!--
+		$('#so_youtech a:first').tab('show');
+
+		$('input[name=\'field_product_tab\']').autocomplete({
+			source: function(request, response) {
+				$.ajax({
+					url: 'index.php?route=extension/module/so_super_category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+					dataType: 'json',
+					success: function(json) {
+						response($.map(json, function(item) {
+							return {
+								label: item['name'],
+								value: item['product_id']
+							}
+						}));
+					}
+				});
+			},
+			select: function(item) {
+				$('input[name=\'field_product_tab\']').val('');
+				
+				$('#featured-field_product_tab' + item['value']).remove();
+				
+				$('#featured-field_product_tab').append('<div id="featured-field_product_tab' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="field_product_tab[]" value="' + item['value'] + '" /></div>');
+				
+				$('#field_product' + item['value']).remove();
+				$('#input-field_preload').append('<option value="'+item['value']+'" id="field_product' + item['value'] + '">' + item['label'] + '</option>');
+				
+			}
+		});
+
+		if($("input[name='use_cache']:radio:checked").val() == '0')
+		{
+			$('#input-cache_time_form').hide();
+		}else
+		{
+			$('#input-cache_time_form').show();
+		}
+
+		$("input[name='use_cache']").change(function(){
+			val = $(this).val();
+			if(val ==0)
+			{
+				$('#input-cache_time_form').hide();
+			}else
+			{
+				$('#input-cache_time_form').show();
+			}
+		});
+
+		$('#featured-field_product_tab').delegate('.fa-minus-circle', 'click', function() {
+			$(this).parent().remove();
+			var id_par = $(this).parent().attr('id').substr(26);
+			$("#input-field_preload option[value='"+id_par+"']").each(function() {
+				$(this).remove();
+			});
+		});
+
+		$('#language').change(function(){
+			var that = $(this), opt_select = $('option:selected', that).val() , _input = $('#input-head-name-'+opt_select);
+			$('[id^="input-head-name-"]').addClass('hide');
+			_input.removeClass('hide');
+		});
+
+		$('.first-name').change(function(){
+			$('input[name="head_name"]').val($(this).val());
+		});
+
+		if($("input[name='display_new']:radio:checked").val() == '0')
+		{
+			$('#input-date_day_form').hide();
+		}else
+		{
+			$('#input-date_day_form').show();
+		}
+
+		$("input[name='display_new']").change(function(){
+			val = $(this).val();
+			if(val ==0)
+			{
+				$('#input-date_day_form').hide();
+			}else
+			{
+				$('#input-date_day_form').show();
+			}
+		});
+//--></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function ($) {
+			var button = '<div class="remove-caching" style="margin-left: 15px"><button type="button" onclick="remove_cache()" title="{{ objlang.get("entry_button_clear_cache") }}" class="btn btn-danger"><i class="fa fa-remove"></i>{{ objlang.get("entry_button_clear_cache") }}</button></div>';
+			var button_min = '<div class="remove-caching" style="margin-left: 7px"><button type="button" onclick="remove_cache()" title="{{ objlang.get("entry_button_clear_cache") }}" class="btn btn-danger"><i class="fa fa-remove"></i> </button></div>';
+			if($('#column-left').hasClass('active')){
+				$('#column-left #stats').after(button);
+			}else{
+				$('#column-left #stats').after(button_min);
+			}
+			$('#button-menu').click(function(){
+				$('.remove-caching').remove();
+				if($(this).parents().find('#column-left').hasClass('active')){
+					$('#column-left #stats').after(button);
+				}else{
+					$('#column-left #stats').after(button_min);
+				}
+			});
+		});
+		function remove_cache(){
+			var success_remove = '{{ success_remove }}';
+			$.ajax({
+				type: 'POST',
+				url: '{{ linkremove }}',
+				data: {	is_ajax_cache_lite: 1},
+				success: function () {
+					var html = '<div class="alert alert-success cls-remove-cache"> '+success_remove+' <button type="button" class="close" data-dismiss="alert">&times;</button></div>';
+					if(!($('.page-header .container-fluid .alert-success')).hasClass('cls-remove-cache')){
+						$('.page-header .container-fluid').append(html);
+					}
+				},
+			});
+		}
+	</script>
+</div>
+{{ footer }}

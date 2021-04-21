@@ -1,0 +1,644 @@
+/*===============================================
+	[SASS DIRECTORY ]
+	
+    [1] BACK TO TOP
+    [2] SOCIAL ACCOUNTS
+    [3] TOP PANEL
+    [4] LARY LOADER
+    [5] NO RESPONSIVE BOOTSTRAP
+	   [6] PRELOADING SCREEN
+    [7] BANNER EFFECT
+    [8] POPUP ADDED TO CART 
+    [9] PAGE COMINGSOON
+==============================================*/
+
+/*============BACK TO TOP ==================*/
+.back-to-top {
+    cursor: pointer;
+    background-color: #777;
+    width: 45px;bottom: 35px;#{$right} : 10px;min-height: 42px;
+    overflow: hidden; z-index: 40;position: fixed;display: block;text-align: center;border-radius:3px;opacity:1;
+    
+    @include transition(all 0.5s ease-in-out 0s);
+    @include transform(scale(1) );
+ 
+    &.hidden-top {bottom: -100px;opacity:0;  @include transform(scale(0) );}
+    &:hover{background-color:$background1;}
+    i{font-size: 36px;margin: 1px 0 0 0 !important;color: #fff;display: inline-block;}
+}
+
+/*============SOCIAL ACCOUNTS ==================*/
+.social-widgets {
+  overflow: visible;
+    position:fixed;
+    z-index:999;
+    top:50%;
+    height:0;
+    width:0;
+
+    &.socialwidgets-left{  #{$left} :0}
+    &.socialwidgets-right{  #{$right} :0}
+}
+.socialwidgets-left{
+    .item { #{$right} : 0px}
+    .active {z-index:100;#{$right} :-310px}
+    .tab-icon{#{$right} :-45px;}
+    .facebook.active {#{$right} :-260px}
+    .twitter.active { #{$right} :-300px}
+    .youtube.active {#{$right} :-450px}
+}
+
+.socialwidgets-right{
+    .item { #{$left} : 0px}
+    .active {z-index:100;#{$left} :-310px}
+    .tab-icon{#{$left} :-45px;}
+    .facebook.active {#{$left} :-260px}
+    .twitter.active { #{$left} :-300px}
+    .youtube.active {#{$left} :-450px}
+}
+
+.social-widgets .item, .social-widgets .items {
+    margin:0;
+    padding:0;
+    list-style-type:none
+}
+
+.social-widgets .items {
+    top:-100px;
+    position:relative
+}
+
+.social-widgets .item {
+    position:absolute;
+    top:0;
+   
+}
+
+.social-widgets .item-01 {
+    top:0;
+    z-index:99
+}
+.social-widgets .item-02 {
+    top:45px;
+    z-index:98
+}
+.social-widgets .item-03 {
+    top:90px;
+    z-index:97
+}
+
+
+.social-widgets .tab-icon .fa{font-size:18px;line-height:45px;}
+.social-widgets .tab-icon {
+    position:absolute;
+    top:0;
+   
+    display:block;
+    width:45px;
+    height:45px;
+    background:#fff;
+    text-align:center;
+    font-size:1.54em;
+    
+}
+.social-widgets .tab-icon:hover {
+    text-decoration:none
+}
+.social-widgets .active .tab-icon {
+    border-color:#E9E9E9;
+    background:#fff
+}
+.social-widgets .facebook .tab-icon{
+    background: #3b5998;
+    background-clip: content-box;
+    color: white;
+}
+.social-widgets .twitter .tab-icon{
+    background: #07779a;
+    background-clip: content-box;
+    color: white;
+}
+.social-widgets .youtube .tab-icon{
+    background: #DA2723;
+    background-clip: content-box;
+    color: white;
+}
+.social-widgets .tab-content {
+    background:#fff;
+    width:310px;
+    padding:10px ;
+}
+.social-widgets .active .tab-content {
+    box-shadow:0 0 4px rgba(0, 0, 0, .15)
+}
+.social-widgets .title {
+    margin: side-values(-10px -10px 10px);
+    padding: 0px 10px;
+    background-color: #ccc;
+    text-transform: uppercase;
+    line-height: 45px;
+    color: #000;
+    font-weight: bold;
+    h5{
+        line-height: 45px;margin: 0;
+    }
+}
+
+
+.social-widgets .facebook .tab-content {width:260px}
+
+.social-widgets .twitter .tab-content {
+    width:300px
+}
+.social-widgets .twitter-widget {
+    padding-top:10px
+}
+
+.social-widgets .youtube .tab-content {
+    width:450px;
+}
+.social-widgets .youtube .tab-content iframe{width:100%;}
+.social-widgets .loading {
+    min-height:200px;
+    position:relative;
+    z-index: 100;
+}
+.social-widgets .loading img.ajaxloader {
+    position:absolute;
+    top:45%;
+    #{$left} :45%;
+    width:32px;
+    height:32px
+}
+
+
+
+/*============TOP PANEL ==================*/
+.wrapper-boxed{
+    header.navbar-compact {width: auto;}
+}
+header.navbar-compact { position: fixed;width:100%; z-index:999; box-shadow: 1px 1px 5px rgba(0,0,0,0.3); background:white;
+	.hidden-compact{display:none;}
+  .header-center{padding: 15px 0;}
+}
+
+
+/*============LARY LOADER ==================*/
+.lazy {display: block;  overflow: hidden; background: transparent url(../../images/lazy-loader.gif) no-repeat center center;}
+@media (min-width: 1200px) {
+	
+	.lazy.lazy-loaded {background: none;height:auto;}
+	.lazy img {transition: 1s all ease;opacity: 0;-webkit-backface-visibility: hidden;display:inline-block;}
+	.lazy.lazy-loaded img { opacity: 1; }
+}
+
+/*============NONE RESPONSIVE BOOTSTRAP ==================*/
+@media (min-width: 1200px){
+     .wrapper-fluid{
+        .fluid-sidebar{    width: 83%;}
+        .fluid-allsidebar{ width: 66%;}
+        .content-aside{width:16.666667%;}
+    }
+}
+@include breakpoint(lg){
+    .wrapper-boxed {max-width: 1200px;margin: 0 auto;background: #fff;box-shadow: 0 0 10px rgba(0,0,0,.2);}
+    .wrapper-full{
+        .container{width:1200px;}
+        .products-list .product-grid-5{
+          @include breakpoint(lg){&:nth-child(5n+1){clear: both !important;}}
+          .product-card__gallery,.countdown_box,.order-num{display: none;}
+          
+        }
+    }
+    .wrapper-fluid{
+        .container { max-width: 1650px;padding: 0;width: 93%;}
+    }
+}
+
+
+/*============@group Banners hover effect ==================*/
+.banners-effect-1 .banners > div {
+	img { @include transition(all 0.2s ease-in);
+		&:hover{opacity: 0.8;}
+	}
+	
+}
+
+.banners-effect-2 .banners > div a{display: block;position: relative;overflow: hidden;
+	&:hover{
+		&:before,&:after{left: 0;opacity: 1;}
+	}	
+	&:before,&:after{
+		background-color: rgba(255, 255, 255, 0.4);
+		display: block;
+		width: 100%;
+		height: 100%;
+		left: -100%;
+		opacity: 0;
+		filter: alpha(opacity=0);
+		position: absolute;
+		top: 0;
+		@include transition(all 0.3s ease-in);
+		content: "";
+		z-index: 1;
+	}
+	
+}
+
+.banners-effect-3 .banners > div a {display: block;position: relative;overflow: hidden;
+	&:hover{
+		&:before,&:after{border: 0 solid rgba(0, 0, 0, 0.7);opacity: 0;filter: alpha(opacity=0);}
+	}	
+	&:before,&:after{
+		border: 50px solid transparent;
+		border-top-right-radius: 50px;
+		border-top-left-radius: 50px;
+		border-bottom-right-radius: 50px;
+		border-bottom-left-radius: 50px;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: inline-block;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		position: absolute;
+		top: 0;
+		content: "";
+		opacity: 1;
+		filter: alpha(opacity=100);
+		width: 100px;
+		height: 100px;
+		@include transform(scale(7));
+		@include transition(all 0.4s ease-in-out);
+		
+		visibility: visible;
+		z-index: 1;
+	}
+}
+
+.banners-effect-4 .row-no-padding a,
+.banners-effect-4 .banners > div a {
+     display: block;
+     position: relative;
+     overflow: hidden;
+}
+
+     .banners-effect-4 .row-no-padding a:before,
+     .banners-effect-4 .banners > div a:before {
+          border-bottom: 50px solid rgba(255, 255, 255, 0.4);
+          border-top: 50px solid rgba(255, 255, 255, 0.4);
+          content: "";
+          height: 100%;
+          left: 0;
+          opacity: 0;
+          filter: alpha(opacity=0);
+          position: absolute;
+          top: 0;
+          transform: rotate3d(0, 0, 1, 45deg) scale3d(1, 0, 1);
+          -o-transform: rotate3d(0, 0, 1, 45deg) scale3d(1, 0, 1);
+          -webkit-transform: rotate3d(0, 0, 1, 45deg) scale3d(1, 0, 1);
+          -moz-transform: rotate3d(0, 0, 1, 45deg) scale3d(1, 0, 1);
+          -ms-transform: rotate3d(0, 0, 1, 45deg) scale3d(1, 0, 1);
+          -webkit-transition: opacity 0.35s ease 0s, transform 0.35s ease 0s;
+          -o-transition: opacity 0.35s ease 0s, transform 0.35s ease 0s;
+          transition: opacity 0.35s ease 0s, transform 0.35s ease 0s;
+          transform-origin: 50% 50% 0;
+          width: 100%;
+     }
+     
+    .banners-effect-4 .row-no-padding a:hover:before,
+    .banners-effect-4 .banners > div a:hover:before {
+         opacity: 1;
+         filter: alpha(opacity=100);
+         transform: rotate3d(0, 0, 1, 45deg) scale3d(1, 4, 1);
+         -o-transform: rotate3d(0, 0, 1, 45deg) scale3d(1, 4, 1);
+         -webkit-transform: rotate3d(0, 0, 1, 45deg) scale3d(1, 4, 1);
+         -moz-transform: rotate3d(0, 0, 1, 45deg) scale3d(1, 4, 1);
+         -ms-transform: rotate3d(0, 0, 1, 45deg) scale3d(1, 4, 1);
+    }
+
+.banners-effect-5 .banners > div a {display: block;position: relative;overflow: hidden;
+	 &:before{
+        content: "";
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        border: 70px solid rgba(255,255,255, 0);
+        top: 0;
+        #{$left}: 0;
+        transition: all 0.5s ease-in-out;
+       
+    }
+    &:after{
+        content: "";
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        opacity: 0.5;
+        border: 30px solid #fff;
+        top: 0;
+        #{$left}: 0;
+        transform: scale(0);
+        -moz-transform: scale(0);
+        -webkit-transform: scale(0);
+        -ms-transform: scale(0);
+        transition: all 0.5s ease-in-out;
+    }
+   
+    &:hover{
+        &:before{
+            border: 0 solid rgba(255,255,255, 0.7);
+           
+        }
+        &:after{
+            transform: scale(0.8);
+            -moz-transform: scale(0.8);
+            -webkit-transform: scale(0.8);
+            -ms-transform: scale(0.8);
+            opacity: 0;
+            transition-delay: 0.1s;
+        }
+        
+    }
+}
+
+
+.banners-effect-6 .banners > div a {
+     display: inline-block;
+     position: relative;
+     overflow: hidden;
+     background: #000;
+	 vertical-align: top;
+}
+
+    
+     .banners-effect-6 .banners > div a img {
+          backface-visibility: hidden;
+          opacity: 1;
+          filter: alpha(opacity=100);
+          -webkit-transition: opacity 1s ease 0s, transform 1s ease 0s;
+          -o-transition: opacity 1s ease 0s, transform 1s ease 0s;
+          transition: opacity 1s ease 0s, transform 1s ease 0s;
+     }
+     
+          
+          .banners-effect-6 .banners > div a:hover img {
+               opacity: 0.8;
+               filter: alpha(opacity=80);
+               transform: scale3d(1.1, 1.1, 1);
+          }
+          
+
+.banners-effect-7 .banners > div a {
+     display: block;
+     position: relative;
+     overflow: hidden;
+}
+
+     
+     .banners-effect-7 .banners > div a:before {
+          position: absolute;
+          background: rgba(0, 0, 0, 0.3);
+          width: 0;
+          top: 0;
+          left: 50%;
+          content: "";
+          transition: all 0.3s ease-in-out 0s;
+     }
+     
+          
+          .banners-effect-7 .banners > div a:hover:before {
+               width: 100%;
+               left: 0;
+               top: 0;
+               height: 100%;
+          }
+          
+
+.banners-effect-8 .banners > div a {
+     display: inline-block;
+     position: relative;
+     overflow: hidden;
+     background: #000;
+	 vertical-align: top;
+}
+     
+     .banners-effect-8 .banners > div a:before,
+     .banners-effect-8 .banners > div a:after {
+          bottom: 20px;
+          content: "";
+          left: 20px;
+          opacity: 0;
+          position: absolute;
+          right: 20px;
+          top: 20px;
+          -webkit-transition: opacity 0.35s ease 0s, transform 0.35s ease 0s;
+          -o-transition: opacity 0.35s ease 0s, transform 0.35s ease 0s;
+          transition: opacity 0.35s ease 0s, transform 0.35s ease 0s;
+          z-index: 1;
+     }
+     
+          .banners-effect-8 .banners > div a:before {
+               border-bottom: 1px solid #ffffff;
+               border-top: 1px solid #ffffff;
+               -webkit-transform: scale(0, 1);
+               -ms-transform: scale(0, 1);
+               -o-transform: scale(0, 1);
+               transform: scale(0, 1);
+          }
+          
+          .banners-effect-8 .banners > div a:after {
+               border-left: 1px solid #ffffff;
+               border-right: 1px solid #ffffff;
+               -webkit-transform: scale(1, 0);
+               -ms-transform: scale(1, 0);
+               -o-transform: scale(1, 0);
+               transform: scale(1, 0);
+          }
+     
+          .banners-effect-8 .banners > div img {
+               opacity: 1;
+               filter: alpha(opacity=100);
+               -webkit-transition: opacity 0.35s ease 0s;
+               -o-transition: opacity 0.35s ease 0s;
+               transition: opacity 0.35s ease 0s;
+          }
+          
+               .banners-effect-8 .banners > div a:hover:before,
+               .banners-effect-8 .banners > div a:hover:after {
+                    opacity: 1;
+                    filter: alpha(opacity=100);
+                    -webkit-transform: scale(1);
+                    -ms-transform: scale(1);
+                    -o-transform: scale(1);
+                    transform: scale(1);
+               }
+               
+               .banners-effect-8 .banners > div a:hover img {
+                    opacity: 0.5;
+                    filter: alpha(opacity=50);
+               }
+
+
+.banners-effect-9 .banners > div a {
+     display: block;
+     position: relative;
+     z-index: 10;
+}
+     
+
+     .banners-effect-9 .banners > div a:before {
+     	position: absolute;
+     	top: 0;
+     	left: 0;
+     	z-index: 0;
+     	width: 100%;
+     	height: 100%;
+     	background: #000;
+     	content: '';
+     	-webkit-transition: opacity 0.35s;
+     	transition: opacity 0.35s;
+     	box-shadow: 0 3px 30px rgba(0,0,0,0.2);
+     	opacity: 0;
+     }
+     
+          .banners-effect-9 .banners > div a:hover:before {
+               opacity: 1;
+          }
+
+     .banners-effect-9 .banners > div a img {
+          opacity: 1;
+          -webkit-transition: -webkit-transform 0.35s;
+          transition: transform 0.35s;
+          -webkit-transform: perspective(1000px) translate3d(0,0,0);
+          transform: perspective(1000px) translate3d(0,0,0);
+     }
+     
+          .banners-effect-9 .banners > div a:hover img {
+               -webkit-transform: perspective(1000px) translate3d(0,0,21px);
+               transform: perspective(1000px) translate3d(0,0,21px);
+          }
+          
+.banners-effect-10 .banners > div a {
+     display: block;
+     position: relative;
+     overflow: hidden;
+}
+     
+     .banners-effect-10 .banners > div a:before {
+     	position: absolute;
+     	top: 0;
+     	left: 0;
+     	width: 100%;
+     	height: 100%;
+     	background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 75%);
+     	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 75%);
+     	content: '';
+     	opacity: 0;
+     	-webkit-transform: translate3d(0,50%,0);
+     	transform: translate3d(0,50%,0);
+     	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+     	transition: opacity 0.35s, transform 0.35s;
+     }
+     
+          .banners-effect-10 .banners > div a:hover:before {
+               opacity: 1;
+               -webkit-transform: translate3d(0,0,0);
+               transform: translate3d(0,0,0);
+          }
+
+
+.banners-effect-11 .banners > div a {display: block;position: relative;overflow: hidden;
+	&:hover{
+		&:before,&:after{
+			width:100%;height: 100%;
+		}
+	}
+	
+	&:before,&:after{
+		 background-color: rgba(0, 0, 0, 0.15);
+		content: "";
+		height: 0;
+		left: 0;
+		margin: auto;
+		position: absolute;
+		
+		width: 0;
+		@include transition(all 0.3s ease-out 0s);
+	}
+	&:after{left: auto;right: 0; bottom: 0;}
+}
+
+.banners-effect-12 .banners > div {
+	img { @include transition(all 0.3s ease-in);
+		&:hover{@include filter(grayscale(100%));}
+	}
+	
+}
+
+/*============POPUP ADDED TO CART ==================*/
+body>.alert {
+    position: fixed;
+    z-index: 10004;
+    top: 0;
+    left: 0;
+    width: 100%;
+    @include animation(alert-anim 1s cubic-bezier(1, -0.01, 0, 0.99));
+}
+body>.alert .alert{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+}
+body>.alert .alert.fadeOut{ top: -100%;}
+@include keyframes(alert-anim) {
+   0% {
+        top: -100%;
+    }
+    60% {
+        top: 0;
+    }
+    100% {
+        top: 0;
+    }
+}
+@include keyframes(alert-anim2) {
+   0% {
+        top: -100%;
+    }
+    60% {
+        top: 100%;
+    }
+    100% {
+        top: 100%;
+    }
+}
+@include keyframes(alert-icon-anim) {
+   0% {
+        font-size: 0;
+    }
+    60% {
+        font-size: 0;
+    }
+   
+}
+
+/*============ PAGE COMINGSOON ==================*/
+.comingsoon-page{ background: #495057; padding: 7em 0;color: #bdbdbd;
+  .container{max-width: 750px;}
+
+    .comingsoon--title{margin: 0.5em 0 1em; font-size: 46px;color: $white; text-transform: uppercase;font-weight: 700; padding: 0 1em;}
+    .comingsoon--content{margin: 1em 0;  font-size: 14px;}
+    .comingsoon--countdown{margin:6em 0 8em;
+      .time-item{width:125px;height: 125px;border: 3px solid rgba(255,255,255,0.4); border-radius: 50%; margin:0 15px; display: inline-block; padding: 30px;}
+      .num-time{ font-size: 40px; color: $white; font-weight: 700; line-height: 100%; margin:0 0 5px 0;}
+      .name-time{ font-size: 20px;text-transform: uppercase; }
+    }
+    .comingsoon--newsletter{ margin:2em 0;
+        .newsletter{background: none !important;}
+        .title-block{display: none;}
+       
+    }
+}

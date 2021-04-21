@@ -1,0 +1,109 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+
+{% set special_info = 0 %}
+{% for product in products %}
+	{% if  product.special %}
+		{% set special_info = special_info + 1 %}
+	{% endif %}
+{% endfor %}
+
+{% if soconfig.get_settings('product_catalog_deals') and special_info %}
+<div class="module category_deals">
+	<h3 class="title-category">{{text_todaydeals}}</h3>
+	<div class="modcontent ">
+		<div class="deals_module_wrapper contentslider" data-rtl="{{direction}}" data-autoplay="no"  data-pagination="no" data-delay="4" data-speed="0.6" data-margin="0"  data-items_column0="1" data-items_column1="1" data-items_column2="1" data-items_column3="1" data-items_column4="1" data-arrows="yes" data-lazyload="yes" data-loop="no" data-hoverpause="yes" >
+			
+			{% for product in products %}
+				{% if product.special %}
+					<div class="product-item-container">
+						<div class="row">
+							<div class="left-block col-lg-4 col-md-6">
+								<div class="product-image-container ">
+									<a href="{{ product.href }} " title="{{ product.name }} ">
+										<img  src="{{ product.thumb }} " alt="{{ product.name }} " title="{{ product.name }} " class="img-responsive" />
+									</a>
+									<div class="box-label">
+										{# New Label  #}
+										{% if soconfig.get_settings('new_status') and product.date_available %} 
+											<span class="label-product label-new">{{ objlang.get('text_new')}} </span>
+										{% endif %} 
+										
+										{# Discount Label #}
+										{% if soconfig.get_settings('discount_status')  %} 
+										{% if product.price  and  product.special  %} 
+											<span class="label-product label-sale">
+												 {{ product.discount }}
+											</span>
+										{% endif %} 
+										{% endif %} 
+									</div> 
+								</div>
+								{#===== Show CountDown Product =======#}
+								{% if soconfig.get_settings('countdown_status') and product.special_end_date %}
+									{% include theme_directory~'/template/soconfig/countdown.twig' with {product: product,special_end_date:product.special_end_date} %}
+								{% endif %}
+
+							</div>
+							
+							<div class="right-block col-lg-8 col-md-6">
+								<div class="caption">
+									<h3 class="title-product"><a href="{{ product.href }}">{{ product.name }}</a></h3>		
+									<div class="clearfix">
+										{% if soconfig.get_settings('rating_status') %} 
+										<div class="ratings">
+											<div class="rating-box">
+											{% for i in 1..5 %}
+											{% if product.rating < i %} 
+												<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+											{% else %}   
+												<span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+											{% endif %} 
+											{% endfor %}
+
+											</div>
+										</div>
+										{% endif %} 
+
+
+										{% if product.price %} 
+										<div class="price">
+											{% if not product.special %} 
+												<span class="price-new">{{ product.price }} </span>
+											{% else %}   
+												<span class="price-new">{{ product.special }} </span> <span class="price-old">{{ product.price }} </span>
+											{% endif %} 
+										</div>
+										{% endif %} 
+										
+									</div>
+									
+									<div class="short_description clearfix">
+										<p>{{ product.description }}</p>
+									</div>
+								</div>
+							   
+								
+								<div class="button-group">
+									<button class="btn btn-default addToCart" type="button" data-toggle="tooltip" title="{{ button_cart }}" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><span>{{ button_cart }}</span></button>
+									<button class="btn btn-default wishlist" type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart-o"></i></button>
+									<button class="btn btn-default compare" type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-retweet"></i></button>
+								</div>
+
+							</div>
+						</div>	
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+	
+</div>
+{% endif %}
+

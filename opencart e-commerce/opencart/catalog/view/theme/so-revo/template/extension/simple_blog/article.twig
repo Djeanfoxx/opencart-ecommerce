@@ -1,0 +1,231 @@
+
+{{ header }}
+	<div class="container">
+		<ul class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+			<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+    <div class="container product-listing">
+        
+        <div class="row">
+            {{ column_left }}
+            {% if column_left and column_right %}
+                {% set class = 'col-sm-6 fluid-allsidebar' %}
+            {% elseif column_left or column_right %}
+                {% set class = 'col-md-9 col-sm-12 fluid-sidebar' %}
+            {% else %}
+                {% set class = 'col-sm-12' %}
+            {% endif %}
+            
+            <div id="content" class="{{ class }}">
+                {{ content_top }}
+                
+                {% if column_left or column_right %}
+				<a href="javascript:void(0)" class="btn btn-primary open-sidebar  hidden-lg hidden-md form-group"><i class="fa fa-bars"></i> {{ text_sidebar }} </a>
+					<div class="sidebar-overlay "></div>
+				{% endif %}
+
+				{% if error_no_database is defined and error_no_database == '' %}
+	            <div class="blog-category clearfix">
+					 <div class="blog-header">
+						<h3>{{ heading_title }}</h3>
+						{% if image  %}	
+						<img  src="{{ image }}" alt="{{heading_title }}" />
+						{% endif %}
+						{{ description is defined and description ? description : '' }}
+					</div>	
+				
+
+					{#==== filters panel Top==== #}
+					<div class="product-filter product-filter-top filters-panel hidden-sm hidden-xs">
+						  <div class="row">
+								<div class="col-sm-4 view-mode">
+									<div class="list-view ">
+										<button type="button" id="grid-view" class="btn btn-view hidden-sm hidden-xs">1</button>
+										<button type="button" id="grid-view-2" class="btn btn-view ">2</button>
+									  	<button type="button" id="grid-view-3" class="btn btn-view hidden-sm hidden-xs ">3</button>
+									  	<button type="button" id="grid-view-4" class="btn btn-view hidden-sm hidden-xs">4</button>
+										<button type="button" id="list-view" class="btn btn-view list "><i class="fa fa-bars"></i></button>
+										
+									</div>
+								</div>
+							
+						  </div>
+					</div>
+
+	                <div class="blog-listitem row">
+	                    {% if articles %}
+	                        {% for id_article, article in articles %}
+
+		                        <div class="blog-item ">
+		                        	<div class="blog-item-inner clearfix">
+										{% if article.image %}
+											<div class="itemBlogImg clearfix">
+												<div class="article-image">
+													<div>
+														<a  class="popup-gallery" href="{{ article.image }}"><img  src="{{ article.image }}" alt="{{ article.article_title }}" /></a>
+													</div>
+													<div class="article-date">
+														<div class="date">
+															 
+															<span class="article-date" >
+																{% set datetotime = article.date_added %}
+															   {{ datetotime }}
+															</span>
+														</div>
+													</div>
+
+												</div>
+											</div>
+										{% endif %}
+										<div class="itemBlogContent clearfix ">
+											
+											<div class="blog-content">
+										  		<div class="article-title font-title">
+													<h4><a href="{{ article.href }}">{{ article.article_title|capitalize }}</a></h4>
+												</div>
+												
+										  		<div class="blog-meta">
+										  			<span class="author"><i class="fa fa-user"></i><span>Post by </span>{{ article.author_name }}</span>
+													{% if article.allow_comment %}
+														<span class="comment_count"><i class="fa fa-comment-o"></i><a href="{{ article.comment_href }}#comment-section">{{ article.total_comment }}</a></span>
+													{% endif %}
+													
+												</div>
+												
+											 	<p class="article-description" >
+													 {{ article.description }}
+												</p>
+
+
+												<div class="readmore">
+													<a class="btn-readmore font-title" href="{{ article.href }}"><i class="fa fa-caret-right"></i>{{ button_continue_reading }}</a>
+												</div>
+
+											</div>
+										</div>
+									</div>
+		                        </div>
+
+
+
+
+
+
+
+
+
+															
+	                    	{% endfor %}
+	                    {% else %}
+	                        <div class="col-xs-12">
+								<h3 class="text-center">{{ text_no_found }}</h3>
+							</div>
+	                    {% endif %}
+	                </div> 
+					
+					<script type="text/javascript"><!--
+					reinitView();
+					function getParameterByName(name, url) {
+					    if (!url) url = window.location.href;
+					    name = name.replace(/[\[\]]/g, "\\$&");
+					    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+					        results = regex.exec(url);
+					    if (!results) return null;
+					    if (!results[2]) return '';
+					    return decodeURIComponent(results[2].replace(/\+/g, " "));
+					}
+					function reinitView() {
+						
+						$('.view-mode .list-view button').bind("click", function() {
+							$(this).parent().find('button').removeClass('active');
+							$(this).addClass('active');
+						});	
+						// Product List
+						$('#list-view').click(function() {
+							$('#content .blog-item').attr('class', 'blog-item blog-list col-xs-12');
+							localStorage.setItem('blogview', 'blog-list');
+						});
+
+						// Product Grid
+						$('#grid-view').click(function() {
+							$('#content .blog-item').attr('class', 'blog-item blog-grid blog-grid-1 col-sm-12 col-xs-12');
+							localStorage.setItem('blogview', 'blog-grid');
+						});
+
+						// Product Grid 2
+						$('#grid-view-2').click(function() {
+							$('#content .blog-item').attr('class', 'blog-item blog-grid blog-grid-2 col-lg-6 col-md-6 col-sm-6 col-xs-12');
+							localStorage.setItem('blogview', 'blog-2');
+						});
+
+						// Product Grid 3
+						$('#grid-view-3').click(function() {
+							$('#content .blog-item').attr('class', 'blog-item blog-grid blog-grid-3 col-lg-4 col-md-4 col-sm-6 col-xs-12');
+							localStorage.setItem('blogview', 'blog-3');
+						});
+
+						// Product Grid 4
+						$('#grid-view-4').click(function() {
+							$('#content .blog-item').attr('class', 'blog-item blog-list blog-grid-4 col-lg-3 col-md-4 col-sm-6 col-xs-12');
+							localStorage.setItem('blogview', 'blog-4');
+						});
+
+						var url_blogview = getParameterByName('blogview'); // "lorem"
+						if(localStorage.getItem('blogview')== null) localStorage.setItem('blogview', '{{simple_blog_columns}}');
+						if(url_blogview){
+							if (url_blogview == 'blog-grid') {
+								$('#grid-view').trigger('click');
+							}  else if (url_blogview == 'blog-2'){
+								$('#grid-view-2').trigger('click');
+							} else if (url_blogview == 'blog-3' ){
+								$('#grid-view-3').trigger('click');
+							} else if (url_blogview == 'blog-4'){
+								$('#grid-view-4').trigger('click');
+							} else{
+								$('#list-view').trigger('click');
+							}
+							
+						}else{
+
+							if (localStorage.getItem('blogview') == 'blog-grid') {
+								$('#grid-view').trigger('click');
+							}  else if (localStorage.getItem('blogview') == 'blog-2'){
+								$('#grid-view-2').trigger('click');
+							} else if (localStorage.getItem('blogview') == 'blog-3' ){
+								$('#grid-view-3').trigger('click');
+							} else if (localStorage.getItem('blogview') == 'blog-4'){
+								$('#grid-view-4').trigger('click');
+							} else{
+								$('#list-view').trigger('click');
+							}
+						}
+						
+					}
+
+					//--></script> 
+
+	                <div class="product-filter product-filter-bottom filters-panel clearfix" >
+						<div class="row">
+							
+							<div class="col-md-12"><div>{{ pagination }}</div></div>
+						</div>
+					</div>
+
+				</div>
+				{% else %}
+					<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>
+						{{ error_no_database }}
+					</div>
+				{% endif %}
+				
+                {{ content_bottom }}
+            </div>            
+            
+            {{ column_right }}
+        </div>        
+    </div> 
+
+{{ footer }}

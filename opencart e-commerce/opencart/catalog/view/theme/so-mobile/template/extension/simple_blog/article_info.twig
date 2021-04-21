@@ -1,0 +1,71 @@
+{{ header }}
+
+    
+    {{ include (theme_config~"/template/extension/simple_blog/article_info/default.twig") }}
+    
+    
+    
+    <script type="text/javascript">
+		function removeCommentId() {
+			$("#blog-reply-id").val(0);
+			$("#reply-remove").css('display', 'none');
+		}
+	</script>
+    
+    <script type="text/javascript">
+		$('#comment-list .pagination a').delegate('click', function() {
+			$('#comment-list').fadeOut('slow');
+				
+			$('#comment-list').load(this.href);
+			
+			$('#comment-list').fadeIn('slow');
+			
+			return false;
+		});			
+		
+		$('#comment-list').load('index.php?route=extension/simple_blog/article/comment&simple_blog_article_id={{ simple_blog_article_id }}');
+		
+	</script>	
+    
+    <script type="text/javascript">		
+		$('#button-comment').bind('click', function() {
+			$.ajax({
+				type: 'POST',
+				url: 'index.php?route=extension/simple_blog/article/writeComment&simple_blog_article_id={{ simple_blog_article_id }}',
+				dataType: 'json',
+				data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()) + '&reply_id=' + encodeURIComponent($('input[name=\'blog_article_reply_id\']').val()),
+				beforeSend: function() {
+					$('.success, .warning').remove();
+					$('#button-comment').attr('disabled', true);
+					$('#review-title').after('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> {{ text_wait }}</div>');
+				},
+				complete: function() {
+					$('#button-comment').attr('disabled', false);
+					$('.attention').remove();
+				},
+				success: function(data) {
+				   
+                    $('.alert').remove();
+                    
+					if (data['error']) {
+						$('#review-title').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + data['error'] + '</div>');
+					}
+					
+					if (data['success']) {
+						$('#review-title').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + data['success'] + '</div>');
+										
+						$('input[name=\'name\']').val('');
+						$('textarea[name=\'text\']').val('');
+						$('input[name=\'captcha\']').val('');
+						$("#blog-reply-id").val(0);
+						$("#reply-remove").css('display', 'none');
+						
+						$('#comment-list').load('index.php?route=extension/simple_blog/article/comment&simple_blog_article_id={{ simple_blog_article_id }}');							
+					}
+				}
+			});
+		});
+	</script> 	
+		
+    
+{{ footer }}

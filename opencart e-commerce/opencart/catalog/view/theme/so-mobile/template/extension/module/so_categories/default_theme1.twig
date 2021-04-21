@@ -1,0 +1,45 @@
+<div class="cat-wrap theme1">
+	{% set i = 0 %}
+	{% for items in list %}
+		{% set i = i + 1 %}
+		<div class="content-box">
+			{% if cat_title_display %}
+				<div class="cat-title">
+					<a title="{{ items.title }}" href="{{ items.link }}" target="{{ item_link_target }}">{{ items.title_maxlength }}</a>
+				</div>
+			{% endif %}
+			
+			{% if cat_sub_title_display %}
+				<div class="child-cat">
+					{% if items.child_cat is not empty %}
+						{% for item in items.child_cat %}
+							<div class="child-cat-title">
+								<a href="{{ item.link }}" title="{{ item['title'] }}" target="{{ item_link_target }}">
+									{% if item.title|length > cat_sub_title_maxcharacs and cat_sub_title_maxcharacs != 0 %}
+										{{ item.title|striptags|slice(0, cat_sub_title_maxcharacs) }}
+									{% else %}	
+										{{ item.title }}
+									{% endif %}
+								</a>
+								{% if cat_all_product %}
+									<span class="num_items">{{ '(' ~ item.all_product ~ ')' }}</span>
+								{% endif %}
+							</div>
+						{% endfor %}
+					{% else %}
+						<p>
+							{{ objlang.get('text_noitem') }}
+						</p>
+					{% endif %}
+				</div>
+			{% endif %}
+		</div>
+		{% set clear = 'clr1' %}
+		{% if i % 2 == 0 %} {% set clear = clear~' clr2' %} {% endif %}
+		{% if i % 3 == 0 %} {% set clear = clear~' clr3' %} {% endif %}
+		{% if i % 4 == 0 %} {% set clear = clear~' clr4' %} {% endif %}
+		{% if i % 5 == 0 %} {% set clear = clear~' clr5' %} {% endif %}
+		{% if i % 6 == 0 %} {% set clear = clear~' clr6' %} {% endif %}
+		<div class="{{ clear }}"></div>
+	{% endfor %}
+</div>

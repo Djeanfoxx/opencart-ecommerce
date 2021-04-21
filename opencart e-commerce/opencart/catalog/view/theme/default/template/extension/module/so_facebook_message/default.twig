@@ -1,0 +1,57 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="so-fb-message {{ setting.position }}" style="width: {{ setting.width }}px">
+	<div class="so-fb-ms-inner" style="display: none;">
+		<div class="offline_heading" style="width: {{ setting.width - 2 }}px">
+            <label class="button_chat_offline_text">{{ setting.widget_text }}</label>
+            <i class="fa fa-angle-down shrink_icon"></i>
+        </div>
+		<div class="fb-page" 
+			data-href="{{ setting.page_url }}" 
+			data-tabs="{{ setting.tabs }}" 
+			data-width="{{ setting.width }}" 
+			data-height="{{ setting.height }}" 
+			data-small-header="{{ setting.small_header == 1 ? 'true' : 'false' }}" 
+			data-adapt-container-width="true" 
+			data-hide-cover="{{ setting.hide_cover == 1 ? 'true' : 'false' }}" 
+			data-show-facepile="{{ setting.show_facepile == 1 ? 'true' : 'false' }}">
+			<blockquote cite="{{ setting.page_url }}" class="fb-xfbml-parse-ignore">
+				<a href="{{ setting.page_url }}">{{ setting.name }}</a>
+			</blockquote>
+		</div>
+	</div>
+	
+	<div class="so-fb-ms-bottom so-fb-message-style-{{ setting.button_style }}">
+		{% if setting.button_style == 'default' %}
+      	<div class="so-fb-ms-heading so-fb-message-head">
+      		<img class="online" src="catalog/view/theme/default/image/so_facebook_message/da.png">{{ setting.widget_text }}
+      	{% elseif setting.button_style == 'metro' %}
+      	<div class="so-fb-ms-heading so-fb-message-head-metro">
+      		<a href="javascript:void(0)"><span></span>{{ setting.widget_text }}</a>
+      	{% elseif setting.button_style == 'icon' %}
+      	<div class="so-fb-ms-heading so-fb-message-head-icon">
+      		<img  src="catalog/view/theme/default/image/so_facebook_message/fbmessenger.svg" style="width:50px;">
+      	{% endif %}
+       	</div>
+	</div>	
+</div>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$(document).on('click', '.so-fb-ms-bottom', function() {
+			$(this).prev('.so-fb-ms-inner').show();
+			$(this).hide();
+		})
+
+		$(document).on('click', '.offline_heading', function() {
+			$(this).parent('.so-fb-ms-inner').hide();
+			$(this).parent().next('.so-fb-ms-bottom').show();
+		})
+	})
+</script>

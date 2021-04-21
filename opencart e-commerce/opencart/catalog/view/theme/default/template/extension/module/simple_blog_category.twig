@@ -1,0 +1,56 @@
+{% if categories %}
+    <div class="blog-category module">
+		{% if simple_blog_category_search_article is defined and simple_blog_category_search_article %}
+			<div id="blog-search" class="module">
+				<div class="input-group">
+					<input type="text" name="article_search" value="{{ blog_search }}" placeholder="{{ text_search_article }}" class="form-control" style="margin-bottom: 5px;" />
+					<span class="input-group-btn" style="vertical-align: top;">
+						<a id="button-search" class="button-search btn btn-primary"><i class="fa fa-search"></i></a>
+					</span>
+					
+				</div>
+			</div>
+		{% endif %}
+		<div class="module blog-cate">
+			<h3 class="modtitle"><span>{{ heading_title }}</span></h3>
+			 <ul class="list-group ">
+			 	{% for category in categories %}
+					{% if category.simple_blog_category_id == category_id %}
+						<li class="list-group-item"> <a href="{{ category.href }}" class=" active">{{ category.name }}</a></li>
+						{% if category.children %}
+							{% for child in category.children %}
+								{% if child.category_id == child_id %}
+									<a href="{{ child.href }}" class="active">&nbsp;&nbsp;&nbsp;- {{ child.name }}</a>
+								{% else %}
+									<a href="{{ child.href }}" >&nbsp;&nbsp;&nbsp;- {{ child.name }}</a>
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+					{% else %}
+						<li class="list-group-item"> <a href="{{ category.href }}" >{{ category.name }}</a></li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		</div>      	
+    </div>
+{% endif %}
+
+<script type="text/javascript">
+	$('#blog-search input[name=\'article_search\']').keydown(function(e) {
+		if (e.keyCode == 13) {
+			$('#button-search').trigger('click');
+		}
+	});
+
+	$('#button-search').bind('click', function() {
+		url = 'index.php?route=extension/simple_blog/search';
+		
+		var article_search = $('#blog-search input[name=\'article_search\']').val();
+		
+		if (article_search) {
+			url += '&blog_search=' + encodeURIComponent(article_search);
+		}
+		
+		location = url;
+	});
+</script> 

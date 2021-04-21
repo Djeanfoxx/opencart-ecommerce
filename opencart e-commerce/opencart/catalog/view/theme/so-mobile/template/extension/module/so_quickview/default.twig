@@ -1,0 +1,58 @@
+<script type="text/javascript">
+	function _SoMagnificPopup(){
+		$('.products-list').magnificPopup({
+	        delegate: '.quickview_handler',
+	        preloader: true,
+	        tLoading: '',
+	        type: 'iframe',
+	        mainClass: 'my-mfp-zoom-in',
+	        removalDelay: 200,
+	        gallery: {enabled: true},
+	        callbacks: {
+	        open: function() {
+	          // Will fire when this exact popup is opened
+	          // this - is Magnific Popup object
+	        },
+	        beforeOpen: function() {
+	            $('[data-toggle=\'tooltip\']').hover(
+	                function() {
+	                },
+	                function(e) {
+	                  $('[data-toggle=\'tooltip\']').tooltip('hide');
+	                }
+	            );
+	        },
+	        afterClose: function() {
+	            $('[data-toggle=\'tooltip\']').tooltip('hide');
+	        },
+	        
+	      }
+    	});
+
+	}
+	function _SoQuickView(){
+		var $item_class = $('{{ class_suffix }}');
+		if ($item_class.length > 0) {
+			for (var i = 0; i < $item_class.length; i++) {
+				//$($item_class[i]).addClass('quickview');
+				if($($item_class[i]).find('.quickview_handler').length <= 0){
+					var producturlpath = $($item_class[i]).find('a', $(this)).attr('href');
+					if(typeof producturlpath !== 'undefined' && producturlpath.length > 0 ){
+						var $product_id = $($item_class[i]).find('a', $(this)).attr('data-product');
+						var _quickviewbutton = "<a class='visible-lg btn-button quickview quickview_handler' href='{{ our_url.link('extension/soconfig/quickview','product_id=') }}"+$product_id+"' title=\"{{ label_text }}\" data-toggle=\"tooltip\" data-title =\"{{ label_text }}\" data-fancybox-type=\"iframe\" ><i class=\"quickview fa fa-search\"></i></a>";
+						$($item_class[i]).append(_quickviewbutton);
+					}
+				}
+			}
+		}
+		_SoMagnificPopup();
+	}
+	jQuery(document).ready(function ($) {
+		setTimeout(function (){_SoQuickView()}, 500);
+		// Hide tooltip when clicking on it
+		var hasTooltip = $("[data-toggle='tooltip']").tooltip({container: 'body'});
+		hasTooltip.on('click', function () {
+				$(this).tooltip('hide')
+		});
+	});
+</script>

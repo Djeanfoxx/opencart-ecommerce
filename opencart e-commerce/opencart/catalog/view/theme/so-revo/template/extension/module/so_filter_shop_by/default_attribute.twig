@@ -1,0 +1,35 @@
+<li class="so-filter-options" data-attribute="{{ item[0] }}">
+	<div class="so-filter-heading">
+		<div class="so-filter-heading-text">
+			<span>{{ item[0] }}</span>
+		</div>
+		<i class="fa fa-chevron-down"></i>
+	</div>
+
+	<div class="so-filter-content-opts">
+		<div class="so-filter-content-opts-container">
+			{% for value in values %}
+				{% if att_id|length > 0 %}
+					{% set class = value.att_value_id in att_id|split(',') == true ? 'opt_active' : '' %}
+				{% else %}
+					{% set class = "" %}
+				{% endif %}
+
+				{% if disp_attributes[value.att_value_value] %}
+					<div class="so-filter-option opt-select {{ class }} {{ value.att_count_product > 0 ? 'opt_enable' : 'opt_disable' }}" data-type="attribute" data-attribute_value= "{{ value.att_value_id }}" data-count_product="{{ value.att_count_product }}" data-list_product="{{ value.att_list_product }}">
+						<div class="so-option-container">
+							<div class="option-input">
+								<i class="fa fa-square-o"></i>
+							</div>
+							<label>{{ value.att_value_name }}</label>
+							<div class="option-count {% if att_id|length > 0 %} {{ value.att_value_id in att_id|split(',') == true ? 'opt_close' : '' }}{% endif %}">
+								<span>{{ value.att_count_product }}</span>
+								<i class="fa fa-times"></i>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</li>

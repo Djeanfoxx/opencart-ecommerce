@@ -1,0 +1,377 @@
+{% if settings.status is defined and settings.status == 1 %}
+<script type="text/javascript" src="{{ tool_js }}"></script>
+<div id="so-groups" class="{{ position }} so-groups-sticky hidden-xs" style="top: {{ top~'px' }}">
+	{% if settings.show_category %}
+	<a class="sticky-categories" data-target="popup" data-popup="#popup-categories"><span>{{ text_head_categories }}</span><i class="fa fa-align-justify"></i></a>
+	{% endif %}
+	{% if settings.show_cart %}
+	<a class="sticky-mycart" data-target="popup" data-popup="#popup-mycart"><span>{{ text_head_cart }}</span><i class="fa fa-shopping-cart"></i></a>
+	{% endif %}
+	{% if settings.show_account %}
+	<a class="sticky-myaccount" data-target="popup" data-popup="#popup-myaccount"><span>{{ text_head_account }}</span><i class="fa fa-user"></i></a>
+	{% endif %}
+	{% if settings.show_search %}
+	<a class="sticky-mysearch" data-target="popup" data-popup="#popup-mysearch"><span>{{ text_head_search }}</span><i class="fa fa-search"></i></a>
+	{% endif %}
+	{% if settings.show_recent_product %}
+	<a class="sticky-recent" data-target="popup" data-popup="#popup-recent"><span>{{ text_head_recent_view }}</span><i class="fa fa-recent"></i></a>
+	{% endif %}
+	{% if settings.show_backtop %}
+	<a class="sticky-backtop" data-target="scroll" data-scroll="html"><span>{{ text_head_gotop }}</span><i class="fa fa-angle-double-up"></i></a>
+	{% endif %}
+
+	{% if settings.show_category %}
+	<div class="popup popup-categories popup-hidden" id="popup-categories">
+		<div class="popup-screen">
+			<div class="popup-position">
+				<div class="popup-container popup-small">
+					<div class="popup-header">
+						<span><i class="fa fa-align-justify"></i>{{ text_all_categories }}</span>
+						<a class="popup-close" data-target="popup-close" data-popup-close="#popup-categories">&times;</a>
+					</div>
+					<div class="popup-content">
+						{% if categories %}
+						<div class="nav-secondary">
+							<ul>
+								{% for category in categories %}
+									{% set childrens = category.children %}
+									<li>
+										{% if childrens %}
+											<span class="nav-action">
+												<i class="fa fa-plus more"></i>
+												<i class="fa fa-minus less"></i>
+											</span>
+										{% endif %}
+										<a href="{{ category.href }}"><i class="fa fa-chevron-down nav-arrow"></i>{{ category.name }}</a>
+										{% if childrens %}
+											<ul class="level-2">
+												{% for child in childrens %}
+													{% set subchildrens = child.children %}
+													<li>
+														{% if subchildrens %}
+															<span class="nav-action">
+																<i class="fa fa-plus more"></i>
+																<i class="fa fa-minus less"></i>
+															</span>
+														{% endif %}
+														<a href="{{ child.href }}"><i class="fa fa-chevron-right flip nav-arrow"></i>{{ child.name }}</a>
+														{% if subchildrens %}
+															<ul class="level-3">
+																{% for subchild in subchildrens %}
+																	<li><a href="{{ subchild.href }}">{{ subchild.name }}</a></li>
+																{% endfor %}
+															</ul>
+														{% endif %}
+													</li>
+												{% endfor %}
+											</ul>
+										{% endif %}
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	{% if settings.show_cart %}
+	<div class="popup popup-mycart popup-hidden" id="popup-mycart">
+		<div class="popup-screen">
+			<div class="popup-position">
+				<div class="popup-container popup-small">
+					<div class="popup-html">
+						<div class="popup-header">
+							<span><i class="fa fa-shopping-cart"></i>{{ text_shopping_cart }}</span>
+							<a class="popup-close" data-target="popup-close" data-popup-close="#popup-mycart">&times;</a>
+						</div>
+						<div class="popup-content">
+							<div class="cart-header">
+								{% if products or vouchers %}
+									<div class="notification gray">
+										<p>{{ text_items_product }}</p>
+									</div>
+									<table class="table table-striped">
+										{% for product in products %}
+											<tr>
+									  			<td class="text-left first">
+									  				{% if product.thumb %}
+									    				<a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a>
+									    			{% endif %}
+									    		</td>
+									  			<td class="text-left">
+									  				<a href="{{ product.href }}">{{ product.name }}></a>
+									    			{% if product.option %}
+									    				{% for option in product.option %}
+									    					<br />
+									    					- <small>{{ option.name }} {{ option.value }}</small>
+									    				{% endfor %}
+									    			{% endif %}
+									    			{% if product.recurring %}
+									    				<br />
+									    				- <small>{{ text_recurring }} {{ product.recurring }}</small>
+									    			{% endif %}
+									    		</td>
+									  			<td class="text-right">x {{ product.quantity }}</td>
+									  			<td class="text-right total-price">{{ product.total }}</td>
+									  			<td class="text-right last"><a href="javascript:;" onclick="cart.remove('{{ product.cart_id }}');" title="{{ button_remove }}"><i class="fa fa-trash"></i></a></td>
+											</tr>
+										{% endfor %}
+										{% for voucher in vouchers %}
+											<tr>
+									  			<td class="text-left first"></td>
+									  			<td class="text-left">{{ voucher.description }}</td>
+									  			<td class="text-right">x&nbsp;1</td>
+									  			<td class="text-right">{{ voucher.amount }}</td>
+									  			<td class="text-right last"><a href="javascript:;" onclick="voucher.remove('{{ voucher.key }}');" title="{{ button_remove }}"><i class="fa fa-trash"></i></a></td>
+											</tr>
+										{% endfor %}
+									</table>
+									<div class="cart-bottom">
+										<table class="table table-striped">
+									  		{% for total in totals %}
+									  			<tr>
+									    			<td class="text-left"><strong>{{ total.title }}</strong></td>
+									    			<td class="text-right">{{ total.text }}</td>
+									  			</tr>
+									  		{% endfor %}
+										</table>
+										<p class="text-center">
+											<a href="{{ cart }}" class="btn btn-view-cart"><strong>{{ text_cart }}</strong></a>
+											<a href="{{ checkout }}" class="btn btn-checkout"><strong>{{ text_checkout }}</strong></a>
+										</p>
+									</div>
+								{% else %}
+									<div class="notification gray">
+										<i class="fa fa-shopping-cart info-icon"></i>
+										<p>{{ text_empty }}</p>
+									</div>
+								{% endif %}
+							</div>
+						</div>			
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	{% if settings.show_account %}
+	<div class="popup popup-myaccount popup-hidden" id="popup-myaccount">
+		<div class="popup-screen">
+			<div class="popup-position">
+				<div class="popup-container popup-small">
+					<div class="popup-html">
+						<div class="popup-header">
+							<span><i class="fa fa-user"></i>{{ text_my_account }}</span>
+							<a class="popup-close" data-target="popup-close" data-popup-close="#popup-myaccount">&times;</a>
+						</div>
+						<div class="popup-content">
+							<div class="form-content">
+								<div class="row space">
+									<div class="col col-sm-6 col-xs-12">
+										<div class="form-box">
+											<form action="{{ action_currency }}" method="post" enctype="multipart/form-data" id="sticky-form-currency">
+												<label class="label-top" for="input-language"><span>{{ text_currency }}</span></label>
+												<select name="select-currency" id="input-currency" class="field icon dark arrow">
+													{% for currency in currencies %}
+														{% if currency.symbol_left %}
+															<option value="{{ currency.code }}" {% if code == currency.code %} {{ 'selected="selected"' }} {% endif %}>{{ currency.symbol_left }} {{ currency.title }}</option>
+														{% else %}
+															<option value="{{ currency.code }}" {% if code == currency.code %} {{ 'selected="selected"' }} {% endif %}>{{ currency.symbol_right }} {{ currency.title }}</option>
+														{% endif %}
+													{% endfor %}					
+												</select>
+												<input type="hidden" name="code" value="">
+												<input type="hidden" name="redirect" value="{{ redirect_currency }}">
+											</form>
+										</div>
+									</div>
+									<div class="col col-sm-6 col-xs-12">
+										<div class="form-box">
+											<form action="{{ action_language }}" method="post" enctype="multipart/form-data" id="sticky-form-language">
+												<label class="label-top" for="input-language"><span>{{ text_language }}</span></label>
+												<select name="select-language" id="input-language" class="field icon dark arrow">
+													{% for language in languages %}
+														{% if language.code == code_language %}
+															<option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
+														{% else %}
+															<option value="{{ language.code }}">{{ language.name }}</option>
+														{% endif %}
+													{% endfor %}
+												</select>
+												<input type="hidden" name="code" value="">
+												<input type="hidden" name="redirect" value="{{ redirect_language }}">
+											</form>
+										</div>
+									</div>
+									<div class="col col-sm-12">
+										<div class="form-box">
+											<div class="hr show"></div>
+										</div>
+									</div>
+									<div class="col col-sm-4 col-xs-6 txt-center">
+										<div class="form-box">
+											<a class="account-url" href="{{ link_order }}">
+												<span class="ico ico-32 ico-sm"><i class="fa fa-history"></i></span><br>
+												<span class="account-txt">{{ text_history }}</span>
+											</a>
+										</div>
+									</div>
+									<div class="col col-sm-4 col-xs-6 txt-center">
+										<div class="form-box">
+											<a class="account-url" href="{{ link_cart }}">
+												<span class="ico ico-32 ico-sm"><i class="fa fa-shoppingcart"></i></span><br>
+												<span class="account-txt">{{ text_shopping_cart }}</span>
+											</a>
+										</div>
+									</div>
+									<div class="col col-sm-4 col-xs-6 txt-center">
+										<div class="form-box">
+											<a class="account-url" href="{{ link_register }}">
+												<span class="ico ico-32 ico-sm"><i class="fa fa-register"></i></span><br>
+												<span class="account-txt">{{ text_register }}</span>
+											</a>
+										</div>
+									</div>
+									<div class="col col-sm-4 col-xs-6 txt-center">
+										<div class="form-box">
+											<a class="account-url" href="{{ link_account }}">
+												<span class="ico ico-32 ico-sm"><i class="fa fa-account"></i></span><br>
+												<span class="account-txt">{{ text_account }}</span>
+											</a>
+										</div>
+									</div>
+									<div class="col col-sm-4 col-xs-6 txt-center">
+										<div class="form-box">
+											<a class="account-url" href="{{ link_download }}">
+												<span class="ico ico-32 ico-sm"><i class="fa fa-download"></i></span><br>
+												<span class="account-txt">{{ text_download }}</span>
+											</a>
+										</div>
+									</div>
+									<div class="col col-sm-4 col-xs-6 txt-center">
+										<div class="form-box">
+											<a class="account-url" href="{{ link_login }}">
+												<span class="ico ico-32 ico-sm"><i class="fa fa-login"></i></span><br>
+												<span class="account-txt">{{ text_login }}</span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	{% if settings.show_search %}
+	<div class="popup popup-mysearch popup-hidden" id="popup-mysearch">
+		<div class="popup-screen">
+			<div class="popup-position">
+				<div class="popup-container popup-small">
+					<div class="popup-html">
+						<div class="popup-header">
+							<span><i class="fa fa-search"></i>{{ text_search }}</span>
+							<a class="popup-close" data-target="popup-close" data-popup-close="#popup-mysearch">&times;</a>
+						</div>
+						<div class="popup-content">
+							<div class="form-content">
+								<div class="row space">
+									<div class="col">
+										<div class="form-box">
+											<input type="text" name="search" value="" placeholder="Search" id="input-search" class="field" />
+											<i class="fa fa-search sbmsearch"></i>
+										</div>
+									</div>
+									<div class="col">
+										<div class="form-box">
+											<button type="button" id="button-search" class="btn button-search">{{ text_search }}</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	{% if settings.show_recent_product %}
+	<div class="popup popup-recent popup-hidden" id="popup-recent">
+		<div class="popup-screen">
+			<div class="popup-position">
+				<div class="popup-container popup-small">
+					<div class="popup-html">
+						<div class="popup-header">
+							<span><i class="fa fa-recent"></i>{{ text_recent_products }}</span>
+							<a class="popup-close" data-target="popup-close" data-popup-close="#popup-recent">&times;</a>
+						</div>
+						<div class="popup-content">
+							<div class="form-content">
+								<div class="row space">
+									{% if recent_products %}
+										{% for product_viewed in recent_products %}
+											<div class="col col-sm-4 col-xs-6">
+												<div class="form-box">
+													<div class="item">
+				                                        <div class="product-thumb transition">
+								                        	<div class="image">
+								                        		{% if product_viewed.product_special %}
+																	<span class="bt-sale">{{ product_viewed.product_discount }}</span>
+																{% endif %}
+																{% if product_viewed.product_new %}
+																	<span class="bt-new">{{ text_new }}</span>
+																{% endif %}
+																<a href="{{ product_viewed.product_href }}">
+																	<img src="{{ product_viewed.product_image }}" alt="{{ product_viewed.product_name }}" class="img-responsive" >
+																</a>
+								                         	</div>
+									                        <div class="caption">
+		                                                        <h4 class="font-ct"><a href="{{ product_viewed.product_href }}" title="{{ product_viewed.product_name }}" >{{ product_viewed.product_name }}</a></h4>
+		                                                        {% if product_viewed.product_price %}
+			                                                        <p class="price">
+			                                                        	{% if product_viewed.product_special == false %}
+										                                	<span class="price-new">{{ product_viewed.product_price }}</span>
+										                                {% else %}
+										                                	<span class="price-new">{{ product_viewed.product_special }}</span>
+										                                	<span class="price-old">{{ product_viewed.product_price }}</span>
+										                                {% endif %}
+										                            </p>
+		                                                    	{% endif %}
+		                                                    </div>
+		                                                    <div class="button-group">
+		                                                    	<button type="button" onclick="cart.add('{{ product_viewed.product_id }}');">
+		                                                    		<span class="">{{ button_cart }}</span>
+		                                                    	</button>
+		                                                    </div>
+			                                            </div>
+				                                    </div>
+												</div>
+											</div>
+										{% endfor %}
+									{% else %}
+										<div class="col col-xs-12">{{ 'Has no content to show !'}}</div>
+									{% endif %}
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+</div>
+{% endif %}

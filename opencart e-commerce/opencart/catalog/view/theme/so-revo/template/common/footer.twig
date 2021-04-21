@@ -1,0 +1,115 @@
+{# =========== Show Footer==============#}
+
+{% if soconfig.get_settings('typefooter') =='1'%}
+	{% include theme_directory~'/template/footer/footer1.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+
+{% elseif soconfig.get_settings('typefooter') =='2'%}
+	{% include theme_directory~'/template/footer/footer2.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+	
+{% elseif soconfig.get_settings('typefooter') =='3'%}
+	{% include theme_directory~'/template/footer/footer3.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+	
+{% elseif soconfig.get_settings('typefooter') =='4'%}
+	{% include theme_directory~'/template/footer/footer4.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+	
+{% elseif soconfig.get_settings('typefooter') =='5'%}
+	{% include theme_directory~'/template/footer/footer5.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+	
+{% elseif soconfig.get_settings('typefooter') =='6'%}
+	{% include theme_directory~'/template/footer/footer6.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+	
+{% elseif soconfig.get_settings('typefooter') =='7'%}
+	{% include theme_directory~'/template/footer/footer7.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+
+{% elseif soconfig.get_settings('typefooter') =='8'%}
+	{% include theme_directory~'/template/footer/footer8.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+	
+{% elseif soconfig.get_settings('typefooter') =='9'%}
+	{% include theme_directory~'/template/footer/footer9.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+	
+{% elseif soconfig.get_settings('typefooter') =='10'%}
+	{% include theme_directory~'/template/footer/footer10.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+
+{% elseif soconfig.get_settings('typefooter') =='11'%}
+	{% include theme_directory~'/template/footer/footer11.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+
+{% elseif soconfig.get_settings('typefooter') =='12'%}
+	{% include theme_directory~'/template/footer/footer12.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+
+{% elseif soconfig.get_settings('typefooter') =='13'%}
+	{% include theme_directory~'/template/footer/footer13.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+
+{% elseif soconfig.get_settings('typefooter') =='14'%}
+	{% include theme_directory~'/template/footer/footer14.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+	
+{% elseif soconfig.get_settings('typefooter') =='15'%}
+	{% include theme_directory~'/template/footer/footer15.twig' with {typefooter: soconfig.get_settings('typefooter')} %}
+
+{% endif %}
+
+
+<div id="previewModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title"> {{objlang.get('text_alertaddtocart') }}</h4>
+		</div>
+		<div class="modal-body"></div>
+    </div>
+  </div>
+</div>
+{# =========== Show BackToTop==============#}
+
+{% if soconfig.get_settings('social_sidebar')  %}
+	{% if soconfig.get_settings('social_sidebar') == 1 %}
+		{% set  social_sidebar = 'socialwidgets-left'%}
+	{% else %}
+		{% set  social_sidebar = 'socialwidgets-right'%}
+	{% endif %}
+	<section class="social-widgets visible-lg {{social_sidebar}} ">
+		<ul class="items">
+			{% if soconfig.get_settings('social_fb_status') %} 
+			<li class="item item-01 facebook">
+				<a href="catalog/view/theme/{{ theme_directory }}/template/social/facebook.php?account_fb={{soconfig.get_settings('facebook')}} " class="tab-icon"><span class="fa fa-facebook"></span></a>
+				<div class="tab-content">
+					<div class="title"><h5>{{text_title_facebook}}</h5></div>
+					<div class="loading">
+						<img class="lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="catalog/view/theme/{{ theme_directory }}/images/ajax-loader.gif" class="ajaxloader" alt="loader">
+					</div>
+				</div>
+			</li>
+			{% endif %} 
+
+			{% if soconfig.get_settings('social_twitter_status') %} 
+			<li class="item item-02 twitter">
+				<a href="catalog/view/theme/{{ theme_directory }}/template/social/twitter.php?account_twitter={{ soconfig.get_settings('twitter')}} " class="tab-icon"><span class="fa fa-twitter"></span></a>
+				<div class="tab-content">
+					<div class="title"><h5>{{text_title_twitter}}</h5></div>
+					<div class="loading">
+						<img class="lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="catalog/view/theme/{{ theme_directory }}/images/ajax-loader.gif" class="ajaxloader" alt="loader">
+					</div>
+				</div>
+			</li>
+			{% endif %} 
+
+			{% if soconfig.get_settings('social_custom_status') %} 
+			<li class="item item-03 youtube">
+				<div class="tab-icon"><span class="fa fa-youtube"></span></div>
+				<div class="tab-content">
+					<div class="loading">
+						{% if soconfig.get_settings('video_code') %}
+								{{ soconfig.decode_entities( soconfig.get_settings('video_code') ) }}
+						{% endif %} 
+					</div>
+				</div>
+			</li>
+			{% endif %} 
+		</ul>
+	</section>
+	
+{% endif %} 
+
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+@include breakpoint(lg){
+ 	
+	.container{width:1200px;overflow: visible;}
+
+	//=====SHOW MORE Footer=======
+	footer #collapse-footer{max-height: 100%;
+		&:before{display:none;}
+	}
+	
+	
+	
+	.layout-1.common-home .vertical .vertical-wrapper {
+		display: block !important;
+	}
+	.horizontal ul.megamenu > li.content-full > .sub-menu{
+		width: 1170px!important;
+		max-width: none;
+		
+		.content{ padding: 30px 30px 20px; }
+	}
+	.layout-1.common-home{
+		
+		 .vertical .vertical-wrapper{
+			display: block !important;
+		}
+	}
+	.so-page-builder .container{
+        overflow: visible !important;
+    }
+    div.so-deals-slick.slick-horizontal .deals-content .ds-items-detail{
+        padding: side-values(0px 35px 0px 20px) !important;
+    }
+
+
+    .typeheader-9{
+	    .megamenu-pattern,
+	    .megamenu-wrapper{
+	        position: static;
+	        .container{
+	             position: static;
+	        }
+	    }
+	}
+	.typeheader-10{
+	    .megamenu-wrapper{
+	        position: static;
+	    }
+	}
+	.applyLayout{
+		white-space: normal;
+	}
+
+}

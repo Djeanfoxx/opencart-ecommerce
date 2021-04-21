@@ -1,0 +1,202 @@
+{{ header }} {{ column_left }} 
+
+<div id="content">
+    <div class="page-header" style="border:none">    </div>
+
+    <div id="theme-options" class="container-fluid">
+
+         {% if error.warning %}
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error.warning }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        {% endif %} 
+		
+        {% if success  and  success %} 
+        <div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }} 
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        {% endif %} 
+
+        <div class="panel ">
+			<div class="content">
+				<div class="panel-heading">
+					
+					<div class="col-sm-6">
+						<div class="btn-group">
+							{% for store  in stores %}  
+								{% if store.store_id == active_store %}
+									<a class="btn  dropdown-toggle" data-toggle="dropdown" href="#">{{ store.name }} <span class="fa fa-angle-down"></span></a>
+								{% endif %}
+							{% endfor %} 
+							<span class="label label-primary">{{theme_version}}</span>
+							<ul class="dropdown-menu store_dropdown">
+								{% for store  in stores %}  
+									{% set store_active = store.store_id == active_store  ? 'active' :  '' %}
+									{% if store.status  %}
+									<li class="{{ store_active }}" ><a href="{{base_href}}&store_id={{ store.store_id }}" >{{ store.name }} </a></li>
+									{% endif %}
+								{% endfor %} 
+							</ul>
+					   </div>
+
+					</div>
+					
+					<div class="col-sm-6">
+						<div class="pull-right">
+							<a onclick="buttonApply();" data-toggle="tooltip" title="Apply Changes" class="btn btn-success"><i class="fa fa-save"></i></a>
+							<a href="{{ cancel }} " data-toggle="tooltip" title="{{ button_cancel }} " class="btn btn-default"><i class="fa fa-close"></i></a>
+						</div>
+					</div>
+				</div>
+            </div>
+            
+			<div class="content">
+				<div class="panel-body">
+					<form name="settingsform" action="{{ action }} " method="post" enctype="multipart/form-data" id="form-optimus" class="form-horizontal">
+						<div class="form-horizontal">
+							<div class="tab-content tab-content-main">
+								{% for store in stores %}  
+								{% set store_active = (store.store_id == 0 ? 'active' :  '') %}
+									{% if store.store_id == active_store %}
+									<div class="clearfix tab-pane-demo" id="tab-store" data-sticky_parent>
+										{% include 'extension/soconfig/options_mobile.twig' with {store: store} %}
+									</div>
+									{% endif %}
+
+								{% endfor %} 
+							</div>
+
+						</div>
+						<input name="buttonForm" type="hidden"  value="" />
+						<input name="buttonColor" type="hidden"  value="" />
+					</form>
+
+
+				</div>
+			</div>
+			<div class="content-row clearfix">
+				<div class="col-md-5">
+					<div class="copyright-info">
+						Designed &amp; Developed with <i class="fa fa-heart"></i> by <a href="http://www.opencartworks.com" target="_blank">Opencartworks</a>
+					</div>
+				</div>
+
+				<div class="col-md-7">
+					<div class="pagebuilder-links">
+						<ul class="list-inline text-right">
+							<li>
+								<a target="_blank" href="http://www.opencartworks.com/forums">Forum</a>
+							</li>
+
+							<li>
+								<a target="_blank" href="http://www.smartaddons.com/documentation/category/opencart/">Documentation</a>
+							</li>
+
+							<li>
+								<a target="_blank" href="http://www.opencartworks.com/contact-us">Support</a>
+							</li>
+
+							<li>
+								<a target="_blank" href="https://www.facebook.com/opencartworks">Community</a>
+							</li>
+						
+						</ul>
+					</div>
+				</div>
+			</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script type="text/javascript"><!--
+$(document).ready(function(){
+		/*** Change ColorPicker ***/
+		ChangeColor("#colorHex");
+		
+		$('#tab-general__headertype').on('click', '.type', function () {
+		   $('#tab-general__headertype .type').removeClass("active");
+		   $(this).addClass("active");
+		});
+		
+		$('#tab-general__layouttype').on('click', '.type', function () {
+			$keyheader = $(this).data("keyheader");
+			
+		   $('#tab-general__layouttype .type').removeClass("active");
+		   $(this).addClass("active");
+		   
+		   $("#tab-general__headertype .group-typeheader").each(function() {
+				$(this).find(".type").removeClass("active");
+				$(this).find("input:radio").prop("checked", false);
+				if( $keyheader ==  $(this).find(".type").data("mtypeheader")) {
+					$(this).find(".type").addClass("active");
+					$(this).find(".type").prev().prop("checked", true);
+				}
+			});
+		});
+
+		
+		
+		/*Button Radio On/Off*/
+		BtnToggle(".field-mphone_status");
+		BtnToggle(".field-memail_status");
+		BtnToggle(".field-customfooter_status");
+		BtnToggle(".field-menufooter_status");
+		BtnToggle(".field-barmore_status");
+		/*
+		
+		
+		
+		BtnToggle(".field-imgpayment_status");
+		BtnToggle(".field-product_enablezoom");
+   		BtnToggle(".field-product_page_button");
+    	BtnToggle(".field-related_status");
+    	BtnToggle(".field-social_fb_status");
+    	BtnToggle(".field-social_twitter_status");
+    	BtnToggle(".field-social_custom_status");
+    	BtnToggle(".field-layoutstyle");*/
+	
+});
+
+
+function buttonApply() {document.settingsform.buttonForm.value='apply'; $('#form-optimus').submit();}
+function buttonApplyColor() {document.settingsform.buttonForm.value='color';$('#form-optimus').submit();}
+
+function BtnToggle(class_name) {
+	var $checkedValue = $(class_name).filter(':checked').val();
+	if ($checkedValue == 1) $('#tab-'+$(class_name).attr('class')).show();
+	else $('#tab-'+$(class_name).attr('class')).hide();
+	
+	$(class_name).change(function(){
+		val = $(this).val();
+		if(val ==1 ) {$('#tab-'+$(this).attr('class')).show(); }
+		else{$('#tab-'+$(this).attr('class')).hide();} 
+	});
+}
+
+function ChangeColor(class_name) {
+	$(class_name).ColorPicker({
+		
+		color: $(class_name).val(),
+		onShow: function (colpkr) {
+			$(colpkr).fadeIn(500);
+			return false;
+		},
+		onHide: function (colpkr) {
+			$(colpkr).fadeOut(500);
+			return false;
+		},
+		onChange: function (hsb, hex, rgb) {
+			$(class_name).css('backgroundColor', '#' + hex);
+			$(class_name).val('#' + hex);
+		}
+	});
+}
+
+//--></script>
+
+{{ footer }} 

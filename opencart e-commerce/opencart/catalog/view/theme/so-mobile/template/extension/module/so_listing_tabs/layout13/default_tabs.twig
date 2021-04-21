@@ -1,0 +1,49 @@
+<div class="ltabs-tabs-wrap">
+	<span class='ltabs-tab-selected'></span>
+	<span class="ltabs-tab-arrow">▼</span>
+	<ul class="ltabs-tabs cf">
+		{% for tab in list %}
+			{% if type_source == "0" %}
+				<li class="ltabs-tab {{ tab.sel is defined ? '  tab-sel tab-loaded' : '' }} {{ tab.category_id == '*' ? ' tab-all' : '' }}"
+					data-category-id="{{ tab.category_id }}"
+					data-active-content-l=".items-category-{{ tab.category_id == "*" ? 'all' : tab.category_id }}"  
+					>
+				{% if tab_icon_display == '1' %}
+					{% if tab.category_id != "*" %}
+						<div class="ltabs-tab-img">
+							<img src="{{ tab.icon_image }}"
+								 title="{{ tab.name }}" alt="{{ tab.name }}"
+								 style="width: {{ imgcfgcat_width }}px; height:{{ imgcfgcat_height }}px;background:#fff"/>
+						</div>
+					{% else %}
+						<div class="ltabs-tab-img">
+							<img src="catalog/view/javascript/so_listing_tabs/images/icon-catall.png"
+								 title="{{ tab.name }}" alt="{{ tab.name }}"
+								 style="width: 30px; height:74px; background:#fff"/>
+						</div>
+					{% endif %}
+				{% endif %}
+					<span class="ltabs-tab-label">
+						{% if tab.name|length > tab_max_characters and tab_max_characters != '0' %}
+							{{ tab.name|striptags|slice(0, tab_max_characters) ~ '..' }}
+						{% else %}
+							{{ tab.name }}
+						{% endif %}
+					</span>
+				</li>
+			{% else %}
+				<li class="ltabs-tab {{ tab.sel is defined ? '  tab-sel tab-loaded' : '' }} {{ tab.category_id == '*' ? ' tab-all' : '' }}"
+					data-category-id="{{ tab.category_id }}"
+					data-active-content-l=".items-category-{{ tab.category_id }}">
+					<span class="ltabs-tab-label">
+						{% if tab.title|length > tab_max_characters and tab_max_characters != '0' %}
+							{{ tab.title|striptags|slice(0, tab_max_characters) ~ '..' }}
+						{% else %}
+							{{ tab.title }}
+						{% endif %}
+					</span>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+</div>

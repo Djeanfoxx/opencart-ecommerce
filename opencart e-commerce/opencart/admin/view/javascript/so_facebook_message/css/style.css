@@ -1,0 +1,62 @@
+.chat-panel-default {
+    background-color: #4267b2;
+    border: 1px solid #29487d;
+    cursor: pointer;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    width: 248px;
+}
+.chat-content {
+    font-family: arial, sans-serif;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    height: 29px;
+    padding: 5px;
+    position: relative;
+}
+.online {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.chat-content-icon {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.chat-panel-metro {
+    width: 248px;
+}
+a.fbkMetroStyleBtn {
+    width: 70%;
+    display: inline-block;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 13px;
+    color: #fff;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    padding: 0 20px 0 48px;
+    background-color: #3b5998;
+    position: relative;
+    transition: background-color 700ms ease-in-out;
+    -moz-transition: background-color 700ms ease-in-out;
+    -webkit-transition: background-color 700ms ease-in-out;
+    -o-transition: background-color 700ms ease-in-out;
+    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -o-box-sizing: content-box;
+    border: none;
+}
+a.fbkMetroStyleBtn span {
+    width: 40px;
+    height: 36px;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background: url(../../../../../catalog/view/theme/default/image/so_facebook_message/iconmetro.png) no-repeat left top;
+}

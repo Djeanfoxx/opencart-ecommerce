@@ -1,0 +1,35 @@
+{#=====Check Home page=====#}
+{% set barStatic = soconfig.get_settings('barnav') ? '' : 'bar-static' %}
+{% if soconfig.is_mobile_page() or soconfig.is_home_page() %}
+	<header class=" bar bar-nav bar-navhome typeheader-{{soconfig.get_settings('mtypeheader')}} {{barStatic}}">
+		<div class="row navbar-bar ">
+		
+			<div class="navbar-menu col-xs-2">
+			   <a class="toggle-panel" href="#panel-menu">
+			   	<span class="icon-bar"></span>
+			   	<span class="icon-bar bar2"></span>
+			   	<span class="icon-bar"></span>
+			   </a>
+			</div>
+
+			<div class="navbar-logo col-xs-3">
+				{{soconfig.get_logoMobile()}}
+			</div>
+			<div class="navbar-search col-xs-7">
+				{{search_block}}
+			</div>
+
+		</div>
+	</header>
+{% else %}
+{#=====Check Subpage page =====#}
+	<header class="bar bar-nav {{barStatic}}">
+		<a class="btn btn-link btn-nav pull-left" href="#" onClick="history.go(-1); return false;">
+			<span class="icon icon-left-nav"></span>
+		</a>
+		<a class="btn btn-link btn-nav pull-right toggle-panel" href="#panel-menu">
+			<span class="icon icon-bars"></span>
+		</a>
+		<h1 class="title">{{title}}</h1>
+	</header>
+{% endif %}

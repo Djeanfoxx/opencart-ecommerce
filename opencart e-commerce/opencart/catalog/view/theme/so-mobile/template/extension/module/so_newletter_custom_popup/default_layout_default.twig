@@ -1,0 +1,110 @@
+{% set width_popup =  width ? width : '50%' %}
+
+{% if image_bg_display %}
+    {% set bg   =  'background: url(image/'~image~')' %}
+{% else %} 
+   {%  set  bg  =  'background-color: #'~color_bg~'' %}
+{% endif %}
+
+
+<div class="module {{ class_suffix }}">
+    <div class="newsletter" style="width:{{ width_popup }}; {{ bg }} ; ">
+        {% if disp_title_module %} 
+            <h3 class="modtitle">{{ head_name }} </h3>
+        {% endif %} 
+        
+        <div class="title-block">
+            {% if title_display %}
+                <div class="page-heading font-title">
+                    {{ title }}
+                </div>
+                <div class="promotext">{{ newsletter_promo }}</div>
+            {% endif %}
+            {% if pre_text != '' %}
+                <div class="form-group">
+                    {{ pre_text }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="block_content">
+            <form method="post" id="signup" name="signup" class="form-group form-inline signup send-mail">
+                <div class="form-group">
+                    <div class="input-box">
+                        <input type="email" placeholder="{{ newsletter_placeholder}}" value="" class="form-control" id="txtemail" name="txtemail" size="55">
+                    </div>
+                    <div class="subcribe">
+                        <button class="btn btn-primary btn-default font-title" type="submit" onclick="return subscribe_newsletter();" name="submit">
+                            {{ newsletter_button  }}
+                        </button>
+                    </div>
+                </div>
+            </form>
+            
+
+        </div> <!--/.modcontent-->
+        {% if post_text !='' %}
+            <div class="form-group">
+                {{ post_text }}
+            </div>
+        {% endif %}
+        
+    </div>
+
+
+
+<script type="text/javascript">
+    function subscribe_newsletter()
+    {
+        var emailpattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        var email = $('#txtemail').val();
+        var d = new Date();
+        var createdate = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+        var status   = 0;
+        var dataString = 'email='+email+'&createdate='+createdate+'&status='+status;
+
+        if(email != ""){
+
+            if(!emailpattern.test(email))
+            {
+
+                $('.show-error').remove();
+                $('.send-mail').after('<div class="alert alert-danger " role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> Invalid Email </div>')
+                return false;
+            }
+            else
+            {
+                $.ajax({
+                    url: 'index.php?route=extension/module/so_newletter_custom_popup/newsletter',
+                    type: 'post',
+                    data: dataString,
+                    dataType: 'json',
+                    success: function(json) {
+                        $('.show-error').remove();
+                        if(json.message == "Subscription Successfull") {
+                            $('.send-mail').after('<div class="alert alert-success" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> ' + json.message + '</div>');
+                            setTimeout(function () {
+                                var this_close = $('.popup-close');
+                                this_close.parent().css('display', 'none');
+                                this_close.parents().find('.so_newletter_custom_popup_bg').removeClass('popup_bg');
+                            }, 3000);
+
+                        }else{
+                            $('.send-mail').after('<div class="alert alert-danger" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> ' + json.message + '</div>');
+                        }
+                        var x = document.getElementsByClassName('signup');
+                            for (i = 0; i < x.length; i++) {
+                            x[i].reset();
+                        }
+                    }
+                });
+                return false;
+            }
+        } else{
+            alert("Email Is Require");
+            $(email).focus();
+            return false;
+        }
+    }
+</script>
+</div>

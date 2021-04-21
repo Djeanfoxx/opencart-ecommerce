@@ -1,0 +1,102 @@
+{% set limit = limitation %}
+{% set nbcolumn0 = product_column0 >= _count_item ? _count_item : product_column0 %}
+{% set nbcolumn1 = product_column1 >= _count_item ? _count_item : product_column1 %}
+{% set nbcolumn2 = product_column2 >= _count_item ? _count_item : product_column2 %}
+{% set nbcolumn3 = product_column3 >= _count_item ? _count_item : product_column3 %}
+{% set nbcolumn4 = product_column4 >= _count_item ? _count_item : product_column4 %}
+{% set class_spcat = 'spcat00-' ~ nbcolumn0 ~ ' spcat01-' ~ nbcolumn1 ~ ' spcat02-' ~ nbcolumn2 ~ ' spcat03-' ~ nbcolumn3 ~ ' spcat04-' ~ nbcolumn4 %}
+
+{% set count_item = category_tree|length %}
+{% set nb_column0 = category_column0 >= count_item ? count_item : category_column0 %}
+{% set nb_column1 = category_column1 >= count_item ? count_item : category_column1 %}
+{% set nb_column2 = category_column2 >= count_item ? count_item : category_column2 %}
+{% set nb_column3 = category_column3 >= count_item ? count_item : category_column3 %}
+{% set nb_column4 = category_column3 >= count_item ? count_item : category_column4 %}
+
+<div class="module {{ direction_class }} {{ advanced_mod_class_suffix }}">
+	{% if disp_title_module %}
+		<h3 class="modtitle">{{ head_name }}</h3>
+	{% endif %}
+	
+	{% if pre_text != '' %}
+		<div class="form-group">
+			{{ pre_text }}
+		</div>
+	{% endif %}
+	<div class="modcontent">
+		<!--[if lt IE 9]>
+		<div id="{{ tag_id }}" class="so-sp-cat msie lt-ie9 first-load"><![endif]-->
+		<!--[if IE 9]>
+		<div id="{{ tag_id }}" class="so-sp-cat msie first-load"><![endif]-->
+		<!--[if gt IE 9]><!-->
+		<div id="{{ tag_id }}" class="so-sp-cat first-load"><!--<![endif]-->
+			<div class="spcat-wrap ">
+				<div class="category-wrap col-lg-2 col-md-3 col-sm-12 col-xs-12">
+					{{ include (theme_config~"/template/extension/module/so_super_category/default_cat.twig") }}
+					<div class="spcat-tabs-container"
+						 data-delay="{{ product_delay }}"
+						 data-duration="{{ product_duration }}"
+						 data-effect="{{ effect }}"
+						 data-ajaxurl="{{ ajaxurl }}" data-modid="{{ moduleid }}">
+						
+						<!--Begin Tabs-->
+						{{ include (theme_config~"/template/extension/module/so_super_category/default_tabs.twig") }}
+						<!-- End Tabs-->
+					</div>
+				</div>
+				<div class="spc-wrap col-lg-10 col-md-9 col-sm-12 col-xs-12">
+					{% if tabs is not empty %}
+						<div class="spcat-items-container"><!--Begin Items-->
+							{% for items in tabs %}
+								{% set child_items = items.child is defined ? items.child : '' %}
+								{% set cls_device = class_spcat %}
+								{% set cls_animate = effect %}
+								{% set cls = items.sel is defined and items.sel == "sel" ? ' spcat-items-selected spcat-items-loaded' : '' %}
+								{% set cls = cls ~ ' items-category-' ~ items.category_id %}
+								
+								<div class="spcat-items {{ cls }}" data-total="{{ items.count }}">
+									<div class="spcat-items-inner {{ cls_device ~ ' ' ~ cls_animate }}">
+										{% if child_items is not empty and child_items|length %}
+											{{ include (theme_config~"/template/extension/module/so_super_category/default_items.twig") }}
+										{% else %}
+											<div class="spcat-loading"></div>
+										{% endif %}
+									</div>
+								
+									{% if type_show == "loadmore" %}
+										{% set classloaded = limit >= items.count or limit == 0 ? 'loaded' : '' %}
+										<div class="spcat-loadmore"
+											 data-active-content=".items-category-{{ items.category_id }}"
+											 data-field_order="{{ items.category_id }}"
+											 data-rl_start="{{ limit }}"
+											 data-rl_total="{{ items.count }}"
+											 data-rl_allready="{{ objlang.get('all_ready_label') }}"
+											 data-ajaxurl="{{ ajaxurl }}"
+											 data-modid="{{ moduleid }}"
+											 data-rl_load="{{ limit }}">
+											<div class="spcat-loadmore-btn {{ classloaded }}"
+												 data-label="{{ classloaded ? objlang.get('all_ready_label') : objlang.get('load_more_label') }}">
+												<span class="spcat-image-loading"></span>
+											</div>
+										</div>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ objlang.get('text_noitem') }}
+					{% endif %}
+					<!--End Items-->
+				</div>
+			</div>
+
+			{{ include (theme_config~"/template/extension/module/so_super_category/default_js.twig") }}
+		</div>
+	</div> <!--/.modcontent-->
+
+	{% if post_text != '' %}
+		<div class="form-group">
+			{{ post_text }}
+		</div>
+	{% endif %}
+</div>

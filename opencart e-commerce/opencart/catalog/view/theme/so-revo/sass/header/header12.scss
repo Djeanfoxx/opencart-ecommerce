@@ -1,0 +1,315 @@
+/*============HEADER V1 ==================*/
+
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/*===============================================
+    [SASS DIRECTORY ]
+    
+    [1] BLOCK HEADER
+    [2] BLOCK FOOTER
+    
+==============================================*/
+
+.common-home{
+    .horizontal ul.megamenu > li.menu-home{
+        a{
+           color: $linkColor !important;
+       }
+       
+    }
+}
+
+.common-home{
+    .typeheader-12{
+         background: rgba(37,37,37,0.6);
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 9;
+    }
+}
+.typeheader-12{
+    background: #222;
+     .item-style2,
+    .item-style1{
+         > a strong{
+            img{
+                display: none;
+            }
+         }
+    }
+    .header-promotion{
+        color: #fff;
+        font-size: 14px;
+        font-weight: 300;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .horizontal ul.megamenu > li.content-full > .sub-menu{
+        #{$left}: 0 !important;
+        #{$right}: inherit !important;
+    }
+    .header-top{
+        padding-top: 30px;
+        .header-top-inner{padding: 0 50px;}
+        .navbar-logo{
+           text-align: center;
+        }
+        .header-top-right{
+            ul.top-link{
+                float: $right;
+                padding-top: 7px;
+                 > li{
+                    padding: 0 10px;
+                    float: $left;
+                    &.phone-header{
+                        color: #fff;
+                    }
+                    &.language{
+                        margin-top: -3px;
+                        img{
+                            display: none;
+                             @media (max-width: 1199px){
+                                display: inline-block;
+                            }
+                        }
+                    }
+                    
+                    &.language,
+                    &.currency{
+                        margin-top: -2px;
+                        .dropdown-toggle{
+                            span{
+                                 text-transform: uppercase;
+                                 font-size: 12px;
+                             }
+                         }
+                    }
+                     > a{
+                        color: #fff;
+                        i{margin-#{$right}: 5px;}
+                        &:hover{
+                            color: $linkColor;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .btn-group{
+        .btn-link{
+            color: #fff;
+            padding: 0;
+            &:hover{
+                color: $linkColor;
+            }
+        }
+    }
+    .message{
+        color: #fff;
+    }
+     /*BLOCK CART*/
+    .block-cart{   
+        cursor: pointer;
+        position: relative;
+        padding: side-values(8px 10px 10px 5px);
+        display: inline-block;
+        float: $right;
+    }
+    .shopping_cart{
+        text-align: center;
+        border-radius: 50%;
+        width: 36px;
+        height: 32px;
+        background: url("#{$imgPath}/icon-image.png") no-repeat -114px -135px;
+        position: relative;
+        h2{display: none; color: #444444;font-size: 12px; margin: 0; font-weight: bold;}
+        .btn-shopping-cart{display: block;font-size: 13px; cursor: pointer;width: auto; padding: 0;
+            a.top_cart{padding: 0px; color: #fff;height: 20px;width: 16px;
+                .shopcart .text-shopping-cart{padding: 0px; color: #fff;font-size: 12px; text-transform: uppercase; font-weight: bold; float: $left;margin: 0;}
+                &:hover{ color: $linkColor;
+                    .shopcart .text-shopping-cart{color: $linkColor;}
+                }
+            } 
+            &:before{
+                display: none;
+            }
+            .total-shopping-cart{
+                width: 22px;
+                height: 22px;
+                line-height: 22px;
+                border-radius: 100%;
+                -moz-border-radius: 100%;
+                -webkit-border-radius: 100%;
+                background-color: $background;
+                position: absolute;
+                top: -12px;
+                color: #fff;
+                overflow: hidden;
+                text-align: center;
+                font-size: 12px;  
+                #{$right}: -18px;  
+                 @include if-rtl{
+                    font-size: 15px; 
+                }
+            }                    
+        } 
+        .dropdown-menu{margin: 5px 0; top: 20px; #{$right}: -11px; #{$left}: auto;}
+        .shoppingcart-box:before{#{$right}: 50px;}
+    }  
+     /*MENU MEGA*/
+    .megamenu-style-dev{
+        .horizontal ul.megamenu > li:first-child a{ padding-#{$left}: 0; }
+        .navbar-default{ background: transparent; }
+        .horizontal{
+            text-align: center;
+            ul.megamenu > li.active > a, ul.megamenu > li:hover > a{ background: transparent; color: $linkColor; border-radius: 0;
+            }
+            ul.megamenu li{text-align: $left;}
+            ul.megamenu > li{
+                display: inline-block;
+                float: none;
+
+                 > a{
+                    color: #fff; font-size: 14px !important; height: auto; padding: 16px 25px 15px; line-height: 28px;
+                    text-transform: uppercase; text-shadow: none;  font-weight: bold; 
+                    strong{ font-weight: normal; }
+                    .caret{
+                        display: none;
+                    }
+                    strong img{
+                        top: 0;
+                    }
+                }
+            }
+        }
+    }
+     .navbar-default{
+        background: transparent;
+    }
+    /*HEADER SEARCH*/
+    .header_search{
+        margin: 0;
+       #sosearchpro{
+            .search{
+                width: 295px;
+            }
+             .select_category{
+                border: 1px solid #cdcdcd;
+                 width: 130px;
+                 display: none;
+                &:after{
+                    line-height: 44px;
+                }
+                select.no-border{
+                    outline: none;
+                    height: 42px;
+                    color: #222;
+                    line-height: 44px;
+                }
+             }
+             .button-search{
+                background-color: #fff;
+                padding: 8px 7px 9px;
+                opacity: 1;
+                height: 40px;
+                i{
+                    font-size: 16px;
+                    color: #2b2b2b;
+                }
+                &:hover{
+                    i{
+                        color: $linkColor;
+                    }
+                }
+             }
+            input.autosearch-input{
+                color: #787878;
+                background-color: #fff;
+                height: 40px;
+               // line-height: 40px;
+                border: none;
+                padding-#{$left}: 20px;
+                &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                  color:  #5e5e5e;
+                }
+                &::-moz-placeholder { /* Firefox 19+ */
+                  color:  #5e5e5e;
+                }
+                &:-ms-input-placeholder { /* IE 10+ */
+                  color:  #5e5e5e;
+                }
+                &:-moz-placeholder { /* Firefox 18- */
+                  color:  #5e5e5e;
+                }
+            }
+       }
+       @media (min-width: 992px){
+            .dropdown-menu-search{
+                display:block; opacity:1;
+                display: block;
+                opacity: 1;
+                visibility: visible;
+                margin: 0;
+                background: transparent;
+                border: none;
+                box-shadow: none;
+                #{$right}: 15px;
+                z-index: 9;
+                max-width: 232px;
+            }
+        }
+    }
+
+    .header-center{
+        padding:0 50px;
+        background: rgba(37,37,37,0.6);
+        
+        .header_search{
+            float: $right;
+            max-width: 239px;
+        }
+        .contain{
+            position: relative;
+            
+            .header-menu,ul.megamenu,
+            .megamenu-style-dev{
+                position: static;
+            }
+        }
+    }
+     &.navbar-compact{
+        position: fixed !important;
+        background: #fff !important;
+         .megamenu-style-dev .horizontal ul.megamenu > li > a{
+            color: $textBody;
+         }
+        .header-center {
+            .header-menu{
+                padding-left: 65px;
+                @include if-rtl{
+                      padding-right: 65px;
+                }
+            }
+        }
+    }
+
+}

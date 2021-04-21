@@ -1,0 +1,254 @@
+
+// Load Bootstrap variables and mixins
+@import "functions";
+@import "variables";
+@import "mixins";
+
+// Load docs components
+@import "component-examples";
+@import "clipboard-js";
+
+h2.sub-title {font-size: 23px;margin: 24px 0; color: $gray;}
+
+.simple-list {
+    margin: 10px 0 6px 0;
+    padding: 0;
+    clear: both;
+    li {
+        padding: side-values(0 0 7px 18px);
+        position: relative;
+        list-style-type: none;
+        &:before{
+            position: absolute;
+            display: block;
+            top: 10px;
+            #{$left}: 0;
+            font-family: $FontAwesome;
+            content: "\f111";
+            font-size: 0.53em;
+            line-height: 1em;
+        };
+    }
+}
+.simple-list ul {
+    margin:0 0 15px;
+    padding:0;
+    list-style-type:none;
+    position:relative;
+    bottom:-.8em;
+}
+.simple-list  ul a{@include linkGray();}
+.arrow-list > li {
+	padding :0;
+	position:relative;
+	> a{font-size: 15px; font-weight: 600; display: block;margin-bottom: 5px;}
+
+	&:before{display:none;}
+}
+.arrow-list li li:before {
+		margin-#{$right}:10px;
+        font-size: 14px;
+        font-family: $FontAwesome;
+        display: inline-block;
+        top: 5px;
+        content: if-ltr('\f105', '\f104');;
+}
+.color {color:  $background;}
+.divider--md1 {height: 31.5px;}
+.divider {height: 30px;clear: both;overflow: hidden; width: 100%;}
+
+.item-article{font-size: 13px;
+	dl {
+		dt {
+		    color: $gray;
+		    font-size: 18px;
+		    font-weight: 500;
+		    padding: 0 0 4px 0;
+		}
+		dd{margin-bottom: 15px;}
+	}
+
+
+	.title-decimal {
+	    font-size: 20px;
+	    color:$gray;
+	    @media (min-width: 1200px) {
+	        font-size: 26px;
+	    }
+	    line-height: 44px;
+	    position: relative;
+	    padding: side-values(0px 0 0px 69px);
+	    &:before {
+	        content: attr(data-content);
+	        display: table-cell;
+	        vertical-align: middle;
+	        position: absolute;
+	        top: 0px;
+	        line-height: 40px;
+	        background:$gray;
+	        width: 44px;
+	        height: 44px;
+	        color: #fff;
+	        text-align: center;
+
+	        border-radius: 50%;
+	        #{$left}: 0;
+	    }
+	}
+	.decimal-list {
+	    padding: 0;
+	    margin: 10px 0 ;
+	    list-style-type: none;
+	    counter-reset: myCounter;
+	    display: inline-block;
+	    width: 100%;
+	    ol{
+	    	 counter-reset: sub-myCounter 0;
+	    }
+	}
+	.decimal-list > li {
+	    padding:0;
+	    position: relative;z-index: 5;
+	    margin-bottom: 15px;
+	    overflow: hidden;
+	    &:before {
+	        counter-increment:  myCounter;
+			content: counter(myCounter);
+			color: white;
+			background: $gray;
+			display: inline-block;
+			text-align: center;
+			line-height: 26px;
+			width: 26px;
+			height: 26px;
+			border-radius: 50%;
+			float:$left;
+			font-size: 15px;
+			margin-#{$right}: 10px;
+	    }
+	    > *:first-child{line-height: 26px; margin-bottom: 0;}
+	    ol {
+		    margin: 0  ;
+		    padding: 10px 0 0 15px;
+		    list-style: none;
+		    > li {
+		    	 > *:first-child{line-height: 25px;}
+		    }
+		    > li:before{
+		    	counter-increment: sub-myCounter;
+	   			content: counter(myCounter) "." counter(sub-myCounter);
+				font-size: 17px;
+				display: inline-block;
+				text-align: center;
+				float:$left;
+				margin-#{$right}: 10px;
+		    }
+		   
+		}
+	}
+
+	.tags{  margin: 15px 0;
+		.label{
+			border: none;
+		    border-radius: 2px;
+		    margin: 0 2px 5px 0;
+		    font-size: 11px;
+		    padding: 12px;
+		    display: inline-block;
+		    text-transform: uppercase;
+		    font-weight: 400;
+		}
+	}
+
+	.swatch-item{
+		width: 100%;
+	    min-height: 100px;
+	    position: relative;
+	    background: #333333;
+	    color: #ffffff;
+	    margin-bottom: 24px;
+	    padding: 20px;
+	    &.color-brand-primary{background: $bd-primary;}
+	    &.color-brand-secondary{background: #f87831;}
+	    &.color-brand-warning{background: $bd-warning;}
+	    &.color-brand-danger{background: $bd-danger;}
+	    &.color-brand-info{background: $bd-info;}
+	    &.color-brand-success{background: $bd-success;}
+	    &.color-gray-darker		{    background: $gray-900;}
+	    &.color-gray-dark		{    background:  $gray-800;}
+	    &.color-gray		{    background:  $gray-700;}
+	    &.color-gray-light		{    background:  $gray-500; color: $gray;}
+	    &.color-gray-lighter	{    background:  $gray-400; color: $gray;}
+	    &.color-gray-lightest	{    background:  $gray-200; color: $gray;}
+	}
+
+
+	//-- Button 
+	.button, .btn {
+		@include buttonGray();
+	}
+	.btn-primary{background: $bd-primary;}
+	.btn-warning{background: $bd-warning;}
+	.btn-success{background: $bd-success;}
+	.btn-danger{background: $bd-danger; }
+	.btn-info{background: $bd-info; }
+
+	//-- Tabs 
+	.nav-tabs {
+	    border: 0;
+	    margin-bottom: 32px;
+	    .dropdown-menu{padding: 15px;    border: 1px solid rgba(0,0,0,0.15);}
+	    > li{
+	    	&.active > a,
+	    	&.active > a:hover,
+	    	&.active > a:focus{
+	    		color: #ffffff;
+			    border: 0;
+			    background: $background;
+			    &:before{
+			    	border: 10px solid $background;
+				    border-color: $background transparent transparent transparent;
+				    content: "";
+				    position: absolute;
+				    top: 100%;
+				    left: 50%;
+				    margin-left: -10px;
+			    }
+	    	}
+	    	> a{
+	    		background: #eaeaea;
+			    border-radius: 2px;
+			    border: 0;
+			    color: #2d2d2d;
+			    text-transform: uppercase;
+			    padding: 0 32px;
+			    height: 48px;
+			    line-height: 48px;
+			    position: relative;
+			    &:hover{background:#ddd;}
+	    	}
+	    }
+	}
+	.nav-pills>li>a{border-radius: 3px;}
+	.nav-pills .dropdown-menu{padding: 15px;    border: 1px solid rgba(0,0,0,0.15);}
+	.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+	    color: #fff;
+	    background: $background;
+	}
+	
+	.dropcap {
+	    display: block;
+	    float: left;
+	    font-size: 3.5em;
+	    line-height: 1em;
+	    margin: 0 5px 0 0;
+	}
+	.color-custom {color: $background;}
+	.color-white{color: $white;}
+	.color-dark{color: $black;}
+	.bg-custom{background:$background; }
+	.bg-black {background:$black; }
+	a.underline{ text-decoration: underline;
+		&:hover{text-decoration:none;}
+	}
+}

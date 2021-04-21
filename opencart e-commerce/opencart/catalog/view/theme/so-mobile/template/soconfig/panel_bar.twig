@@ -1,0 +1,58 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+
+<nav class="bar bar-tab">
+	<a class="tab-item" href="{{ home }}" data-transition="slide-in">
+		<span class="icon icon-home"></span>
+		<span class="tab-label">{{ objlang.get('text_home') }} </span>
+	</a>
+	<a class="tab-item" href="{{ menu_search}}" data-transition="slide-in">
+		<span class="icon icon-search"></span>
+		<span class="tab-label">{{ objlang.get('text_search') }} </span>
+	</a>
+	<a class="tab-item item-cart" href="{{ shopping_cart }}" data-transition="slide-in">
+		<span class="icon icon-download"></span>
+		<div id="cart" class="btn-shopping-cart">
+			<span class="total-shopping-cart cart-total-full">
+				{{ text_items }} 
+			</span>
+		</div>
+		
+		<span class="tab-label">{{ objlang.get('text_cart') }} </span>
+	</a>
+	<a class="tab-item" href="{{ login }}" data-transition="slide-in">
+		<span class="icon icon-person"></span>
+		<span class="tab-label">{{ objlang.get('text_account') }} </span>
+	</a>
+
+	{% if soconfig.get_settings('barmore_status')  %}
+	<a class="tab-item tab-item--more tooltip-popovers"  href="{{ actual_link }}#popover">
+		<span class="icon icon-more"></span>
+		<span class="tab-label">{{ objlang.get('text_more') }} </span>
+	</a>
+	{% endif %}
+</nav>
+
+{% if soconfig.get_settings('barmore_status') %}
+<div id="popover" class="popover fade bottom in right">
+	<ul class="table-view">
+		{% for menuitem in soconfig.get_settings('listmenus') %} 
+			
+			{% for nameid, menuname in menuitem.namemore %}
+				{% if nameid == lang_id %}
+				<li class="table-view-cell"><a href="{{ menuitem.link }}">{{ menuname }}</a></li>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</ul>
+</div>
+{% endif %}
+	
+
+

@@ -1,0 +1,146 @@
+{{ header }}{{ column_left }}    
+    <div id="content">
+        <div class="page-header">
+            <div class="container-fluid">
+                <div class="pull-right">
+                    <button type="submit" form="form-blog-author" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                    <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+                </div>
+                <h1>{{ heading_title }}</h1>
+                <ul class="breadcrumb">
+                    {% for breadcrumb in breadcrumbs %}
+                        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div> <!-- end of page-header class -->
+        
+        <div class="container-fluid">
+            {% if error_warning %}
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            {% endif %}
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+                </div>
+                
+                <div class="panel-body">
+                    <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-blog-author" class="form-horizontal">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+                            <li><a href="#tab-seo" data-toggle="tab">{{ tab_seo }}</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab-general">
+                                <div class="form-group required">
+                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_name }}">{{ entry_name }}</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                        <input type="text" name="name" value="{{ name }}" class="form-control" />
+                        				{% if error_name %}
+                        					<span class="text-danger">{{ error_name }}</span>
+                        				{% endif %}
+                                    </div>
+                                </div>                        
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_image }}</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                        <a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ no_image }}" /></a>
+                                        <input type="hidden" name="image" value="{{ image }}" id="input-image" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_status }}</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                        <select name="status" class="form-control">
+        				            		<option value="1" {% if status == 1 %} {{ "selected='selected'" }} {% endif %}>{{ text_enabled }}</option>
+        				            		<option value="0" {% if status == 0 %} {{ "selected='selected'" }} {% endif %}>{{ text_disabled }}</option>
+        				            	</select>
+                                    </div>
+                                </div> 
+                                                        
+                                <ul class="nav nav-tabs" id="language">
+                                    {% for language in languages %}
+                                        <li><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                        
+                                <div class="tab-content">
+                                    {% for language in languages %}
+                                        <div class="tab-pane" id="language{{ language.language_id }}">
+                                            
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_description }}</label>
+                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                    <textarea name="author_description[{{ language.language_id }}][description]" id="description{{ language.language_id }}" class="form-control">{{ author_description[language.language_id] is defined ? author_description[language.language_id].description : '' }}</textarea>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_meta_description }}</label>
+                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                    <textarea name="author_description[{{ language.language_id }}][meta_description]" class="form-control">{{ author_description[language.language_id] is defined ? author_description[language.language_id].meta_description : '' }}</textarea>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_meta_keyword }}</label>
+                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                    <textarea name="author_description[{{ language.language_id }}][meta_keyword]" class="form-control">{{ author_description[language.language_id] is defined ? author_description[language.language_id].meta_keyword : '' }}</textarea>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab-seo">
+                                <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_keyword }}</div>            
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-left">{{ entry_store }}</td>
+                                                <td class="text-left">{{ entry_keyword }}</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for store in stores %}
+                                            <tr>
+                                                <td class="text-left">{{ store.name }}</td>
+                                                <td class="text-left">
+                                                    {% for language in languages %}
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                                                            <input type="text" name="seo_url[{{ store.store_id }}][{{ language.language_id }}]" value="{% if seo_url[store.store_id][language.language_id] %}{{ seo_url[store.store_id][language.language_id] }}{% endif %}" placeholder="{{ entry_keyword }}" class="form-control" />
+                                                        </div>
+                                                        {% if error_keyword[store.store_id][language.language_id] %}
+                                                            <div class="text-danger">{{ error_keyword[store.store_id][language.language_id] }}</div>
+                                                        {% endif %} 
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>                                  
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>        
+    </div>
+    
+    <script type="text/javascript">
+        {% for language in languages %}
+            $('#description{{ language.language_id }}').summernote({height: 300});
+        {% endfor %}
+    
+        $('#language a:first').tab('show');
+        $('#option a:first').tab('show');
+    </script>
+{{ footer }}

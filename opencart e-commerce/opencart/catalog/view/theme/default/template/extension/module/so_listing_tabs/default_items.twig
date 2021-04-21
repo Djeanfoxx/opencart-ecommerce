@@ -1,0 +1,167 @@
+{% if type_show == 'slider' %}
+		<div class="ltabs-items-inner owl2-carousel  ltabs-slider ">
+{% else %}
+		<div class="ltabs-items-inner {{ type_show == 'loadmore' ? class_ltabs ~ ' '~ effect : ' ' }}">
+{% endif %}
+{% if child_items is not empty %}
+	{% set i = 0 %}
+	{% set k = rl_loaded is defined ? rl_loaded : 0 %}
+	{% set count = child_items|length %}
+		{% for product in child_items %}
+			{% set i = i + 1 %}
+			{% set k = k + 1 %}
+			
+			{% if type_show == 'slider' and (i % nb_rows == 1 or nb_rows == 1) %}
+				<div class="ltabs-item ">
+			{% endif %}
+			{% if type_show == 'loadmore' %}
+				<div class="ltabs-item new-ltabs-item" >
+			{% endif %}			
+			<div class="item-inner product-thumb transition">
+				<div class="image">
+					{% if product_image %}
+						{% if product.special and display_sale %}
+							<span class="label label-sale">{{ objlang.get('text_sale') }}</span>
+						{% endif %}
+						{% if product.productNew and display_new %}
+							<span class="label label-new">{{ objlang.get('text_new') }}</span>
+						{% endif %}
+						<a class="lt-image" 
+						   	href="{{ product.href }}" target="{{ item_link_target }}"
+						   	title="{{ product.name }}">
+							{% if product_image_num ==2 %}
+								<img src="{{ product.thumb }}" class="img-thumb1" alt="{{ product.name }}">
+								<img src="{{ product.thumb2 }}" class="img-thumb2" alt="{{ product.name }}">
+							{% else %}
+								<img src="{{ product.thumb }}" alt="{{ product.name }}">
+							{% endif %}
+						</a>
+					{% endif %}
+				</div>
+				{% if display_title or display_description or display_price %}
+					<div class="caption">
+						{% if display_title %}
+							<h4>
+								<a href="{{ product.href }}" 
+								   title="{{ product.name }}" target="{{ item_link_target }}">
+								   {{ product.name_maxlength }}
+								</a>
+							</h4>
+						{% endif %}
+						{% if display_rating %}
+							<div class="rating">
+							  	{% for j in 1..5 %}
+							  		{% if product.rating < j %}
+							  			<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+							  		{% else %}
+							  			<span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+							  		{% endif %}
+							  	{% endfor %}
+							</div>
+						{% endif %}
+						{% if display_description %}
+							{{ product.description_maxlength }}
+						{% endif %}
+						{% if product.price and display_price %}
+							<p class="price">
+							  	{% if product.special is empty %}
+							  		{{ product.price }}
+							  	{% else %}
+							  		<span class="price-new">{{ product.special }}</span>
+							  		<span class="price-old">{{ product.price }}</span>
+							  	{% endif %}
+							  	{% if product.tax %}
+							  		<span class="price-tax">{{ objlang.get('text_tax') }} {{ product.tax }}</span>
+							  	{% endif %}
+							</p>
+						{% endif %}
+					</div>
+				{% endif %}
+				
+				{% if display_add_to_cart or display_wishlist or display_compare %}
+					<div class="button-group">
+						{% if display_add_to_cart %}
+							<button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ objlang.get('button_cart') }}</span></button>
+						{% endif %}
+						{% if display_wishlist %}
+							<button type="button" data-toggle="tooltip" title="{{ objlang.get('button_wishlist') }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+						{% endif %}
+						{% if display_compare %}
+							<button type="button" data-toggle="tooltip" title="{{ objlang.get('button_compare') }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+						{% endif %}
+					</div>
+				{% endif %}
+			</div>
+			{% if type_show == 'slider' and (i % nb_rows == 0 or i == count) %}
+			</div>
+			{% endif %}
+			
+			{% if type_show == 'loadmore' %}
+			</div>
+			{% endif %}
+
+			{% if type_show == 'loadmore' %}
+				{% set clear = 'clr1' %}
+				{% if k % 2 == 0 %} {% set clear = clear ~' clr2' %} {% endif %}
+				{% if k % 3 == 0 %} {% set clear = clear ~' clr3' %} {% endif %}
+				{% if k % 4 == 0 %} {% set clear = clear ~' clr4' %} {% endif %}
+				{% if k % 5 == 0 %} {% set clear = clear ~' clr5' %} {% endif %}
+				{% if k % 6 == 0 %} {% set clear = clear ~' clr6' %} {% endif %}
+				<div class="{{ clear }}"></div>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+</div>
+
+{% if type_show == 'slider' %}
+<script type="text/javascript">
+	jQuery(document).ready(function($){
+		var $tag_id = $('#{{ tag_id }}'), 
+		parent_active = 	$('.items-category-{{ tab_id }}', $tag_id),
+		total_product = parent_active.data('total'),
+		tab_active = $('.ltabs-items-inner',parent_active),
+		nb_column0 = {{ nb_column0 }},
+		nb_column1 = {{ nb_column1 }},
+		nb_column2 = {{ nb_column2 }},
+		nb_column3 = {{ nb_column3 }},
+		nb_column4 = {{ nb_column4 }};
+		tab_active.owlCarousel2({
+			rtl: {{ direction }},
+			nav: {{ display_nav }},
+			dots: false,	
+			margin: 0,
+			loop:  {{ display_loop }},
+			autoplay: {{ autoplay }},
+			autoplayHoverPause: {{ pausehover }},
+			autoplayTimeout: {{ autoplayTimeout }},
+			autoplaySpeed: {{ autoplaySpeed }},
+			mouseDrag: {{ mousedrag }},
+			touchDrag: {{ touchdrag }},
+			navRewind: true,
+			navText: [ '', '' ],
+			responsive: {
+				0: {
+					items: nb_column4,
+					nav: total_product <= nb_column4 ? false : {% if display_nav %}{{ 'true' }}{% else %}{{ 'false' }}{% endif %},
+				},
+				480: {
+					items: nb_column3,
+					nav: total_product <= nb_column3 ? false : {% if display_nav %}{{ 'true' }}{% else %}{{ 'false' }}{% endif %},
+				},
+				768: {
+					items: nb_column2,
+					nav: total_product <= nb_column2 ? false : {% if display_nav %}{{ 'true' }}{% else %}{{ 'false' }}{% endif %},
+				},
+				992: {
+					items: nb_column1,
+					nav: total_product <= nb_column1 ? false : {% if display_nav %}{{ 'true' }}{% else %}{{ 'false' }}{% endif %},
+				},
+				1200: {
+					items: nb_column0,
+					nav: total_product <= nb_column0 ? false : {% if display_nav %}{{ 'true' }}{% else %}{{ 'false' }}{% endif %},
+				}
+			}
+		});
+	});
+</script>
+{% endif %}

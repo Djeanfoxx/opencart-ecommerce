@@ -1,0 +1,189 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/************************************************************************************************
+  FOOTER DEFFAULT
+*************************************************************************************************/
+footer.typefooter-12{
+	background: url("#{$imgPath}bg-footer-h12.jpg")  no-repeat fixed center bottom;
+	 background-size: cover;
+	 position: relative;
+	 // &:before{
+	 // 	content: "";
+	 // 	background: rgba(0,0,0,.85);
+	 // 	width: 100%;
+	 // 	height: 100%;
+	 // 	position: absolute;
+	 // 	top: 0;
+	 // 	#{$left}: 0;
+
+	 // }
+	
+	.footer-main{
+		padding-top: 65px;
+		padding-bottom: 45px;
+	}
+
+	// Socials
+	.socials-wrap{
+		float: $left;
+		.title-follow{
+			display: none;
+		}
+		ul{
+			padding-top: 15px;
+			padding-#{$left}: 0;
+			padding-bottom: 20px;
+			 li{
+				float: $left;
+				margin-#{$left}: 0;
+				margin-#{$right}: 7px;
+				margin-bottom: 7px;
+				&:last-child{
+					margin-#{$right}: 0;
+				}
+				a{
+					width: 40px;
+					height: 40px;
+					line-height: 38px;
+					background: transparent;
+					color: #fff;
+					border: 1px solid #fff;
+					&:hover{
+						background: $background;
+						border-color: $background;
+						color: #fff !important;
+					}
+					span{font-size: 14px;}
+				}
+
+			}
+		}
+	}	
+	.links-contact{
+		padding-bottom: 20px;
+		li{
+			padding: 4px 0;
+			color: #c5c5c5;	
+			i{
+				width: 25px;
+				color: #c5c5c5;	
+			}
+			a{
+				color: #c5c5c5;	
+				@include transition(all 0.5s ease);
+				&:hover{
+					color: $linkColor;
+				}
+			}
+		}
+	}
+
+	// Footer block
+	.footer-block-title {
+	    margin-bottom: 17px;
+	    h3{
+	    	font-weight: normal;
+		    font-size: 138.4%;
+		    text-transform: uppercase;
+		    color: #fff;
+		    margin-bottom: 35px;
+	    }
+	}
+	.footer-block-content{
+		padding-bottom: 20px;
+		 .links-footer li a{
+		  	display: inline-block;
+			padding: 5px 0;
+			color: #c5c5c5;	
+			@include transition(all 0.5s ease);
+			&:hover{
+				color: $linkColor;
+				padding-#{$left}: 5px;
+			}
+		}
+	}
+
+	// NEWWLETTER
+	.news-letter{ 
+		color: #c5c5c5; float: none;  position: relative;    display: table-cell;
+		.title-block{ display: block; padding: 0; white-space: normal;
+			.page-heading{ 
+				font-weight: normal;
+			    font-size: 138.4%;
+			    text-transform: uppercase;
+			    color: #fff;
+			    margin-bottom: 42px;
+			    line-height: 25px;
+			}
+			.newsletter_promo{ line-height: 21px;
+			}
+		}
+		.block_content{ display: block; padding: 0;     margin-top: 28px;margin-bottom: 14px;
+			.input-box input{
+				height: 40px; border-radius: 0; width: 100%;
+			}
+			.subcribe button{
+				 padding: 0 15px; height: 40px;width: 40px; border-color: #999; font-size: 12px; font-weight: 600; border-radius: 0;
+				z-index: 9;
+				text-indent: 999em;
+				background: $background url("#{$imgPath}icon-image.png")  no-repeat;
+				background-position: -310px -309px;
+				@include if-rtl{
+					transform: rotate(180deg);
+					-webkit-transform: rotate(180deg);
+					-ms-transform: rotate(180deg);
+					-o-transform: rotate(180deg);
+				}
+				
+			}
+		}
+		
+	} 
+	.footer-bottom{
+		background: transparent;
+		padding: 0;
+
+		.copyright{
+			border-top: 1px solid rgba(255,255,255,.25);
+			padding: 23px 0;
+			margin: 0;
+			color: #d8d8d8;
+			a{
+				color: #d8d8d8;
+				&:hover{
+					color: $linkColor;
+				}
+			}
+		}
+	}
+	.f12-about{
+		a{
+			display: block;
+    		margin-bottom: 35px;
+		}
+		p{
+			line-height: 21px;
+			color: #c5c5c5;
+			margin-bottom: 20px;
+		}
+	}
+}

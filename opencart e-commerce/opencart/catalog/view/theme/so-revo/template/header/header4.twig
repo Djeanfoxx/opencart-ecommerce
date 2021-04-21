@@ -1,0 +1,83 @@
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headertop = soconfig.get_settings('toppanel_type') =='1' or soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+
+<header id="header" class=" variant typeheader-{{ typeheader ? typeheader : '1'}}">
+	{#======	HEADER promotion	=======#}  
+	{% if soconfig.get_settings('promotion_status') and soconfig.get_settings('promotion') %}
+	<div class="header-promotion {{hidden_headertop}}" >
+		{{ soconfig.decode_entities( soconfig.get_settings('promotion') ) }}
+	</div>
+	{% endif %}
+
+	<!-- HEADER CENTER -->
+	<div class="header-center {{hidden_headercenter}}">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 header-left">
+					<div class="menu-wrapper pull-left">
+						<div class="responsive megamenu-style-dev">
+						{{content_menu1 }}
+						</div>
+					</div>
+					<div class="link-wrapper pull-left">
+						{% if soconfig.get_settings('lang_status') %}
+							<div class="link language" >{{ language }} </div>
+							<div class="link currency" > {{ currency }}  </div>
+						{% endif %}
+					
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-3 col-sm-3 col-xs-12 navbar-logo">
+				    {{soconfig.get_logo()}}
+				</div>
+				<div class="col-lg-4 col-md-5 col-sm-8 col-xs-12 header-right">
+					<div class="header-cart">
+						<div class="shopping_cart">
+						 	{{ cart }} 
+						</div>
+					</div>
+					<div class="header-link collapsed-block ">
+						<h5 class="tabBlockTitle hidden-lg hidden-sm hidden-md visible-xs">{{ text_more }}<a class="expander " href="#TabBlock-1"><i class="fa fa-angle-down"></i></a></h5>
+						<div  class="tabBlock" id="TabBlock-1">
+								{% if soconfig.get_settings('phone_status') and soconfig.get_settings('contact_number') %}
+								<div class="telephone hidden-xs" >
+									{{ soconfig.decode_entities( soconfig.get_settings('contact_number') ) }}
+								</div>
+								{% endif %} 
+						
+							<ul class="top-link list-inline">
+								<li class="hidden-xs"><a href="{{ login }}"><i class="fa fa-lock"></i> {{ text_login }}</a></li>
+								<li class="account" id="my_account"><a href="{{ account }} " title="{{ text_account }} " class="btn-xs dropdown-toggle" data-toggle="dropdown"> <span>{{ text_account }} </span> <span class="fa fa-angle-down"></span></a>
+									<ul class="dropdown-menu ">
+										
+										{% if logged %}
+										<li><a href="{{ account }} ">{{ text_account }} </a></li>
+										<li><a href="{{ order }} ">{{ text_order }} </a></li>
+										<li><a href="{{ transaction }} ">{{ text_transaction }} </a></li>
+										<li><a href="{{ download }} ">{{ text_download }} </a></li>
+										<li class="wishlist"><a href="{{ wishlist }} " id="wishlist-total" class="top-link-wishlist" title="{{ text_wishlist }} "><span>{{ text_wishlist }} </span></a></li>
+										<li><a href="{{ logout }}">{{ text_logout }}</a></li>
+										
+										{% else %}
+										<li><a href="{{ register }} "><i class="fa fa-user"></i> {{ text_register }}</a></li>
+										<li><a href="{{ login }}"><i class="fa fa-pencil-square-o"></i> {{ text_login }}</a></li>
+										{% endif %}
+									</ul>
+								</li>
+							
+							</ul>
+						</div>
+					</div>
+					<div class="header-search">
+						{{ search_block }} 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+</header>

@@ -1,0 +1,86 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+{% if soconfig.get_settings('layouts') %} <meta name="viewport" content="width=device-width, initial-scale=1"> {% endif %}
+{% if description %}<meta name="description" content="{{ description }}" />{% endif %}
+{% if keywords %}<meta name="keywords" content="{{ keywords }}" />{% endif %}
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+
+{# =========== Begin General CSS ==============#}
+{% if direction=='ltr' %} {{soconfig.addCss('catalog/view/javascript/bootstrap/css/bootstrap.min.css')}}
+{% elseif direction=='rtl' %}{{soconfig.addCss('catalog/view/javascript/soconfig/css/bootstrap/bootstrap.rtl.min.css')}} 
+{% else %}{{soconfig.addCss('catalog/view/javascript/bootstrap/css/bootstrap.min.css')}} {% endif %}
+
+{{soconfig.addCss('catalog/view/javascript/font-awesome/css/font-awesome.min.css')}}
+{{soconfig.addCss('catalog/view/javascript/soconfig/css/lib.css')}}
+{{soconfig.addCss('catalog/view/javascript/soconfig/css/owl.carousel.css')}}
+
+{# =========== Begin General Scripts ==============#}
+{{soconfig.addJs('catalog/view/javascript/jquery/jquery-2.1.1.min.js')}}
+{{soconfig.addJs('catalog/view/javascript/bootstrap/js/bootstrap.min.js')}}
+{{soconfig.addJs('catalog/view/javascript/soconfig/js/libs.js')}}
+{{soconfig.addJs('catalog/view/javascript/soconfig/js/owl.carousel.js')}}
+{{soconfig.addJs('catalog/view/javascript/soconfig/js/so.system.js')}}
+{{soconfig.addJs('catalog/view/theme/'~theme_directory~'/js/jquery.nav.js')}}
+{{soconfig.addJs('catalog/view/theme/'~theme_directory~'/js/so.custom.js')}}
+{{soconfig.addJs('catalog/view/theme/'~theme_directory~'/js/common.js')}}
+
+{% if soconfig.get_settings('toppanel_status') %}{{soconfig.addJs('catalog/view/javascript/soconfig/js/toppanel.js')}}{% endif %}
+
+{# =========== Begin Google Font ==============#}
+{% if soconfig.get_settings('url_body')  and  soconfig.get_settings('body_status') ==  'google' %} <link href='{{ soconfig.get_settings('url_body') }}' rel='stylesheet' type='text/css'> {% endif %} 	
+{% if soconfig.get_settings('url_menu')  and  soconfig.get_settings('menu_status')  ==  'google' %} <link href='{{ soconfig.get_settings('url_menu') }}' rel='stylesheet' type='text/css'> {% endif %} 	
+{% if soconfig.get_settings('url_heading')  and  soconfig.get_settings('heading_status') ==  'google' %} <link href='{{ soconfig.get_settings('url_heading') }}' rel='stylesheet' type='text/css'> {% endif %} 	
+{% if soconfig.get_settings('selector_body') %}
+	<style type="text/css">
+		{% if soconfig.get_settings('body_status') == 'google' %} {{ (soconfig.get_settings('selector_body')|raw~'{font-family:'~ soconfig.get_settings('family_body')~'}') }}
+		{% else %}  {{ soconfig.get_settings('selector_body')|raw~'{font-family:'~ soconfig.get_settings('normal_body')~'}' }}{% endif %} 
+	</style>
+{% endif %} 
+{% if soconfig.get_settings('selector_menu') %}
+	<style type="text/css">
+		{% if soconfig.get_settings('menu_status') == 'google' %} {{ (soconfig.get_settings('selector_menu')|raw~'{font-family:'~ soconfig.get_settings('family_menu')~'}') }}
+		{% else %}  {{ soconfig.get_settings('selector_menu')|raw~'{font-family:'~ soconfig.get_settings('normal_menu')~'}' }}{% endif %} 
+	</style>
+{% endif %} 
+{% if soconfig.get_settings('selector_heading') %}
+	<style type="text/css">
+		{% if soconfig.get_settings('menu_status') == 'google' %} {{ (soconfig.get_settings('selector_heading')|raw~'{font-family:'~ soconfig.get_settings('family_heading')~'}') }}
+		{% else %}  {{ soconfig.get_settings('selector_heading')|raw~'{font-family:'~ soconfig.get_settings('normal_heading')~'}' }}{% endif %} 
+	</style>
+{% endif %} 
+
+{# =========== Begin Cusom Code ==============#}
+
+{# =========== Begin Google Analytics ==============#}
+{% for link in links %}<link href="{{ link.href }}" rel="{{ link.rel }}" />{% endfor %}
+{% for analytic in analytics %}
+{{ analytic }}
+{% endfor %}
+
+{# =========== Begin Other CSS & JS  ==============#}
+{{soconfig.scss_compass}}
+{{soconfig.css_out}}
+{{soconfig.js_out}}
+{% for script in scripts %}<script src="{{ script }}" type="text/javascript"></script>{% endfor %}
+{% for style in styles %}<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />{% endfor %}
+
+
+</head>
+
+	
+<body >
+<div id="wrapper">  
+ 

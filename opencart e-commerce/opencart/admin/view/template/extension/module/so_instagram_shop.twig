@@ -1,0 +1,107 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+				<button type="submit" form="form-featured" data-toggle="tooltip" title="{{ entry_button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ entry_button_save }}</button>
+				<a class="btn btn-success" onclick="$('#action').val('save_edit');$('#form-featured').submit();" data-toggle="tooltip" title="{{ entry_button_save_and_edit }}" ><i class="fa fa-pencil-square-o"></i> {{ entry_button_save_and_edit }}</a>
+				<a class="btn btn-info" onclick="$('#action').val('save_new');$('#form-featured').submit();" data-toggle="tooltip" title="{{ entry_button_save_and_new }}" ><i class="fa fa-book"></i>  {{ entry_button_save_and_new }}</a>
+				<a href="{{ cancel }}" data-toggle="tooltip" title="{{ entry_button_cancel }}" class="btn btn-danger"><i class="fa fa-reply"></i>  {{ entry_button_cancel }}</a>
+			</div>
+			<h1>{{ heading_title_so }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid">
+		{% if error.warning %}
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error.warning }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		{% if success is defined and success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ subheading }}</h3>
+			</div>
+			<div class="panel-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
+					<input type="hidden" name="action" id="action" value=""/>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="input-name"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_name_desc }}">{{ entry_name }} </span></label>
+						<div class="col-sm-9">
+							<input type="text" name="name" value="{{ module.name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+							{% if error.name %}
+							<div class="text-danger">{{ error.name }}</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="input-disp_title_module"> <span data-toggle="tooltip" title="{{ entry_display_title_module_desc }}">{{ entry_display_title_module }} </span></label>
+						<div class="col-sm-9">
+							<select name="disp_title_module" id="input-disp_title_module" class="form-control">
+								{% if module.disp_title_module %}
+									<option value="1" selected="selected">{{ text_yes }}</option>
+									<option value="0">{{ text_no }}</option>
+								{% else %}
+									<option value="1">{{ text_yes }}</option>
+									<option value="0" selected="selected">{{ text_no }}</option>
+								{% endif %}
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="input-status"><span data-toggle="tooltip" title="{{ entry_status_desc }}">{{ entry_status }} </span></label>
+						<div class="col-sm-9">
+							<select name="status" id="input-status" class="form-control">
+								{% if module.status %}
+									<option value="1" selected="selected">{{ text_enabled }}</option>
+									<option value="0">{{ text_disabled }}</option>
+								{% else %}
+									<option value="1">{{ text_enabled }}</option>
+									<option value="0" selected="selected">{{ text_disabled }}</option>
+								{% endif %}
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="input-embed_widget">{{ entry_embed_widget }}</label>
+						<div class="col-sm-9">
+							<textarea name="embed_widget" placeholder="{{ entry_embed_widget }}" id="input-embed_widget" class="form-control" rows="3">{{ module.embed_widget }}</textarea>
+							<div class="help-block">Get widget: <a href="https://snapppt.com/?ref=wdgt-ftr-tglne" target="_blank">snapppt.com</a></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="input-class_suffix">{{ entry_class_suffix }}</label>
+						<div class="col-sm-9">
+							<input type="text" name="class_suffix" value="{{ module.class_suffix }}" placeholder="{{ entry_class_suffix }}" id="input-class_suffix" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="input-pre_text">{{ entry_pre_text }}</label>
+						<div class="col-sm-9">
+							<textarea name="pre_text" placeholder="{{ entry_pre_text }}" id="input-pre_text" class="form-control" rows="2">{{ module.pre_text }}</textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label" for="input-post_text">{{ entry_post_text }}</label>
+						<div class="col-sm-9">
+							<textarea name="post_text" placeholder="{{ entry_post_text }}" id="input-post_text" class="form-control">{{ module.post_text }}</textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{{ footer }}

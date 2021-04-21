@@ -1,0 +1,110 @@
+{% set devices = {'lg' : ' Desktops', 'md' : ' Desktops', 'sm' : ' Tablets', 'xs' : ' Phones' } %}
+{% set soconfig_pages = {'catalog_column_lg' : '3', 'catalog_column_md' : '3', 'catalog_column_sm' : '2' } %}
+
+{{ header }}
+	<div class="container">
+		<ul class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+			<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+    <div class="container">
+        
+        <div class="row">
+            {{ column_left }}
+            {% if column_left and column_right %}
+                {% set class = 'col-sm-6' %}
+            {% elseif column_left or column_right %}
+                {% set class = 'col-md-9 col-sm-12' %}
+            {% else %}
+                {% set class = 'col-sm-12' %}
+            {% endif %}
+            
+            <div id="content" class="{{ class }}">
+                {{ content_top }}
+				{% if error_no_database is defined and error_no_database == '' %}
+	                <div class="blog-header">
+						<h3>{{ heading_title }}</h3>
+						{{ description is defined and description ? description : '' }}
+					</div>
+	                
+					<div class="product-filter product-filter-top filters-panel" style="float: left; width: 100%;">
+						<div class="row">
+						
+							<div class="col-md-10"><div class="pull-right">{{ pagination }}</div></div>
+						</div>
+					</div>
+					
+	                <div class="blog-listitem row">
+	                    {% if articles %}
+	                        {% for id_article, article in articles %}
+		                        <div class="blog-item col-md-4 col-sm-6">
+									{% if article.image %}
+										<div class="itemBlogImg left-block ">
+											<div class="article-image banners ">
+												<div>
+													<a  class="popup-gallery" href="{{ article.image }}"><img  src="{{ article.image }}" alt="{{ article.article_title }}" /></a>
+												</div>
+											</div>
+										</div>
+									{% endif %}
+									<div class="itemBlogContent right-block ">
+								  		<div class="article-title">
+											<h4><a href="{{ article.href }}">{{ article.article_title|capitalize }}</a></h4>
+										</div>
+										
+								  		<div class="blog-meta">
+								  			<span class="author"><i class="fa fa-user"></i><span>Post by </span>{{ article.author_name }}</span>
+											{% if article.allow_comment %}
+												<span class="comment_count"><i class="fa fa-comment-o"></i><a href="{{ article.comment_href }}#comment-section">{{ article.total_comment }}</a></span>
+											{% endif %}
+											<span class="article-date hidden" >
+											    {% set datetotime = article.date_added %}
+											    <i class="fa fa-calendar"></i>{{ datetotime }}
+											</span>
+										</div>
+										
+									 	<p class="article-description hidden" >
+											 {{ article.description }}
+										</p>
+										<a class="btn btn-default hidden" href="{{ article.href }}"><b>{{ button_continue_reading }}</b><i class="fa fa-angle-right"></i></a>
+									</div>
+		                        </div>
+								{% for subfix, device in devices %}
+									{% set id = id_article + 1 %}
+										{% if soconfig_pages["catalog_column_"~subfix] is defined and soconfig_pages["catalog_column_"~subfix] !='' %}
+											{% if (id  % soconfig_pages["catalog_column_"~subfix]) == 0 %}
+												{% set id = 1 %}
+												<div class="clearfix visible-{{ subfix~'-block' }}"></div>
+											{% endif %}	
+										{% endif %}	
+								{% endfor %}							
+	                    	{% endfor %}
+	                    {% else %}
+	                        <div class="col-xs-12">
+								<h3 class="text-center">{{ text_no_found }}</h3>
+							</div>
+	                    {% endif %}
+	                </div> 
+					
+	                <div class="product-filter product-filter-bottom filters-panel clearfix" >
+						<div class="row">
+							
+							<div class="col-md-10"><div class="pull-right">{{ pagination }}</div></div>
+						</div>
+					</div>
+				
+				{% else %}
+					<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>
+						{{ error_no_database }}
+					</div>
+				{% endif %}
+				
+                {{ content_bottom }}
+            </div>            
+            
+            {{ column_right }}
+        </div>        
+    </div>    
+{{ footer }}

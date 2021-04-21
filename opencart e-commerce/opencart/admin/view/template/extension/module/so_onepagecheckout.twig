@@ -1,0 +1,556 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  	<div class="page-header">
+    	<div class="container-fluid">
+      		<div class="pull-right">
+        		<button type="submit" form="form-so-onepagecheckout" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ button_save }}</button>
+        		<a class="btn btn-success1" onclick="$('#action').val('save_edit');$('#form-so-onepagecheckout').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_edit') }}" ><i class="fa fa-pencil-square-o"></i> {{ objlang.get('entry_button_save_and_edit') }}</a>
+				<a class="btn btn-info" onclick="$('#action').val('save_new');$('#form-so-onepagecheckout').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_new') }}" ><i class="fa fa-book"></i>  {{ objlang.get('entry_button_save_and_new') }}</a>
+        		<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-danger"><i class="fa fa-reply"></i> {{ button_cancel }}</a>
+        	</div>
+			<h1>{{ heading_title_so }}</h1>
+      		<ul class="breadcrumb">
+        		{% for breadcrumb in breadcrumbs %}
+        			<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        		{% endfor %}
+      		</ul>
+    	</div>
+  	</div>
+  	<div class="container-fluid">
+    	{% if error_warning %}
+    		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      			<button type="button" class="close" data-dismiss="alert">&times;</button>
+    		</div>
+    	{% endif %}
+    	{% if success %}
+    		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+      			<button type="button" class="close" data-dismiss="alert">&times;</button>
+    		</div>
+    	{% endif %}
+    	<div class="panel panel-default">
+      		<div class="panel-heading">
+        		<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      		</div>
+      		<div class="panel-body">
+	   			<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-so-onepagecheckout" class="form-horizontal">
+    				<input type="hidden" name="action" id="action" value=""/>        
+					<ul class="nav nav-tabs" id="CheckoutTab">
+						<li class="active"><a href="#tab-general" data-toggle="tab"><i class="fa fa-cog fa-fw"></i> {{ tab_general }}</a></li>
+						<li class="dropdown">
+							<a href="#" data-toggle="dropdown"><i class="fa fa-eye"></i> {{ tab_layout_setting }}<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#tab-layout" data-toggle="tab"><i class="fa fa-eye"></i> {{ tab_account_setting }}</a></li>
+								<li><a href="#tab-shopping-cart-setting" data-toggle="tab"><i class="fa fa-shopping-cart"></i> {{ tab_shipping_cart }}</a></li>
+								<li><a href="#tab-delivery_method-setting" data-toggle="tab"><i class="fa fa-truck" aria-hidden="true"></i> {{ tab_delivery_methods }}</a></li>
+								<li><a href="#tab-payment_method-setting" data-toggle="tab"><i class="fa fa-credit-card" aria-hidden="true"></i> {{ tab_payment_methods }}</a></li>
+								<li><a href="#tab-confirm_order-setting" data-toggle="tab"><i class="fa fa-cart-plus" aria-hidden="true"></i> {{ tab_confirm_order }}</a></li>
+							</ul>
+						</li>
+						<li class="">
+							<a href="#tab-help" data-toggle="tab"><i class="fa fa-question-circle"></i> {{ tab_help }}</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active in" id="tab-general">
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-status"><span data-toggle="tooltip" title="" data-original-title="{{ entry_status_title }}">{{ entry_status }}</span></label>
+								<div class="col-sm-3">
+									<div class="btn-group" data-toggle="buttons">
+										<label class="btn btn-success btn-sm  {{ so_onepagecheckout_enabled == 1 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_general][so_onepagecheckout_enabled]"  {{ so_onepagecheckout_enabled == 1 ? 'checked="checked"' : '' }}  value="1" autocomplete="off">{{ text_enabled }}</label>
+										<label class="btn btn-success btn-sm {{ so_onepagecheckout_enabled == 0 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_general][so_onepagecheckout_enabled]" {{ so_onepagecheckout_enabled == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_disabled }}</label>
+									</div>
+				  				</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-name"><span data-toggle="tooltip" title="" data-original-title="{{ entry_name_title }}">{{ entry_name }}</span></label>
+								<div class="col-sm-3">
+				  					<input type="text" name="so_onepagecheckout[so_onepagecheckout_general][so_onepagecheckout_name]" value="{{ so_onepagecheckout_name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+				  					{% if error_name %}
+				  						<div class="text-danger">{{ error_name }}</div>
+				  					{% endif %}
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-status"><span data-toggle="tooltip" title="" data-original-title="{{ text_layout_title }}">{{ text_layout }}</span></label>
+								<div class="col-sm-3">
+									<select name="so_onepagecheckout[so_onepagecheckout_general][so_onepagecheckout_layout]" id="input-country" class="form-control">
+			                			<option value="1" {{ so_onepagecheckout_layout == 1 ? 'selected="selected"' : '' }}>{{ text_layout_one }}</option>
+			                			<option value="2" {{ so_onepagecheckout_layout == 2 ? 'selected="selected"' : '' }}>{{ text_layout_two }}</option>
+			                		</select>
+				  				</div>
+							</div>
+							<div class="form-group">
+			                	<label class="col-sm-2 control-label" for="input-country"><span data-toggle="tooltip" title="" data-original-title="Set Default Country">{{ text_default_country }}</span></label>
+			                	<div class="col-sm-3">
+			                		<select name="so_onepagecheckout[so_onepagecheckout_general][so_onepagecheckout_country_id]" id="input-country" class="form-control">
+			                			{% for country in countries %}
+			                				<option value="{{ country.country_id }}" {{ country.country_id == so_onepagecheckout_country_id ? 'selected="selected"' : '' }}>{{ country.name }}</option>
+			                			{% endfor %}
+			                		</select>
+			                	</div>
+			                </div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-zone"><span data-toggle="tooltip" title="" data-original-title="Set Default zone">{{ text_default_zone }}</span></label>
+								<div class="col-sm-3">
+									<select name="so_onepagecheckout[so_onepagecheckout_general][so_onepagecheckout_zone_id]" id="input-zone" class="form-control">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="tab-layout">
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-status"><span  data-toggle="tooltip" title="Disabled Register Checkout ">{{ text_register_account }}</span></label>
+								<div class="col-sm-10">
+									<div class="btn-group" data-toggle="buttons">
+										<label class="btn btn-success btn-sm button-account-type {{ so_onepagecheckout_register_checkout == 1 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_register_checkout]" {{ so_onepagecheckout_register_checkout == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+										<label class="btn btn-success btn-sm button-account-type {{ so_onepagecheckout_register_checkout == 0 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_register_checkout]" {{ so_onepagecheckout_register_checkout == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-status"><span  data-toggle="tooltip" title="Disabled Guest Checkout ">{{ text_guest_checkout }}</span></label>
+								<div class="col-sm-10">
+									<div class="btn-group" data-toggle="buttons">
+										<label class="btn btn-success btn-sm {{ so_onepagecheckout_guest_checkout == 1 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_guest_checkout]" {{ so_onepagecheckout_guest_checkout == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+										<label class="btn btn-success btn-sm {{ so_onepagecheckout_guest_checkout == 0 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_guest_checkout]"  {{ so_onepagecheckout_guest_checkout == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-status"><span  data-toggle="tooltip" title="Disabled Login ">{{ text_login_checkout }}</span></label>
+								<div class="col-sm-10">
+									<div class="btn-group" data-toggle="buttons">
+										<label class="btn btn-success btn-sm {{ so_onepagecheckout_enable_login == 1 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_enable_login]" {{ so_onepagecheckout_enable_login == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+										<label class="btn btn-success btn-sm {{ so_onepagecheckout_enable_login == 0 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_enable_login]" {{ so_onepagecheckout_enable_login == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-2 control-label" for="input-account_open"><span data-toggle="tooltip" title="" data-original-title="Default select section">{{ text_default_display }}</span></label>
+								<div class="col-sm-3">
+									<div class="btn-group btn-group-justified" data-toggle="buttons">	
+										<label class="btn btn-success btn-sm {{ so_onepagecheckout_account_open == 'register' ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_account_open]" {{ so_onepagecheckout_account_open == 'register' ? 'checked="checked"' : '' }} value="register" autocomplete="off" />{{ text_register }}</label>
+										<label class="btn btn-success btn-sm {{ so_onepagecheckout_account_open == 'guest' ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_account_open]" {{ so_onepagecheckout_account_open == 'guest' ? 'checked="checked"' : '' }} value="guest" autocomplete="off" />{{ text_guest }}</label>
+										<label class="btn btn-success btn-sm {{ so_onepagecheckout_account_open == 'login' ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_account_open]" {{ so_onepagecheckout_account_open == 'login' ? 'checked="checked"' : '' }} value="login" autocomplete="off" />{{ text_login }}</label>
+									</div>	 
+								</div>
+							</div>
+						</div>
+						<div id="tab-shopping-cart-setting" class="tab-pane">
+							<fieldset>
+								<legend>{{ text_shopping_cart }}</legend>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-status"><span  data-toggle="tooltip" title="Shopping Cart Status" >{{ text_shopping_cart_status }}</span></label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm {{ shopping_cart_status == 1 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][shopping_cart_status]" {{ shopping_cart_status == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+											<label class="btn btn-success btn-sm {{ shopping_cart_status == 0 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][shopping_cart_status]" {{ shopping_cart_status == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-weight"><span  data-toggle="tooltip" title="Show Weight" >{{ text_show_weight }}</span></label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm  {{ show_product_weight == 1 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_product_weight]" {{ show_product_weight == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+											<label class="btn btn-success btn-sm  {{ show_product_weight == 0 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_product_weight]" {{ show_product_weight == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-qnty_update"><span  data-toggle="tooltip" title="Show product Quantity update on cart">{{ text_quantity_update_permission }}</span></label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm  {{ show_product_qnty_update == 1 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_product_qnty_update]" {{ show_product_qnty_update == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+											<label class="btn btn-success btn-sm  {{ show_product_qnty_update == 0 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_product_qnty_update]" {{ show_product_qnty_update == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-qnty_update"><span  data-toggle="tooltip" title="Show remove cart button">{{ text_show_removecart }}</span></label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm  {{ show_product_removecart == 1 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_product_removecart]" {{ show_product_removecart == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+											<label class="btn btn-success btn-sm  {{ show_product_removecart == 0 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_product_removecart]" {{ show_product_removecart == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-image_width">{{ text_product_image_size }}</label>
+									<div class="col-sm-3">
+										<input type="text" value="{{ show_product_image_width }}" name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_product_image_width]" class="form-control" placeholder="Width">
+										{% if error_product_image_width %}
+					  						<div class="text-danger">{{ error_product_image_width }}</div>
+					  					{% endif %}
+									</div>
+									<div class="col-sm-3">
+										<input type="text" value="{{ show_product_image_height }}" name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_product_image_height]" class="form-control" placeholder="Height">
+										{% if error_product_image_height %}
+					  						<div class="text-danger">{{ error_product_image_height }}</div>
+					  					{% endif %}
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend>{{ text_coupon_voucher }}</legend>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<td class="text-left">{{ text_show_module_name }}</td>
+											<th class="text-center">{{ text_login_account }}</th>
+											<th class="text-center">{{ text_register_account }}</th>
+											<th class="text-right">{{ text_guest_checkout }}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="text-left">{{ text_coupon }}</td>
+											<td class="text-center">
+												<div class="col-sm-12">
+													<div class="btn-group" data-toggle="buttons">
+														<label class="btn btn-success btn-sm  {{ coupon_login_status == 1 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][coupon_login_status]" {{ coupon_login_status == 1 ? 'checked="checked"': '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+														<label class="btn btn-success btn-sm  {{ coupon_login_status == 0 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][coupon_login_status]" {{ coupon_login_status == 0 ? 'checked="checked"': '' }} value="0" autocomplete="off">{{ text_no }}</label>
+													</div>
+												</div>
+											</td>	
+											<td class="text-center">
+												<div class="col-sm-12">
+													<div class="btn-group" data-toggle="buttons">
+														<label class="btn btn-success btn-sm  {{ coupon_register_status == 1 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][coupon_register_status]" {{ coupon_register_status == 1 ? 'checked="checked"': '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+														<label class="btn btn-success btn-sm  {{ coupon_register_status == 0 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][coupon_register_status]" {{ coupon_register_status == 0 ? 'checked="checked"': '' }} value="0" autocomplete="off">{{ text_no }}</label>
+													</div>
+												</div>
+											</td>
+											<td class="text-right">
+												<div class="col-sm-12">
+													<div class="btn-group" data-toggle="buttons">
+														<label class="btn btn-success btn-sm  {{ coupon_guest_status == 1 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][coupon_guest_status]" {{ coupon_guest_status == 1 ? 'checked="checked"': '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+														<label class="btn btn-success btn-sm  {{ coupon_guest_status == 0 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][coupon_guest_status]" {{ coupon_guest_status == 0 ? 'checked="checked"': '' }} value="0" autocomplete="off">{{ text_no }}</label>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td class="text-left">{{ text_reward }}</td>
+											<td class="text-center">
+												<div class="col-sm-12">
+													<div class="btn-group" data-toggle="buttons">
+														<label class="btn btn-success btn-sm  {{ reward_login_status == 1 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][reward_login_status]" {{ reward_login_status == 1 ? 'checked="checked"': '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+														<label class="btn btn-success btn-sm  {{ reward_login_status == 0 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][reward_login_status]" {{ reward_login_status == 0 ? 'checked="checked"': '' }} value="0" autocomplete="off">{{ text_no }}</label>
+													</div>
+												</div>
+											</td>	
+											<td class="text-center">
+												<div class="col-sm-12">
+													<div class="btn-group" data-toggle="buttons">
+														<label class="btn btn-success btn-sm  {{ reward_register_status == 1 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][reward_register_status]" {{ reward_register_status == 1 ? 'checked="checked"': '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+														<label class="btn btn-success btn-sm  {{ reward_register_status == 0 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][reward_register_status]" {{ reward_register_status == 0 ? 'checked="checked"': '' }} value="0" autocomplete="off">{{ text_no }}</label>
+													</div>
+												</div>
+											</td>
+											<td class="text-right">
+												<div class="col-sm-12">
+													<div class="btn-group" data-toggle="buttons">
+														<label class="btn btn-success btn-sm  {{ reward_guest_status == 1 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][reward_guest_status]" {{ reward_guest_status == 1 ? 'checked="checked"': '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+														<label class="btn btn-success btn-sm  {{ reward_guest_status == 0 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][reward_guest_status]" {{ reward_guest_status == 0 ? 'checked="checked"': '' }} value="0" autocomplete="off">{{ text_no }}</label>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td class="text-left">{{ text_voucher }}</td>
+											<td class="text-center">
+												<div class="col-sm-12">
+													<div class="btn-group" data-toggle="buttons">
+														<label class="btn btn-success btn-sm  {{ voucher_login_status == 1 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][voucher_login_status]" {{ voucher_login_status == 1 ? 'checked="checked"': '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+														<label class="btn btn-success btn-sm  {{ voucher_login_status == 0 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][voucher_login_status]" {{ voucher_login_status == 0 ? 'checked="checked"': '' }} value="0" autocomplete="off">{{ text_no }}</label>
+													</div>
+												</div>
+											</td>	
+											<td class="text-center">
+												<div class="col-sm-12">
+													<div class="btn-group" data-toggle="buttons">
+														<label class="btn btn-success btn-sm  {{ voucher_register_status == 1 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][voucher_register_status]" {{ voucher_register_status == 1 ? 'checked="checked"': '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+														<label class="btn btn-success btn-sm  {{ voucher_register_status == 0 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][voucher_register_status]" {{ voucher_register_status == 0 ? 'checked="checked"': '' }} value="0" autocomplete="off">{{ text_no }}</label>
+													</div>
+												</div>
+											</td>
+											<td class="text-right">
+												<div class="col-sm-12">
+													<div class="btn-group" data-toggle="buttons">
+														<label class="btn btn-success btn-sm  {{ voucher_guest_status == 1 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][voucher_guest_status]" {{ voucher_guest_status == 1 ? 'checked="checked"': '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+														<label class="btn btn-success btn-sm  {{ voucher_guest_status == 0 ? 'active': '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][voucher_guest_status]" {{ voucher_guest_status == 0 ? 'checked="checked"': '' }} value="0" autocomplete="off">{{ text_no }}</label>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</fieldset>
+						</div>
+						<div id="tab-delivery_method-setting" class="tab-pane">
+							{% if shipping_methods|length %}
+							<fieldset>
+								<legend>{{ text_delivery_methods }}</legend>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-status"><span  data-toggle="tooltip" title="Status" >{{ text_delivery_methods_status }}</span></label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm {{ delivery_method_status == 1 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][delivery_method_status]" {{ delivery_method_status == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+											<label class="btn btn-success btn-sm {{ delivery_method_status == 0 ? 'active' : '' }}"><input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][delivery_method_status]" {{ delivery_method_status == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-customer-group"><span data-toggle="tooltip" title="" data-original-title="Default selected Shipping Method">{{ text_shipping_methods }}</span></label>
+									<div class="col-md-5">
+										<select class="form-control" name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_default_shipping]">
+											{% for shipping_method in shipping_methods %}
+										  		<option value="{{ shipping_method.code }}" {{ shipping_method.code == so_onepagecheckout_default_shipping ? 'selected="selected"' : '' }}>{{ shipping_method.title }}</option>
+										  	{% endfor %}
+										</select>
+									</div>
+								</div>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th class="text-left">{{ text_shipping_methods }}</th>
+											<th class="text-center">{{ text_status }}</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for shipping_method in shipping_methods %}
+										{% set shipping_status = shipping_method.code~'_status' %}
+										<tr>
+											<td class="text-left">{{ shipping_method.title }}</td>
+											<td class="text-center">
+												<div class="col-md-12">
+													<div class="form-group">
+														<div class="btn-group" data-toggle="buttons">
+															<label class="btn btn-success btn-sm {{ setting_so_onepagecheckout_layout_setting[shipping_status] is defined and setting_so_onepagecheckout_layout_setting[shipping_status] == 1 ? 'active' : '' }}">
+																<input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][{{ shipping_method.code }}_status]" {{ setting_so_onepagecheckout_layout_setting[shipping_status] is defined and setting_so_onepagecheckout_layout_setting[shipping_status] == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">
+																{{ text_yes }}
+															</label>
+															<label class="btn btn-success btn-sm {{ setting_so_onepagecheckout_layout_setting[shipping_status] is empty or (setting_so_onepagecheckout_layout_setting[shipping_status] is defined and setting_so_onepagecheckout_layout_setting[shipping_status] == 0) ? 'active' : '' }}">
+																<input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][{{ shipping_method.code }}_status]" {{ setting_so_onepagecheckout_layout_setting[shipping_status] is defined and setting_so_onepagecheckout_layout_setting[shipping_status] == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">
+																{{ text_no }}
+															</label>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</fieldset>
+							{% endif %}
+						</div>
+						<div id="tab-payment_method-setting" class="tab-pane">
+							{% if payment_methods|length %}
+							<fieldset>
+								<legend>{{ text_payment_methods }}</legend>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-status"><span  data-toggle="tooltip" title="Status" >{{ text_payment_methods_status }}</span></label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm {{ payment_method_status is defined and payment_method_status == 1 ? 'active' : '' }}">
+												<input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][payment_method_status]" {{ payment_method_status is defined and payment_method_status == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">
+												{{ text_yes }}
+											</label>
+											<label class="btn btn-success btn-sm {{ payment_method_status is defined and payment_method_status == 0 ? 'active' : '' }}">
+												<input type="radio"  name="so_onepagecheckout[so_onepagecheckout_layout_setting][payment_method_status]" {{ payment_method_status is defined and payment_method_status == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">
+												{{ text_no }}
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-customer-group"><span data-toggle="tooltip" title="" data-original-title="Default selected Payment Method">{{ text_payment_methods }}</span></label>
+									<div class="col-md-5">
+										<select class="form-control" name="so_onepagecheckout[so_onepagecheckout_layout_setting][so_onepagecheckout_default_payment]">
+											{% for payment_method in payment_methods %}
+										  		<option value="{{ payment_method.code }}" {{ payment_method.code == so_onepagecheckout_default_payment ? 'selected="selected"' : '' }}>{{ payment_method.title }}</option>
+										  	{% endfor %}
+										</select>
+									</div>
+								</div>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th class="text-left">{{ text_payment_methods }}</th>
+											<th class="text-center">{{ text_status }}</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for payment_method in payment_methods %}
+										{% set payment_status = payment_method.code~'_status' %}
+										<tr>
+											<td class="text-left">{{ payment_method.title }}</td>
+											<td class="text-center">
+												<div class="col-md-12">
+													<div class="form-group">
+														<div class="btn-group" data-toggle="buttons">
+															<label class="btn btn-success btn-sm {{ setting_so_onepagecheckout_layout_setting[payment_status] is defined and setting_so_onepagecheckout_layout_setting[payment_status] == 1 ? 'active' : '' }}">
+																<input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][{{ payment_method.code }}_status]" {{ setting_so_onepagecheckout_layout_setting[payment_status] is defined and setting_so_onepagecheckout_layout_setting[payment_status] == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">
+																{{ text_yes }}
+															</label>
+															<label class="btn btn-success btn-sm {{ setting_so_onepagecheckout_layout_setting[payment_status] is defined and setting_so_onepagecheckout_layout_setting[payment_status] == 0 ? 'active' : '' }}">
+																<input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][{{ payment_method.code }}_status]" {{ setting_so_onepagecheckout_layout_setting[payment_status] is defined and setting_so_onepagecheckout_layout_setting[payment_status] == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">
+																{{ text_no }}
+															</label>
+														</div>
+													</div>
+												</div>
+											</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</fieldset>
+							{% endif %}
+						</div>
+						<div id="tab-confirm_order-setting" class="tab-pane">
+							<fieldset>
+								<legend>{{ text_confirm_order }}</legend>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-status">{{ text_add_comments }}</label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm {{ comment_status == 1 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][comment_status]" {{ comment_status == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+											<label class="btn btn-success btn-sm {{ comment_status == 0 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][comment_status]" {{ comment_status == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-status">{{ text_require_comment }}</label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm {{ require_comment_status == 1 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][require_comment_status]" {{ require_comment_status == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>										
+											<label class="btn btn-success btn-sm {{ require_comment_status == 0 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][require_comment_status]" {{ require_comment_status == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-status">{{ text_show_newsletter }}</label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm {{ show_newsletter == 1 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_newsletter]" {{ show_newsletter == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+											<label class="btn btn-success btn-sm {{ show_newsletter == 0 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_newsletter]" {{ show_newsletter == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-status">{{ text_show_privacy }}</label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm {{ show_privacy == 1 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_privacy]" {{ show_privacy == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+											<label class="btn btn-success btn-sm {{ show_privacy == 0 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_privacy]" {{ show_privacy == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label" for="input-status">{{ text_show_term }}</label>
+									<div class="col-sm-10">
+										<div class="btn-group" data-toggle="buttons">
+											<label class="btn btn-success btn-sm {{ show_term == 1 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_term]" {{ show_term == 1 ? 'checked="checked"' : '' }} value="1" autocomplete="off">{{ text_yes }}</label>
+											<label class="btn btn-success btn-sm {{ show_term == 0 ? 'active' : '' }}"><input type="radio" name="so_onepagecheckout[so_onepagecheckout_layout_setting][show_term]" {{ show_term == 0 ? 'checked="checked"' : '' }} value="0" autocomplete="off">{{ text_no }}</label>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+						<div id="tab-help" class="tab-pane">
+							<div class="tab-body">
+								<ol>
+									<li><b>Setting your FTP credentials</b></li>
+									<p>In order to set your FTP credentials, navigate to System -> Settings -> Store Settings.</p>
+									<p><img src="view/javascript/so_onepagecheckout/images/help/1.png" class="img-thumbnail img-responsive"></p>
+									<p>Then, choose the FTP tab and fill in your FTP credentials. Make sure you check the Yes radio button for the Enable FTP field and click the blue Save button in the upper right corner of the page as shown:</p>
+									<p><img src="view/javascript/so_onepagecheckout/images/help/2.png" class="img-thumbnail img-responsive"></p>
+									<p>Now the Extension Installer will know how to access your FTP and you will be able to install extensions with ease.</p>
+									<li><b>Installing an extension</b></li>
+									<p>In order to upload an extension, navigate to Extensions -> Extension Installer. Then click the blue Upload button and provide the route to your extension' s"*.ocmod.zip" archive.</p>
+									<p><img src="view/javascript/so_onepagecheckout/images/help/3.png" class="img-thumbnail img-responsive"></p>
+									<li><b>Clear Modification</b></li>
+									<p>In order to upload an extension, navigate to Extensions -> Modifications. Then click the blue Refresh button.</p>
+									<p><img src="view/javascript/so_onepagecheckout/images/help/4.png" class="img-thumbnail img-responsive"></p>
+								</ol>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+      	</div>
+	</div>
+</div>
+<script type="text/javascript"><!--
+jQuery(document).ready(function($) {
+	$('select[name=\'so_onepagecheckout[so_onepagecheckout_general][so_onepagecheckout_country_id]\']').on('change', function() {
+		$.ajax({
+			url: 'index.php?route=localisation/country/country&user_token={{ user_token }}&country_id=' + this.value,
+			dataType: 'json',
+			beforeSend: function() {
+				$('select[name=\'so_onepagecheckout[so_onepagecheckout_general][so_onepagecheckout_country_id]\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+			},
+			complete: function() {
+				$('.fa-spin').remove();
+			},
+			success: function(json) {
+				html = '<option value=""> --- Please Select --- </option>';
+
+				if (json['zone'] && json['zone'] != '') {
+					for (i = 0; i < json['zone'].length; i++) {
+	          			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+						if (json['zone'][i]['zone_id'] == '{{ so_onepagecheckout_zone_id }}') {
+	            			html += ' selected="selected"';
+						}
+
+						html += '>' + json['zone'][i]['name'] + '</option>';
+					}
+				} else {
+					html += '<option value="0" selected="selected"> --- None --- </option>';
+				}
+
+				$('select[name=\'so_onepagecheckout[so_onepagecheckout_general][so_onepagecheckout_zone_id]\']').html(html);
+				
+				$('#button-save').prop('disabled', false);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+
+	$('select[name=\'so_onepagecheckout[so_onepagecheckout_general][so_onepagecheckout_country_id]\']').trigger('change');
+	
+	// for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        // save the latest tab; use cookies if you like 'em better:
+        localStorage.setItem('lastTab', $(this).attr('href'));
+    });
+
+    // go to the latest tab, if it exists:
+    var lastTab = localStorage.getItem('lastTab');
+    if (lastTab) {
+        $('[href="' + lastTab + '"]').tab('show');
+    }
+    
+	$('#CheckoutTab a').click(function(e) {
+	  e.preventDefault();
+	  $(this).tab('show');
+	});
+
+	// store the currently selected tab in the hash value
+	// $("ul.nav-tabs li a, ul.nav-tabs li ul li a").on("shown.bs.tab", function(e) {
+	//   var id = $(e.target).attr("href").substr(1);
+	//   window.location.hash = id;
+	// });
+
+	// // on load of the page: switch to the currently selected tab
+	// var hash = window.location.hash;
+	// $('#CheckoutTab a[href="' + hash + '"]').tab('show');
+});
+//--></script>
+{{ footer }}

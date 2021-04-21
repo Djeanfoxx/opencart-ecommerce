@@ -1,0 +1,86 @@
+{% set count_item = list|length %}
+
+<div class="module sohomepage-slider {{direction_class}}  {{ class_suffix}}">
+    {% if disp_title_module %}
+      <h3 class="modtitle">{{ head_name}}</h3>
+    {% endif %}
+
+{% if pre_text|trim is not empty  %}
+  <div class="form-group">
+    {{ pre_text }}
+  </div>
+{% endif %}
+
+
+<div class="modcontent">
+    {% if list %} 
+    <div id="sohomepage-slider{{ module}}">
+        <div class="so-homeslider sohomeslider-inner-{{ module}}">
+        {% for item in list %}        
+            <div class="item">
+                <a href="{{ item.url}}" title="{{ item.title}}" target="{{ item_link_target}}">
+                    <img class="lazyload"   data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ item.thumb}}"  alt="{{ item.title}}" />
+                </a>
+                <div class="sohomeslider-description">
+                    {% if item.caption %} <h2>{{ item.caption}}</h2> {% endif %}
+                    {{ item.description}}              
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+    <script type="text/javascript">
+      var total_item = {{ count_item }} ;
+      $(".sohomeslider-inner-{{ module}}").owlCarousel2({
+		  rtl: {{ direction}},
+          animateOut: '{{ animateOut}}',
+          animateIn: '{{ animateIn}}',
+          autoplay: {{ autoplay}},
+          autoplayTimeout: {{ autoplayTimeout}},
+          autoplaySpeed:  {{ autoplaySpeed}},
+          smartSpeed: 500,
+          autoplayHoverPause: {{ autoplayHoverPause}},
+          startPosition: {{ startPosition}},
+          mouseDrag:  {{ mouseDrag}},
+          touchDrag: {{ touchDrag}},
+          dots: {{ dots}},
+          autoWidth: false,
+          dotClass: "owl2-dot",
+          dotsClass: "owl2-dots",
+          loop: {{ loop}},
+          navText: ["Next", "Prev"],
+          navClass: ["owl2-prev", "owl2-next"],
+
+          responsive: {
+          0:{ items: {{ nb_column4}},
+            nav: total_item <= {{ nb_column4 }} ? false : (({{ nav  }} ) ? true: false),
+          },
+          480:{ items: {{ nb_column3 }},
+            nav: total_item <= {{ nb_column3 }} ? false : (({{ nav  }} ) ? true: false),
+          },
+          768:{ items: {{ nb_column2 }},
+            nav: total_item <= {{ nb_column2 }} ? false : (({{ nav  }} ) ? true: false),
+          },
+          992:{ items: {{ nb_column1 }},
+            nav: total_item <= {{ nb_column1 }} ? false : (({{ nav  }} ) ? true: false),
+          },
+          1200:{ items: {{ nb_column0 }},
+            nav: total_item <= {{ nb_column0 }} ? false : (({{ nav  }} ) ? true: false),
+          }
+        },
+      });
+    </script>
+    </div>
+    {% else %}  
+        {{ objlang.get('text_noitem') }}
+    {% endif %}
+</div> <!--/.modcontent-->
+
+{% if post_text|trim is not empty %}
+  <div class="form-group">
+    {{ post_text }}
+  </div>
+{% endif %}
+
+
+</div> 

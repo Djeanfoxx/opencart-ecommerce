@@ -1,0 +1,95 @@
+
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headertop = soconfig.get_settings('toppanel_type') =='1' or soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+
+<header id="header" class=" variant typeheader-{{ typeheader ? typeheader : '1'}}">
+	{% if soconfig.get_settings('promotion_status') and soconfig.get_settings('promotion') %}
+	<div class="header-promotion {{hidden_headertop}}" >
+		{{ soconfig.decode_entities( soconfig.get_settings('promotion') ) }}
+	</div>
+	{% endif %} 
+	<!-- HEADER TOP -->
+	<div class="header-top {{hidden_headertop}}">
+			<div class="container">
+				{% if soconfig.get_settings('welcome_message_status') %}
+				<div class="message hidden-xs hidden-sm pull-left" >
+					{% if soconfig.get_settings('welcome_message') is not empty %}
+						{{ soconfig.decode_entities( soconfig.get_settings('welcome_message') ) }}
+					{% endif %}
+				</div>
+				{% endif  %} 
+				<div class="header-top-right collapsed-block pull-right">
+					<h5 class="tabBlockTitle hidden-lg hidden-sm hidden-md visible-xs">{{ text_more }}<a class="expander " href="#TabBlock-1"><i class="fa fa-angle-down"></i></a></h5>
+					<div  class="tabBlock" id="TabBlock-1">
+						<ul class="top-link list-inline">
+							
+							{% if soconfig.get_settings('phone_status') and soconfig.get_settings('contact_number') %}
+							<li class="phone-header">	
+								<span class="telephone hidden-xs" >
+									{{ soconfig.decode_entities( soconfig.get_settings('contact_number') ) }}
+								</span>
+							</li>
+							{% endif  %}
+
+							<!-- LANGUAGE CURENTY -->
+							{% if soconfig.get_settings('lang_status') %}
+								<li class="language">{{ language }} </li>
+								<li class="currency" > {{ currency }}  </li>
+							{% endif %} 
+						
+							<li class="account" id="my_account"><a href="{{ account  }}" title="{{ text_account  }}" class="btn-xs dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user"></i> </a>
+								<ul class="dropdown-menu ">
+									{% if logged %}
+									<li><a href="{{ account  }}">{{ text_account  }}</a></li>
+									<li><a href="{{ order  }}">{{ text_order  }}</a></li>
+									<li><a href="{{ transaction  }}">{{ text_transaction  }}</a></li>
+									<li><a href="{{ download  }}">{{ text_download  }}</a></li>
+									<li><a href="{{ logout  }}">{{ text_logout  }}</a></li>
+									{% else %}
+									<li><a href="{{ register  }}"><i class="fa fa-user"></i> {{ text_register  }}</a></li>
+									<li><a href="{{ login }}"><i class="fa fa-pencil-square-o"></i> {{ text_login }}</a></li>
+									{% endif %}
+								</ul>
+							</li>
+
+							
+							<li class="shopping_cart">
+							 	{{ cart }} 
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+				
+	</div>
+
+	<!-- HEADER CENTER -->
+	<div class="header-center {{hidden_headercenter}}">
+		<div class="container">
+			<div class="row">
+				<!-- LOGO -->
+				<div class="navbar-logo col-lg-3 col-md-2">
+				  {{soconfig.get_logo()}}
+				</div>
+				<div class="header-center-right col-lg-9 col-md-10">
+					<div class="header-menu">
+						<div class="responsive megamenu-style-dev megamenu-dev">
+						{{content_menu }}
+						</div>	
+					</div>
+					<div class="inner-top-right">
+						<div class="header_search">
+							<a href="javascript:void(0)" title="Search" class="btn-search">
+								<span class="hidden">Search</span>
+							</a>
+							{{ search_block }} 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</header>

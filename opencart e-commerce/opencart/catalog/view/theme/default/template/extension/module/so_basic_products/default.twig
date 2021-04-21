@@ -1,0 +1,37 @@
+
+
+{% set tag_id = 'so_basic_products_'~moduleid %}
+{% set class_respl0 = 'preset00-'~nb_column0~' preset01-'~nb_column1~' preset02-'~nb_column2~' preset03-'~nb_column3~' preset04-'~nb_column4 %}
+<div class="module {{ class_suffix }}">
+	{% if disp_title_module %} 
+		<h3 class="modtitle">{{ head_name }}</h3>
+	{% endif %}
+	{% if pre_text != '' %}
+		<div class="form-group">
+			{{ (pre_text|raw)|raw }}
+		</div>
+	{% endif %}
+	<div class="modcontent">
+		<div class="so-basic-product" id="{{ tag_id }}">
+		{% if products is empty %}
+			<div class="alert alert-info"><i class="fa fa-info-circle"></i> 
+				{{ text_noproduct }}
+				<button type="button" class="close" data-dismiss="alert">×</button>
+			</div>
+
+		{% else %}
+			{% if layout_theme == 'default' %}
+				{% include DIR_TEMPLATE~'default/template/extension/module/so_basic_products/layout_default.twig' %}
+			{% endif %}
+			{% if layout_theme == 'acc_vertical' %}
+				{% include 'default/template/extension/module/so_basic_products/layout_acc_vertical.twig' %}
+			{% endif %}			
+		{% endif %}
+	</div>
+	</div> {#.modcontent#}
+	{% if post_text != '' %} 
+		<div class="form-group">
+			{{ post_text  }}
+		</div>
+	{% endif %}
+</div>

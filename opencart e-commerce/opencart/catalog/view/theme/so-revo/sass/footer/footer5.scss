@@ -1,0 +1,122 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/************************************************************************************************
+  FOOTER DEFFAULT
+*************************************************************************************************/
+footer.typefooter-5{ background: #111111; 
+	.news-letter{
+		float: none;
+		text-align: center;
+    	padding: 15px 0 10px;
+    	//background: url("#{$imgPath}bg-newsltter5.jpg")  no-repeat center;
+    	.so-custom-default {
+    		background-color: transparent !important;
+    		border: none;
+    		padding: 0;
+    		.newsletter_promo{
+    			display: none;
+    		}
+    		.popup-title{
+    			margin-bottom: 0;
+    		}
+    	}
+    	.input-group {
+    		display: inline-block;
+    	}
+	}
+	.news-letter .page-heading{ margin-top: 30px; color: #fff; }
+	.news-letter .title-block{ display: block; }
+	.news-letter .block_content{ display: block; margin-top: 14px; margin-bottom: 46px;}
+	.module .footer-block-title h3,
+	.module h3.footertitle{ color: #fff; }
+	.footer-top{ background: #111111; padding: 0 0 5px;
+		.about-footer{ text-align: center; padding-top: 50px;
+			.logo{ margin-bottom: 28px; }
+			.text-block{ margin-bottom: 30px; }
+			.socials-footer {
+			    display: inline-block;
+			    overflow: hidden;
+			    h3 {
+				    float: $left;
+				    color: #fff;
+				    font-size: 16px;
+				    text-transform: uppercase;
+				    line-height: 34px;
+				    margin-bottom: 0;
+				}
+				ul {
+				    display: inline-block;
+				    float: $left;
+				    margin-#{$left}: 15px;
+				    li{ float: $left;
+				    	&:hover{
+							&.face{ 
+								a{ background: #3B5998 }
+							}
+							&.twitter{ 
+								a{ background: #00B6F1 }
+							}
+							&.instagram{ 
+								a{ background: #DA2E75 }
+							}
+							&.pinterest{ 
+								a{ background: #CB2027 }
+							}
+							&.google{ 
+								a{ background: #D14130 }
+							}
+						}
+
+				    }
+				    li > a {
+					    display: inline-block;
+					    height: 34px;
+					    width: 34px;
+					    line-height: 34px;
+					    color: #222;
+					    border-radius: 50%;
+					    background-color: #fff;
+					    text-align: center;
+					    margin: 0 5px;
+					    font-size: 16px;
+					    @include transition(all .2s ease 0s);
+					    &:hover{ background: $background; color: #fff; 
+
+					    }
+					}
+				}
+			}
+		} 
+	}
+	.footer-center { 
+		margin-top: 25px!important; 
+		border-top: 1px solid rgba(208,208,208,0.2);
+		padding-top: 34px; 
+		padding-bottom: 43px;
+		
+		.footer-contact ul > li .fa{ background: #444; }
+	}
+	.footer-bottom{
+	    background-color: #0f8db3; color: #fff; a{ color: #fff; }
+	}
+
+}

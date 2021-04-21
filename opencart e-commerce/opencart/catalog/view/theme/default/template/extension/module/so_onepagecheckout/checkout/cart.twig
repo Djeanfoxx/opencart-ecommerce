@@ -1,0 +1,76 @@
+<div class="checkout-content checkout-cart">
+    <h2 class="secondary-title"><i class="fa fa-shopping-cart"></i>{{ text_shopping_cart }} {% if weight %} {{ '('~weight~')' }} {% endif %}</h2>
+    <div class="box-inner">
+        <div class="table-responsive checkout-product">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-left name" colspan="2">{{ column_name }}</th>
+                        <th class="text-center quantity">{{ column_quantity }}</th>
+                        <th class="text-center price">{{ column_price }}</th>
+                        <th class="text-right total">{{ column_total }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td class="text-left name" colspan="2">
+                            {% if product.thumb %}
+                                <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-thumbnail" /></a>
+                            {% endif %}
+                            <a href="{{ product.href }}" class="product-name">{{ product.name }}</a>
+                            {% for option in product.option %}
+                                <br/>
+                                &nbsp;
+                                <small> - {{ option.name }}: {{ option.value }}</small>
+                            {% endfor %}
+                            {% if product.recurring %}
+                                <br/>
+                                <span class="label label-info">{{ text_recurring_item }}</span>
+                                <small>{{ product.recurring }}</small>
+                            {% endif %}
+                        </td>
+                        <td class="text-left quantity">
+                            <div class="input-group">
+                                <input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" class="form-control" />
+                                <span class="input-group-btn">
+                                    {% if setting_so_onepagecheckout_layout_setting.show_product_removecart %}
+                                        <span data-toggle="tooltip" title="{{ button_remove }}" data-product-key="{{ product.cart_id }}" class="btn-delete"><i class="fa fa-trash-o"></i></span>
+                                    {% endif %}
+                                    {% if setting_so_onepagecheckout_layout_setting.show_product_qnty_update %}
+                                        <span data-toggle="tooltip" title="{{ button_update }}" data-product-key="{{ product.cart_id }}" class="btn-update"><i class="fa fa-refresh"></i></span>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="text-right price">{{ product.price }}</td>
+                        <td class="text-right total">{{ product.total }}</td>
+                    </tr>
+                {% endfor %}
+                {% for voucher in vouchers %}
+                    <tr>
+                        <td class="text-left">{{ voucher.description }}</td>
+                        <td class="text-left"></td>
+                        <td class="text-right">1</td>
+                        <td class="text-right">{{ voucher.amount }}</td>
+                        <td class="text-right">{{ voucher.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                {% for total in totals %}
+                    <tr>
+                        <td colspan="4" class="text-left">{{ total.title }}:</td>
+                        <td class="text-right">{{ total.text }}</td>
+                    </tr>
+                {% endfor %}
+                </tfoot>
+            </table>
+        </div>
+        <div id="payment-confirm-button" class="payment-{{ SoUtils.getProperty(session_data, 'payment_method.code') }}">
+            <h2 class="secondary-title"><i class="fa fa-credit-card"></i>{{ text_payment_detail }}</h2>
+            {{ payment }}
+        </div>
+    </div>
+</div>
+

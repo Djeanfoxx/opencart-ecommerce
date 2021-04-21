@@ -1,0 +1,171 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/************************************************************************************************
+  FOOTER DEFFAULT
+*************************************************************************************************/
+.typefooter-1{ 
+  @include rem(font-size, 13px); color: #7d7d7d; background: #f0f0f0;
+  a{ color: #7d7d7d; }
+  .module{ margin: 0; 
+    .footer-block-title h3,
+    h3.footertitle{
+      @include rem(font-size, 16px); font-weight: bold; border: none; color: #222; letter-spacing: 1.2px;
+      text-transform: uppercase; margin: 0 0 12px 0; line-height: inherit; height: auto;
+    }
+  }
+  .footer-top {  background-color: $background;  padding: 18px 0 19px;
+    h2{margin-bottom: 0;} 
+    .block-infos{
+      .info {
+        // width: 20%;
+        // float: $left;
+        .inner{ float: $left; width: 100%; border-#{$left}: 1px solid rgba(255,255,255,0.3); padding-#{$left}: 35px;
+          i { float: $left; font-size: 36px; padding-top: 1px; color: #fff; }
+          .info-cont { padding-#{$left}: 50px; 
+            span { font-size: 13px; color: #fff; text-transform: uppercase; margin-bottom: 2px; font-weight: 600; }
+            p { text-transform: capitalize;  color: #fff; padding-top: 0; margin-bottom: 0px; line-height: normal;}
+          }
+        }
+        &.info1 .inner { border-#{$left}: 0; padding-#{$left}: 0px; }
+      }
+    } 
+  }
+
+  .footer-center{padding-top: 25px;
+    @include breakpoint(lg){ padding-top: 44px; 
+      .footer-extra{ padding: side-values( 0 0 0 40px);}
+      .footer-contact{  padding-#{$left}: 50px; }
+      .footer-newsletter{ width: 70%; }
+      .footer-socials{ width: 30%; }
+    }
+    .module{
+      ul.links-footer,
+      ul.menu{
+       li a{
+        position: relative;
+        color: #7d7d7d;
+        text-transform: capitalize;
+        font-size: 13px;
+        position: relative;
+        padding: 4px 0px 5px 0px;
+        @include transition(all .3s ease 0s);
+        display: inline-block;
+        vertical-align: top;
+        @include if-rtl {
+          &:before{ content: "\f104"!important; font-family: FontAwesome}
+        }
+        &:before{
+          content: '\f105';
+          font-family: FontAwesome;
+          font-size: 14px;
+          margin-right: 8px;
+        }
+        &:hover{  color: $linkColor; padding-left: 10px;} 
+       }
+      }
+    }
+    .footer-contact ul > li { list-style: none; overflow: hidden; line-height: 24px; margin-top:23px;
+      .fa {
+        width: 31px;
+        height: 31px;
+        background-color: #9d9d9d;
+        color: #fff;
+        line-height: 31px;
+        font-size: 16px;
+        margin-right: 10px;
+        text-align: center;
+        float: $left;
+        border-radius: 2px;
+      }
+      span { display: block; overflow: hidden; line-height: 15px; color: #7d7d7d; font-size: 13px;}
+      &.email { margin-bottom: 22px; line-height: 32px; font-size: 13px; }
+    }
+    .custom_categories{ border-top: 1px solid #e0e0e0;  text-align: center; clear: both;  padding: 28px 0 30px 0; margin-top: 36px; 
+      nav a { color: #222; font-weight: 700; text-transform: uppercase;  padding: 0 15px; @include transition(all .3s ease 0s);
+        &:hover{ color: $linkColor; }
+      }
+      p { padding: 0 25%; line-height: 28px;  margin: side-values(10px 13px 0); }
+    }
+    
+  }
+  .footer-center-2{ border-top: 1px solid #e0e0e0; padding: 30px 0; }
+
+  /*FOOTER BOTTOM*/
+  .footer-bottom{ background-color: #3b3b3b; text-align: center; padding: 22px 0;
+    .copyright{ margin-bottom: 7px; }
+  }
+
+  /*HTML SOCIAL*/
+  .footer-socials-wrap{
+    h2{margin-bottom: 0;}
+  }
+  .socials-wrap{ display: inline-block;  float: $right;
+    .title-follow {  white-space: nowrap;  display: table-cell;  vertical-align: top;  padding-top: 8px;}
+    ul{ display: table-cell; padding-top: 5px;  padding-#{$left}: 5px;
+       li{ float: $left; margin-#{$left}: 10px;
+        a{ font-size: 18px; display: block; width: 34px; height: 34px; text-align: center; line-height: 34px;
+          background-color: #fff;  color: #222222;  border-radius: 50%; -webkit-border-radius: 50%;
+          @include transition(all .3s ease 0s);
+          &:hover{ color: $linkColor; }
+          i{font-size: 16px;}
+          .name-social{ display: none; }
+        }
+      }
+    } 
+  }
+
+  /*NEWLETTER*/
+  .news-letter{overflow: hidden; float: $left; color: #222; padding-#{$right}: 0;
+    .title-block{ display: table-cell; line-height: 100%; padding: 15px 0; 
+        .promotext{display: none;}
+    }
+    .page-heading { font-size: 16px; text-transform: uppercase; font-weight: bold; color: #222;margin-bottom: 0; }
+    .so-custom-default {padding: 0;border: none;}
+    .newsletter_promo, .pre-text {margin: 0;line-height: 12px; font-size: 12px; display: none;}
+    .block_content{padding: side-values(0 30px 0 27px);  display: table-cell; margin-top: 0;  vertical-align: top;
+    form {margin: 0px;
+      .form-group {margin: 0px; overflow: hidden;}
+    }
+      .input-box{float: $left;
+        input { 
+          -webkit-border-radius:20px 0 0 20px; border-radius:20px 0 0 20px; height: 42px;
+          padding: 5px 15px;background: #fff; color: #999;font-size: 12px; float: $left; width: 515px; 
+          transition: 0.3s all ease 0s;border: solid 1px #fff; border-#{$right}: none; margin-#{$right}: 20px;
+          @include if-rtl{
+              -webkit-border-radius:0px 20px 20px 0px; border-radius:0px 20px 20px 0px; 
+          }
+        }
+      } 
+      .subcribe{ 
+        button{#{$right}: 0;z-index: 9; outline: none; position: absolute; -webkit-border-radius: 0 20px 20px 0; border-radius: 0 20px 20px 0; height: 42px; text-transform: uppercase; 
+          font-size: 14px;transition: 0.3s all ease 0s;font-weight: bold; background-color: $background; border-color: $linkColor; color: #fff; 
+          @include if-rtl{
+              -webkit-border-radius:20px 0px 0px 20px; border-radius:20px 0px 0px 20px; 
+          }
+          @include breakpoint(lg){ padding: 0 25px; }
+          &:hover{background-color: darken($background, 10%); border-color: darken($background, 10%);} 
+        }
+         
+      } 
+    }
+  }
+}

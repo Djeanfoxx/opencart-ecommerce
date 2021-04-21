@@ -1,0 +1,749 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  	<div class="page-header">
+    	<div class="container-fluid">
+	      	<div class="pull-right">
+				<button type="submit" form="form-featured" data-toggle="tooltip" title="{{ objlang.get('entry_button_save') }} " class="btn btn-primary"><i class="fa fa-save"></i> {{ objlang.get('entry_button_save')}}</button>
+				<a class="btn btn-success" onclick="$('#action').val('save_edit');$('#form-featured').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_edit') }} " ><i class="fa fa-pencil-square-o"></i> {{ objlang.get('entry_button_save_and_edit')}}</a>
+				<a class="btn btn-info" onclick="$('#action').val('save_new');$('#form-featured').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_new') }} " ><i class="fa fa-book"></i>  {{ objlang.get('entry_button_save_and_new')}}</a>
+				<a href="{{ cancel}} " data-toggle="tooltip" title="{{ objlang.get('entry_button_cancel') }} " class="btn btn-danger"><i class="fa fa-reply"></i>  {{ objlang.get('entry_button_cancel')}}</a>
+			</div>
+		      <h1>{{ heading_title_so }}</h1>
+		      <ul class="breadcrumb">
+		        {% for breadcrumb in breadcrumbs %}
+		        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		        {% endfor %}
+		      </ul>
+    	</div>
+  	</div>
+  <div class="container-fluid">
+    {% if error.warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error.warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+
+    {% if success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i>  {{ success }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}  
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+	{% endif %}
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ subheading }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
+			{#//Nav tabs #}
+			<div class="row">
+				<div class="col-xs-12">
+					<ul class="nav nav-tabs" role="tablist">
+						<li {% if selectedid  == 0  %} class="active" {% endif %} > <a href="{{ link }} "> <span class="fa fa-plus"></span> {{ objlang.get('button_add_module') }}</a></li>
+						{% set i = 1%}
+						{% for key, module in moduletabs %}  
+							<li role="presentation" {% if module.module_id == selectedid  %} class="active"{% endif %} >
+							<a href="{{ link }}&module_id={{ module.module_id}}" aria-controls="bannermodule-{{ key }} "  >
+								<span class="fa fa-pencil"></span> {{ module.name}}
+							</a>
+							</li>
+							{% set i = i + 1 %}  
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					{% set module_row = 1 %}
+					{% for key, module in modules %}  	
+						{% if selectedid %} 
+						<div class="pull-right">
+							<a href="{{ action }}&delete=1" class="remove btn btn-danger" ><span><i class="fa fa-remove"></i> {{ objlang.get('entry_button_delete') }}</span></a>
+						</div>
+						{% endif %} 
+
+						<div  id="tab-module{{module_row}}" class="col-sm-12">
+							<div class="form-group"> 
+								{# Module Name #}
+								<input type="hidden" name="action" id="action" value=""/>
+								<label class="col-sm-3 control-label" for="input-name"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_name_desc') }} ">{{ objlang.get('entry_name') }}  </span></label>
+								<div class="col-sm-9">
+									<div class="col-sm-5">
+										<input type="text" name="name" value="{{ module.name }}" placeholder="{{ objlang.get('entry_name') }} " id="input-name" class="form-control" />
+									</div>
+									{% if error.name %} 
+									<div class="text-danger col-sm-12">{{ error.name }} </div>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group">
+								{# Header title #}
+								<label class="col-sm-3 control-label" for="input-head_name"><b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_head_name_desc') }} ">{{ objlang.get('entry_head_name') }}  </span></label>
+								<div class="col-sm-9">
+									<div class="col-sm-5">
+										{% set i=0 %}											
+										{% for language in languages %} 
+											{% set i = i + 1 %}		
+											
+											<input type="text" name="module_description[{{ language.language_id }}][head_name]" placeholder="{{ objlang.get('entry_head_name') }}" id="input-head-name-{{ language.language_id}}" value="{{ module_description[language.language_id].head_name ? module_description[language.language_id].head_name : '' }}"  class="form-control {{ i > 1 ? 'hide ' : 'first-name '}}" />
+											
+										{% endfor %}
+										 
+									</div>
+									<div class="col-sm-3">
+										<select  class="form-control" id="language">
+											{% for language in languages %} 
+											<option value="{{ language.language_id }}">
+												{{ language.name }} 
+											</option>
+											{% endfor %} 
+										</select>
+									</div>
+									{% if error.head_name %} 
+									<div class="text-danger col-sm-12">{{ error.head_name }} </div>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group">
+								{# Display header title #}
+								<label class="col-sm-3 control-label" for="input-disp_title_module"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_title_module_desc') }} ">{{ objlang.get('entry_display_title_module') }}  </span></label>
+								<div class="col-sm-9">
+									<div class="col-sm-5">
+										<select name="disp_title_module" id="input-disp_title_module" class="form-control">
+											{% if module.disp_title_module %} 
+												<option value="1" selected="selected">{{ objlang.get('text_yes') }} </option>
+												<option value="0">{{ objlang.get('text_no') }} </option>
+											{% else %}   
+												<option value="1">{{ objlang.get('text_yes') }} </option>
+												<option value="0" selected="selected">{{ objlang.get('text_no') }} </option>
+											 {% endif %}
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group"> 
+								{# Status #}
+								<label class="col-sm-3 control-label" for="input-status"><span data-toggle="tooltip" title="{{ objlang.get('entry_status_desc') }} ">{{ objlang.get('entry_status') }}  </span></label>
+								<div class="col-sm-9">
+									<div class="col-sm-5">
+										<select name="status" id="input-status" class="form-control">
+											{% if module.status %} 
+												<option value="1" selected="selected">{{ objlang.get('text_enabled') }} </option>
+												<option value="0">{{ objlang.get('text_disabled') }} </option>
+											{% else %}   
+												<option value="1">{{ objlang.get('text_enabled') }} </option>
+												<option value="0" selected="selected">{{ objlang.get('text_disabled') }} </option>
+											 {% endif %}
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="tab-pane">
+							<ul class="nav nav-tabs" id="so_youtech">
+								<li>
+									<a href="#so_module_module" data-toggle="tab">{{ objlang.get('entry_module' )}}	</a>
+								</li>
+								<li>
+									<a href="#content_option" data-toggle="tab">
+										{{ objlang.get('entry_content_option' )}}
+									</a>
+								</li>
+								<li>
+									<a href="#newsletter_subscribers_option" data-toggle="tab">
+										{{ objlang.get('entry_newsletter_subscribers' )}}	
+									</a>
+								</li>
+								<li>
+									<a href="#html_Email_template" data-toggle="tab">
+										{{ objlang.get('entry_html_Email_template' )}}
+									</a>
+								</li>
+								<li>
+									<a href="#advanced_option" data-toggle="tab">
+										{{ objlang.get('entry_advanced_option' )}}	
+									</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+							{# // -----------------------------------------------------------------------#}
+								<div class="tab-pane" id="so_module_module"> 
+									{# General Option #}
+									<div class="form-group"> {# Class suffix  #}
+										<label class="col-sm-3 control-label" for="input-class_suffix">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_class_suffix_desc') }} ">{{ objlang.get('entry_class_suffix') }}  </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="class_suffix" value="{{ module.class_suffix }}" id="input-class_suffix" class="form-control" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# <!--Time expired cookie-->  #}
+										<label class="col-sm-3 control-label" for="input-expired"><b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_expired_desc') }} ">{{ objlang.get('entry_expired') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="expired" value="{{ module.expired }} " id="input-expired" class="form-control" />
+											</div>
+											{% if error.expired %} 
+											<div class="text-danger col-sm-12">{{ error.expired }} </div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="form-group"> {# <!--layout-->  #}
+										<label class="col-sm-3 control-label" for="input-layout"><span data-toggle="tooltip" title="{{ objlang.get('entry_layout_desc') }} ">{{ objlang.get('entry_layout') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="layout" id="input-layout" class="form-control">
+													{% for option_id, option_value in layouts %}
+														{% set selected = option_id  == module.layout ? 'selected' :'' %}
+														<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group"> {# <!--width--> #}
+										<label class="col-sm-3 control-label" for="input-width"><span data-toggle="tooltip" title="{{ objlang.get('entry_width_desc') }} ">{{ objlang.get('entry_width') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="width" value="{{ module.width }} " id="input-width" class="form-control" />
+											</div>
+											<div class="col-sm-3" style="margin-top: 10px;color: red">{{ objlang.get('entry_width_note') }} </div>
+										</div>
+									</div>
+									<div class="form-group"> {# <!--Display image background -->  #}
+										<label class="col-sm-3 control-label" for="input-image_bg_display">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_image_bg_display_desc') }} ">{{ objlang.get('entry_image_bg_display') }} </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="radio-inline">
+													{% if module.image_bg_display %} 
+														<input type="radio" name="image_bg_display" value="1" checked="checked" />
+														{{ objlang.get('text_yes') }} 
+													{% else %}   
+														<input type="radio" name="image_bg_display" value="1" />
+														{{ objlang.get('text_yes') }} 
+													{% endif %} 
+												</label>
+												<label class="radio-inline">
+													{% if not module.image_bg_display %} 
+														<input type="radio" name="image_bg_display" value="0" checked="checked" />
+														{{ objlang.get('text_no') }} 
+													{% else %}   
+														<input type="radio" name="image_bg_display" value="0" />
+														{{ objlang.get('text_no') }} 
+													{% endif %}  
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# <!--Image-->  #}
+										<label class="col-sm-3 control-label" for="input-image">{{ objlang.get('entry_image') }} </label>
+										<div class="col-sm-9">
+											<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }} " alt="" title="" data-placeholder="{{ placeholder }} " /></a>
+											<input type="hidden" name="image" value="{{ image }} " id="input-image" />
+										</div>
+									</div>
+
+									<div class="form-group" id="input-color_bg_form"> {# <!--color_bg --> #}
+										<label class="col-sm-3 control-label" for="input-color_bg"><span data-toggle="tooltip" title="{{ objlang.get('entry_color_bg_desc') }} ">{{ objlang.get('entry_color_bg') }} </span></label>
+										<div class="col-sm-9">
+											<div class="input-group col-sm-1">
+									          	<input type="text" name="color_bg" value="{{module.color_bg}}" id="input-color_bg" class="form-control" />
+									        </div>
+												
+										</div>
+									</div>
+								</div>
+							{# // -----------------------------------------------------------------------#}
+								<div class="tab-pane" id="content_option"> 
+								<!--Content Option -->
+									<div class="form-group"> {# <!--Display title popup -->  #}
+										<label class="col-sm-2 control-label" for="input-border_display">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_title_display_desc') }} ">{{ objlang.get('entry_title_display') }} </span>
+										</label>
+										<div class="col-sm-10">
+											<div class="col-sm-5">
+												<label class="radio-inline">
+													{% if module.title_display %} 
+														<input type="radio" name="title_display" value="1" checked="checked" />
+														{{ objlang.get('text_yes') }} 
+													{% else %}   
+														<input type="radio" name="title_display" value="1" />
+														{{ objlang.get('text_yes') }} 
+													{% endif %} 
+												</label>
+												<label class="radio-inline">
+													{% if not module.title_display %} 
+														<input type="radio" name="title_display" value="0" checked="checked" />
+														{{ objlang.get('text_no') }} 
+													{% else %}   
+														<input type="radio" name="title_display" value="0" />
+														{{ objlang.get('text_no') }} 
+													{% endif %}  
+												</label>
+											</div>
+										</div>
+									</div>
+									<ul class="nav nav-tabs" id="so_youtech_content">
+										{% for language in languages %} 
+										<li>
+											<a href="#content_{{ language.language_id }}" data-toggle="tab">
+												<img src="language/{{ language.code}}/{{ language.code}}.png" title="{{ language.name }}" />
+												{{ language.name }}
+											</a>
+										</li>
+										{% endfor %} 
+									</ul>
+									<div class="tab-content">
+										{% for language in languages %} 
+										
+										<div class="tab-pane" id="content_{{ language.language_id }}"> 
+											<div class="form-group" id="input-title_form"> 
+												<label class="col-sm-2 control-label" for="input-title_{{language.language_id }}"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_title_desc') }} ">{{ objlang.get('entry_title') }} </span></label>
+												<div class="col-sm-10">
+													<div class="col-sm-5">
+														<input type="text" name="description_content[{{language.language_id}}][title]" value="{{ description_content[language.language_id] ? description_content[language.language_id].title : '' }}" id="input-title_{{ language.language_id }}" class="form-control" />
+													</div>
+													{% if error.title %} 
+														<div class="text-danger col-sm-12">{{ error.title }} </div>
+													{% endif %}
+												</div>
+											</div>
+											<div id="sign-up-option">
+												<div class="form-group" id="input-newsletter_promo"> 
+													<label class="col-sm-2 control-label" for="input-newsletter_promo_{{ language.language_id }}"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_newsletter_promo_desc') }} ">{{ objlang.get('entry_newsletter_promo') }} </span></label>
+													<div class="col-sm-10">
+														<div class="col-sm-10">
+															<input type="text" name="description_content[{{ language.language_id }}][newsletter_promo]" value="{{ description_content[language.language_id] ? description_content[language.language_id].newsletter_promo : '' }}" id="input-newsletter_promo_{{ language.language_id }}" class="form-control" />
+														</div>
+														{% if error.newsletter_promo %} 
+															<div class="text-danger col-sm-12">{{ error.newsletter_promo }} </div>
+														{% endif %}
+													</div>
+												</div>
+											</div>
+										</div>
+										{% endfor %} 
+									</div>
+								
+								</div>
+							  {# // -----------------------------------------------------------------------#}
+								<div class="tab-pane" id="newsletter_subscribers_option"> 
+									<!--newsletter subscribers option -->
+									<div id="history"></div>
+								</div>
+							{# // -----------------------------------------------------------------------#}
+								<div class="tab-pane" id="html_Email_template">  {# Content Option #}
+									<div class="form-group" id="input-title_form"> <!--title -->
+										<label class="col-sm-2 control-label" for="input-email_template_subject"> <span data-toggle="tooltip" title="{{ objlang.get('entry_email_template_subject_desc') }} ">{{ objlang.get('entry_email_template_subject') }} </span></label>
+										<div class="col-sm-10">
+											<div class="col-sm-10 input-group">
+												<span class="input-group-addon"><i class="fa fa-pencil-square-o"></i> Subject:</span>
+												<input type="text" name="email_template_subject" value="{{ module.email_template_subject }}" id="input-email_template_subject" class="form-control" />
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group"> <!--Content Email -->
+										<label class="col-sm-2 control-label" for="input-content_email"> <span data-toggle="tooltip" title="{{ objlang.get('entry_content_email_desc') }}">{{ objlang.get('entry_content_email') }}</span></label>
+										<div class="col-sm-10">
+											<div class="col-sm-10">
+												<textarea name="content_email" placeholder="{{ objlang.get('entry_content_email') }}" id="input-content_email" class="form-control" data-toggle="summernote">{{ module.content_email }}</textarea>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							{# // -----------------------------------------------------------------------#}
+								<div class="tab-pane" id="advanced_option"> {# Advanced Option #}
+									<div class="form-group"> {# Pre-text #}
+										<label class="col-sm-3 control-label" for="input-pre_text"> <span data-toggle="tooltip" title="{{ objlang.get('entry_pre_text_desc') }} ">{{ objlang.get('entry_pre_text') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<textarea name="pre_text" id="input-pre_text" class="form-control">{{ module.pre_text }}</textarea>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# Post-text #}
+										<label class="col-sm-3 control-label" for="input-post_text"> <span data-toggle="tooltip" title="{{ objlang.get('entry_post_text_desc') }}">{{ objlang.get('entry_post_text') }}</span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<textarea name="post_text" id="input-post_text" class="form-control">{{ module.post_text}}</textarea>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# Use Cache #}
+										<label class="col-sm-3 control-label" for="input-use_cache">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_use_cache_desc') }} ">{{ objlang.get('entry_use_cache') }} </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="radio-inline">
+													{% if module.use_cache %} 
+														<input type="radio" name="use_cache" value="1" checked="checked" />
+														{{ objlang.get('text_yes') }} 
+													{% else %}   
+														<input type="radio" name="use_cache" value="1" />
+														{{ objlang.get('text_yes') }} 
+													{% endif %} 
+												</label>
+												<label class="radio-inline">
+													{% if not module.use_cache %} 
+														<input type="radio" name="use_cache" value="0" checked="checked" />
+														{{ objlang.get('text_no') }} 
+													{% else %}   
+														<input type="radio" name="use_cache" value="0" />
+														{{ objlang.get('text_no') }} 
+													{% endif %}   
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group" id="input-cache_time_form"> {# Cache Time #}
+										<label class="col-sm-3 control-label" for="input-cache_time">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_cache_time_desc') }} ">{{ objlang.get('entry_cache_time') }} </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="cache_time" value="{{ module.cache_time }}" id="input-cache_time" class="form-control" />
+											</div>
+											{% if error.cache_time %} 
+											<div class="text-danger col-sm-12">{{ error.cache_time }} </div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							{# // -----------------------------------------------------------------------#}
+							</div>
+						</div>
+
+						{% set module_row = module_row + 1 %}
+					{% endfor %}
+				</div>
+			</div>
+
+			
+		  
+        </form>		
+      </div>
+    </div>
+  </div>
+ 
+  
+<script type="text/javascript"><!--
+	if($("input[name='use_cache']:radio:checked").val() == '0')
+	{
+		$('#input-cache_time_form').hide();
+	}else
+	{
+		$('#input-cache_time_form').show();
+	}
+	$("input[name='use_cache']").change(function(){
+		val = $(this).val();
+		if(val ==0){
+			$('#input-cache_time_form').hide();
+		}else{
+			$('#input-cache_time_form').show();
+		}
+	});
+	$('#so_youtech a:first').tab('show');
+	$('#so_youtech_content a:first').tab('show');
+	$('#so_email_template a:first').tab('show');
+
+	$('#language').change(function(){
+		var that = $(this), opt_select = $('option:selected', that).val() , _input = $('#input-head-name-'+opt_select);
+		$('[id^="input-head-name-"]').addClass('hide');
+		_input.removeClass('hide');
+	});
+
+	$('.first-name').change(function(){
+		$('input[name="head-name"]').val($(this).val());
+	});
+
+	$('#input-color_bg').colpick({
+		layout:'hex',
+		submit:0,
+		colorScheme:'dark',
+		onChange:function(hsb,hex,rgb,el,bySetColor) {
+			$(el).css('border-color','#'+hex);
+			// Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
+			if(!bySetColor) $(el).val(hex);
+		}
+	}).keyup(function(){
+		$(this).colpickSetColor(this.value);
+
+	});
+	var this_value_bg = $('#input-color_bg').val();
+	$('#input-color_bg').css('border-left', '25px solid #' + this_value_bg);
+	$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }} ');
+	function mailing_all() {
+		$.ajax({
+			type: 'get',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/mailing_all&user_token={{ user_token }}&module_id={{ selectedid }} ',
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }} ');
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }} ');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+	function mailing_selected(subscribe_id) {
+		
+		$.ajax({
+			type: 'get',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/mailing_selected&user_token={{ user_token }}&module_id={{selectedid}}&subscribe_id='+ subscribe_id,
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }} ');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+	function mailing_all_selected() {
+		$.ajax({
+			type: 'post',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/mailing_all_selected&user_token={{ user_token }}&module_id={{ selectedid }} ',
+			data: $('#history input[type=\'checkbox\']:checked'),
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }} ');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+	function mailing_all_not_notified() {
+		$.ajax({
+			type: 'get',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/mailing_all_not_notified&user_token={{ user_token }}&module_id={{ selectedid }} ',
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }} ');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+
+	function mailing_all_approved() {
+		$.ajax({
+			type: 'get',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/mailing_all_approved&user_token={{ user_token }}&module_id={{ selectedid }} ',
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }}');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+	function revert_yet_send() {
+		$.ajax({
+			type: 'get',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/revert_yet_send&user_token={{ user_token }}',
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }}');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+	function approve_selected(subscribe_id) {
+		$.ajax({
+			type: 'get',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/approve_selected&user_token={{ user_token }}&subscribe_id=' + subscribe_id,
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }}');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+	function approve_all_selected() {
+		$.ajax({
+			type: 'post',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/approve_all_selected&user_token={{ user_token }}',
+			data: $('#history input[type=\'checkbox\']:checked'),
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }}');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+	function approve_all_not_approved() {
+		$.ajax({
+			type: 'get',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/approve_all_not_approved&user_token={{ user_token }}',
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }}');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+
+	function delete_selected(subscribe_id) {
+		$.ajax({
+			type: 'get',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/delete_selected&user_token={{ user_token }}&subscribe_id=' + subscribe_id,
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }}');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+	function delete_all() {
+		$.ajax({
+			type: 'get',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/delete_all&user_token={{ user_token }}',
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }}');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+	function delete_all_selected() {
+		$.ajax({
+			type: 'post',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/delete_all_selected&user_token={{ user_token }}',
+			data: $('#history input[type=\'checkbox\']:checked'),
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }}');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+	function delete_all_not_approved() {
+		$.ajax({
+			type: 'get',
+			url:  'index.php?route=extension/module/so_newletter_custom_popup/delete_all_not_approved&user_token={{ user_token }}',
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				if (json['error']) {
+					$('#history').before('<div class="alert alert-danger"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				if (json['success']) {
+					$('#history').load('index.php?route=extension/module/so_newletter_custom_popup/history&user_token={{ user_token }}');
+					$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+			}
+		});
+	}
+
+	//--></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function ($) {
+			var button = '<div class="remove-caching" style="margin-left: 15px"><button type="button" onclick="remove_cache()" title="{{ objlang.get('entry_button_clear_cache') }} " class="btn btn-danger"><i class="fa fa-remove"></i> {{ objlang.get('entry_button_clear_cache')}}</button></div>';
+			var button_min = '<div class="remove-caching" style="margin-left: 7px"><button type="button" onclick="remove_cache()" title="{{ objlang.get('entry_button_clear_cache') }} " class="btn btn-danger"><i class="fa fa-remove"></i> </button></div>';
+			if($('#column-left').hasClass('active')){
+				$('#column-left #stats').after(button);
+			}else{
+				$('#column-left #stats').after(button_min);
+			}
+			$('#button-menu').click(function(){
+				$('.remove-caching').remove();
+				if($(this).parents().find('#column-left').hasClass('active')){
+					$('#column-left #stats').after(button);
+				}else{
+					$('#column-left #stats').after(button_min);
+				}
+			});
+		});
+		function remove_cache(){
+			var success_remove = '{{ success_remove}} ';
+			$.ajax({
+				type: 'POST',
+				url: '{{ linkremove }} ',
+				data: {	is_ajax_cache_lite: 1},
+				success: function () {
+					var html = '<div class="alert alert-success cls-remove-cache"> '+success_remove+' <button type="button" class="close" data-dismiss="alert">&times;</button></div>';
+					if(!($('.page-header .container-fluid .alert-success')).hasClass('cls-remove-cache')){
+						$('.page-header .container-fluid').append(html);
+					}
+				},
+			});
+		}
+	</script>
+	<script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+	<link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+	<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
+  
+
+</div>
+{{ footer }}

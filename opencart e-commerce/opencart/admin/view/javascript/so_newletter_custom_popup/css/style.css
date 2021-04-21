@@ -1,0 +1,22 @@
+#input-color_bg {
+    margin:0;
+   
+    border:0;
+   
+    height:30px;
+    border-left:25px solid #fff;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    line-height:20px;
+}
+#html_Email_template .input-group{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#newsletter_subscribers_option .button_action{
+    margin-bottom: 10px;
+}
+#history .dropdown-menu > li > a{
+    cursor: pointer;
+}

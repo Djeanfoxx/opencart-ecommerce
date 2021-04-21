@@ -1,0 +1,32 @@
+<script type="text/javascript">
+	
+	function _SoQuickView(){
+		var windowWidth = window.innerWidth || document.documentElement.clientWidth;
+		if (windowWidth > 1200 ) {
+			var $item_class = $('{{ class_suffix }}');
+			if ($item_class.length > 0) {
+				for (var i = 0; i < $item_class.length; i++) {
+					if($($item_class[i]).find('.quickview_handler').length <= 0){
+						var $product_id = $($item_class[i]).find('a', $(this)).attr('data-product');
+						if($.isNumeric($product_id) ){
+							var _quickviewbutton = "<a class='btn-quickview quickview quickview_handler' href='{{ our_url.link('extension/soconfig/quickview','product_id=') }}"+$product_id+"' title=\"{{ label_text }}\" data-title =\"{{ label_text }}\" data-fancybox-type=\"iframe\" ><i class=\"fa fa-search\"></i><span class=\"hidden\">{{ label_text }}</span></a>";
+							$($item_class[i]).append(_quickviewbutton);
+						}
+					}
+				}
+			}
+		}
+		
+	}
+
+	jQuery(document).ready(function ($) {
+		_SoQuickView();
+		// Hide tooltip when clicking on it
+		var hasTooltip = $("[data-toggle='tooltip']").tooltip({container: 'body'});
+		hasTooltip.on('click', function () {
+				$(this).tooltip('hide')
+		});
+	});
+
+	
+</script>

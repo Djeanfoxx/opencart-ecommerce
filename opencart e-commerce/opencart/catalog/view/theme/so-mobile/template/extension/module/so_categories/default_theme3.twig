@@ -1,0 +1,66 @@
+<div class="cat-wrap theme3 font-title">
+	{% set j = 0 %}
+	{% for items in list %}
+		{% set j = j + 1 %}
+		<div class="content-box">
+			{% if items.image and items.image != '' and items.product_image == 1 %}
+				<div class="image-cat">
+					<a href="{{ items.link }}"
+					   title="{{ items.title }}" target="{{ item_link_target }}" >
+						<img src="{{ items.image }}" title="{{ items.title }}" alt="{{ items.title }}" />
+					</a>
+				</div>
+			{% endif %}
+
+			{% if cat_title_display %}
+				<div class="cat-title">
+					<a href="{{ items.link }}"
+					   title="{{ items.title }} " target="{{ item_link_target }}">
+						{{ items.title_maxlength }}
+					</a>
+				</div>
+			{% endif %}
+
+			{% if cat_sub_title_display %}
+				<div class="child-cat">
+					{% if items.child_cat is not empty %}
+						{% for item in items.child_cat %}
+							<div class="arrow"></div>
+							<div class="child-cat-title">
+								<a href="{{ item.link }}" target="{{ item_link_target }}">
+									{% if item.title|length > cat_sub_title_maxcharacs and cat_sub_title_maxcharacs != 0 %}
+										{{ item.title|striptags|slice(0, cat_sub_title_maxcharacs) }}
+									{% else %}	
+										{{ item.title }}
+									{% endif %}
+
+									{% if cat_all_product %}
+										{{ '(' ~ item.all_product ~ '), ' }}
+									{% endif %}
+								</a>
+							</div>
+						{% endfor %}
+					{% else %}
+						<p>
+							{{ objlang.get('text_noitem') }}
+						</p>
+					{% endif %}
+				</div>
+			{% endif %}
+
+			<div class="btn-more">
+				<a href="{{ items.link }}"
+				   title="{{ items.title }} " target="{{ item_link_target }}" >
+					{{ objlang.get('text_morecate') }}
+				</a>
+			</div>
+		</div>
+		{% set clear = 'clr1' %}
+		{% if j % 2 == 0 %} {% set clear = clear~' clr2' %} {% endif %}
+		{% if j % 3 == 0 %} {% set clear = clear~' clr3' %} {% endif %}
+		{% if j % 4 == 0 %} {% set clear = clear~' clr4' %} {% endif %}
+		{% if j % 5 == 0 %} {% set clear = clear~' clr5' %} {% endif %}
+		{% if j % 6 == 0 %} {% set clear = clear~' clr6' %} {% endif %}
+		<!-- <div class="{{ clear }}"></div> -->
+	{% endfor %}
+</div>

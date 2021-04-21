@@ -1,0 +1,143 @@
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headertop = soconfig.get_settings('toppanel_type') =='1' or soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+
+<header id="header" class=" variant typeheader-{{ typeheader ? typeheader : '1'}}">
+	{#======	HEADER promotion	=======#}  
+	{% if soconfig.get_settings('promotion_status') and soconfig.get_settings('promotion') %}
+	<div class="header-promotion {{hidden_headertop}}" >
+		{{ soconfig.decode_entities( soconfig.get_settings('promotion') ) }}
+	</div>
+	{% endif %}
+	
+	{#======	HEADER TOP	=======#}  
+	<div class="header-top {{hidden_headertop}}">
+		<div class="container">
+			<div class="row">
+			
+				<div class="header-top-left  col-lg-6 col-sm-5 col-md-6 hidden-xs">
+				
+					<ul class="list-inlines">
+						{% if soconfig.get_settings('welcome_message_status') %}
+						<li class="hidden-xs" >
+							{% if soconfig.get_settings('welcome_message') is not empty %}
+								<span class="hidden-sm">
+								{{ soconfig.decode_entities( soconfig.get_settings('welcome_message') ) }}
+								</span>
+							{% endif %} 
+							
+							{% if logged %} 
+								<a class="link-lg" href="{{ logout}} ">{{ text_lastname }} </a>
+							{% else %}   
+								<a class="link-lg" href="{{ register }} ">{{ text_register }} </a> or 
+								<a class="link-lg" href="{{ login }} ">{{ text_login }} </a>
+							 {% endif %}
+						</li>
+						{% endif %} 
+					</ul>
+				</div>
+				
+				<div class="header-top-right collapsed-block col-lg-6 col-md-6 col-sm-7 col-xs-12 ">
+					<h5 class="tabBlockTitle hidden-lg hidden-sm hidden-md visible-xs">{{ text_more }} <a class="expander " href="#TabBlock-1"><i class="fa fa-angle-down"></i></a></h5>
+					<div  class="tabBlock" id="TabBlock-1">
+						<ul class="top-link list-inline">
+							{% if logged %} 
+								<li class="log logout"><a class="link-lg" href="{{ logout }} ">{{ text_logout }} </a></li>
+							{% else %}   
+								<li class="log login"><a class="link-lg" href="{{ login }} ">{{ text_login }} </a></li>
+							{% endif %}  
+							
+							<li class="account" id="my_account"><a href="{{ account }}" title="{{ text_account }} " class="btn-xs dropdown-toggle" data-toggle="dropdown"> <span class="hidden-xs">{{ text_account }} </span> <span class="fa fa-angle-down"></span></a>
+								<ul class="dropdown-menu ">
+									<li><a href="{{ account }} ">{{ text_account }} </a></li>
+									<li><a href="{{ order }} ">{{ text_order }} </a></li>
+									<li><a href="{{ transaction }} ">{{ text_transaction }} </a></li>
+									<li><a href="{{ download }} ">{{ text_download }} </a></li>
+									
+									{% if soconfig.get_settings('checkout_status') %}
+									<li class="checkout"><a href="{{ checkout }} " class="btn-link" title="{{ text_checkout }} "><span >{{ text_checkout }} </span></a></li>
+									{% endif %} 
+								</ul>
+							</li>
+							
+							{% if soconfig.get_settings('lang_status') %}
+								<li >{{ language }} </li>
+								<li class="currency" > {{ currency }}  </li>
+							{% endif %} 
+							
+						</ul>
+					</div>
+				</div>
+				
+				
+			</div>
+		</div>
+	</div>
+	
+	{#======	HEADER CENTER	=======#}  
+	<div class="header-center {{hidden_headercenter}}">
+		<div class="container">
+			<div class="row">
+				<div class="navbar-logo col-md-2 col-sm-3 col-xs-10">
+				    {{soconfig.get_logo()}}
+				</div>
+				<div class="header-center-right col-md-10 col-sm-9 col-xs-2">
+					<div class="megamenu-style-dev megamenu-dev ">
+					{{ content_menu}}
+					</div>
+					<div class="phone-header pull-right">
+						{% if soconfig.get_settings('phone_status') and soconfig.get_settings('contact_number') %}
+						<div class="telephone hidden-xs" >
+							{{ soconfig.decode_entities( soconfig.get_settings('contact_number') ) }}
+						</div>
+						{% endif %} 
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	{#======	HEADER BOTTOM	=======#}  
+	<div class="header-bottom {{hidden_headerbottom}}">
+		<div class="container">
+			<div class="header-bottom-inner">
+				<div class="row">
+					<div class="header-bottom-left menu-vertical col-md-3 col-sm-2 col-xs-2">
+						<div class="responsive megamenu-style-dev">
+							{{ content_menu1}}
+						</div>
+					</div>
+					
+					<div class="header-bottom-right col-md-9 col-sm-10 col-xs-10">
+						<div class="header_search col-lg-6 col-md-8 col-sm-9 col-xs-4">
+							<button id="dropdownSearch"  class="dropdown-toggle bt-search hidden" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-search" aria-hidden="true"></i>	</button>
+							<div class="dropdown-menu dropdown-menu-search" aria-labelledby="dropdownSearch">
+								{{ search_block }} 
+							</div>
+						</div>
+						<div class="header-right col-lg-3 col-md-3 col-sm-3 col-xs-8 pull-right">
+							<div class="block-cart">
+								<div class="shopping_cart">
+								 	{{ cart }} 
+								</div>
+							</div>
+							<div class="header_custom_link">
+								<ul>
+									<li class="wishlist"><a href="{{ wishlist }}" class="top-link-wishlist" title="{{ text_wishlist }} "></a></li>
+									<li class="compare"><a href="{{ compare }}"  class="top-link-compare" title="{{ text_compare }} "></a></li>
+								</ul>	
+							</div>
+							
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+</header>

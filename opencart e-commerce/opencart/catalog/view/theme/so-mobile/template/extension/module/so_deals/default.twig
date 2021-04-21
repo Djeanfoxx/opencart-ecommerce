@@ -1,0 +1,42 @@
+<script>
+//<![CDATA[
+	var listdeal{{ module }} = [];
+//]]>
+</script>
+
+<div class="module {{ direction_class }} {{ class_suffix }}">    
+	<h3 class="modtitle">
+		{% if pre_text != '' %}
+			<!-- <div class="form-group"> -->
+				{{ pre_text }}
+			<!-- </div> -->
+		{% endif %}
+		{% if disp_title_module %}<span>{{ head_name }}</span>{% endif %}
+	</h3>
+	<div class="modcontent">
+		{% if list is defined and list %}
+		    {% set tag_id = 'so_deals_' ~ random() ~ "now"|date("mdYHis") %}
+		    {% set class_respl = 'preset00-'~nb_column0~' preset01-'~nb_column1~' preset02-'~nb_column2~' preset03-'~nb_column3~' preset04-'~nb_column4 %}
+		    {% set i = 0 %}
+		    {% set count_item = list|length %}
+		    {% if include_js == 'owlCarousel' %}
+		    	{% include (config_theme~'/template/extension/module/so_deals/'~store_layout~'_carousel.twig') %}
+		    {% elseif include_js == 'slick' %}
+		    	{{ include (config_theme~'/template/extension/module/so_deals/'~store_layout~'_slick.twig') }}
+		    {% else %}
+		    	{{ '' }}
+		    {% endif %}
+		{% else %}
+	    	<div class="alert alert-danger"><i class="fa fa-info-circle"></i> 
+				{{ objlang.get('text_noitem') }}
+				<button type="button" class="close" data-dismiss="alert">×</button>
+			</div>
+	    {% endif %}
+	</div>
+	
+	{% if post_text != '' %}
+		<div class="form-group">
+			{{ post_text }}
+		</div>
+	{% endif %}
+</div>

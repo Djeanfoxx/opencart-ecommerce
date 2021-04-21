@@ -1,0 +1,119 @@
+
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headertop = soconfig.get_settings('toppanel_type') =='1' or soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+
+<header id="header" class=" variant typeheader-{{ typeheader ? typeheader : '1'}}">
+	{#======	HEADER promotion	=======#}  
+	{% if soconfig.get_settings('promotion_status') and soconfig.get_settings('promotion') %}
+	<div class="header-promotion {{hidden_headertop}}" >
+		{{ soconfig.decode_entities( soconfig.get_settings('promotion') ) }}
+	</div>
+	{% endif %}
+
+	<!-- HEADER TOP -->
+	<div class="header-top {{hidden_headertop}}">
+		<div class="container">
+			<div class="row">
+				<div class="header-top-left  col-lg-6  hidden-sm col-md-5 hidden-xs">
+					<ul class="list-inlines">
+						{% if soconfig.get_settings('welcome_message_status') %}
+						<li class="hidden-xs" >
+							{% if soconfig.get_settings('welcome_message') is not empty %}
+								{{ soconfig.decode_entities( soconfig.get_settings('welcome_message') ) }}
+							{% endif %}
+						</li>
+						{% endif %} 
+
+					</ul>
+				</div>
+				<div class="header-top-right collapsed-block col-lg-6 col-sm-12 col-md-7 col-xs-12 ">
+					<h5 class="tabBlockTitle hidden-lg hidden-sm hidden-md visible-xs">{{ text_more }}<a class="expander " href="#TabBlock-1"><i class="fa fa-angle-down"></i></a></h5>
+					<div  class="tabBlock" id="TabBlock-1">
+						<ul class="top-link list-inline">
+							<li class="account" id="my_account"><a href="{{ account }} " title="{{ text_account }}" class="btn-xs dropdown-toggle" data-toggle="dropdown"> <span>{{ text_account }}</span> <span class="fa fa-angle-down"></span></a>
+								<ul class="dropdown-menu ">
+									
+									<li><a href="{{ account }}">{{ text_account }}</a></li>
+									<li><a href="{{ order }}">{{ text_order }}</a></li>
+									<li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+									<li><a href="{{ download }}">{{ text_download }}</a></li>
+									{% if soconfig.get_settings('checkout_status') %}
+									<li class="checkout"><a href="{{ checkout }} " class="btn-link" title="{{ text_checkout }} "><span >{{ text_checkout }} </span></a></li>
+									{% endif %} 
+
+								</ul>
+							</li>
+							<!-- LANGUAGE CURENTY -->
+							
+							{% if soconfig.get_settings('lang_status') %}
+								<li >{{ language }} </li>
+								<li class="currency" > {{ currency }}  </li>
+							{% endif %} 
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- HEADER CENTER -->
+	<div class="header-center {{hidden_headercenter}}">
+		<div class="container">
+			<div class="row">
+				<!-- LOGO -->
+				<div class="navbar-logo col-md-3 col-sm-12 col-xs-12">
+				   {{soconfig.get_logo()}}
+				</div>
+				<div class="header-center-right col-md-9 col-sm-12 col-xs-12">
+					{{ search_block }} 
+					<div class="phone-header pull-right">
+						{% if soconfig.get_settings('phone_status') and soconfig.get_settings('contact_number') %}
+						<div class="telephone hidden-xs" >
+							{{ soconfig.decode_entities( soconfig.get_settings('contact_number') ) }}
+						</div>
+						{% endif %} 
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- HEADER BOTTOM -->
+	<div class="header-bottom {{hidden_headerbottom}}">
+		<div class="container">
+			<div class="header-bottom-inner">
+				<div class="row">
+					<div class="header-bottom-right col-md-12 col-sm-12 col-xs-12">
+						<div class="header_menu">
+							<div class="responsive megamenu-style-dev megamenu-dev">
+							{{content_menu }}
+							</div>
+						</div>
+						<div class="header-right pull-right">
+							<div class="block-cart">
+								<div class="shopping_cart">
+								 	{{ cart }} 
+								</div>
+							</div>
+							<div class="header_custom_link hidden-xs">
+								<ul>
+									<li class="wishlist"><a href="{{ wishlist }}" id="wishlist-total" class="top-link-wishlist" title="{{ text_wishlist }}"></a></li>
+									<li class="compare"><a href="#" id="compare-total" class="top-link-compare" title="{{ text_compare }}"></a></li>
+								</ul>	
+							</div>
+							
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	  
+	</div>
+	
+</header>

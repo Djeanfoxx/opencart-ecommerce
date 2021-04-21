@@ -1,0 +1,92 @@
+<div class="module {{ direction_class }} {{ class_suffix }}">
+	{% if disp_title_module %}
+		<div class="box-title font-ct">
+			<h2 class="modtitle">{{ head_name }}</h2>
+		</div>
+	{% endif %}
+	{% if pre_text |trim is not empty  %}
+		<div class="form-group">
+			{{ pre_text }}
+		</div>
+	{% endif %}
+	<div class="modcontent">
+		<!--[if lt IE 9]>
+		<div id="{{ tag_id }}" class="so-listing-tabs msie lt-ie9 first-load module"><![endif]-->
+		<!--[if IE 9]>
+		<div id="{{ tag_id }}" class="so-listing-tabs msie first-load module"><![endif]-->
+		<!--[if gt IE 9]><!-->
+		<div id="{{ tag_id }}" class="so-listing-tabs first-load module"><!--<![endif]-->
+			{% if list|length %}
+				<div class="ltabs-wrap ">
+					<div class="ltabs-tabs-container" data-delay="{{ delay }}"
+					 	data-duration="{{ duration }}"
+					 	data-effect="{{ effect }}"
+					 	data-ajaxurl="{{ ajaxurl }}" data-type_source="{{ type_source }}"
+					 	data-type_show="{{ type_show }}" >
+						 
+						{{ include (theme_config~"/template/extension/module/so_listing_tabs/default/default_tabs.twig") }}
+						
+					</div>
+					<div class="wap-listing-tabs products-list grid">
+
+						{% if display_banner_image == 1 %}
+							<div class="item-cat-image banners">
+								<div>
+									<a href="{{ banner_image_url }}" title="" target="{{ item_link_target }}" >
+										<img class="categories-loadimage" title="" alt="" src="{{ banner_image }}"/>
+									</a>
+								</div>
+							</div>
+						{% endif %}
+						<div class="ltabs-items-container">
+							{% for key, items in list %}
+								{% set child_items = items.child is defined ? items.child : '' %}
+								{% set cls = items.sel is defined and items.sel == "sel" ? ' ltabs-items-selected ltabs-items-loaded' : '' %}
+								{% set cls = cls~(items.category_id == "*" ? ' items-category-all' : ' items-category-' ~ items.category_id) %}
+								{% set tab_id = list[key]['sel'] is defined ? items.category_id : '' %}
+								{% set tab_id = tab_id == '*' ? 'all' : tab_id %}
+								<div class="ltabs-items {{ cls }}" data-total="{{ items.count }}">
+									{% if child_items %}
+									
+										{{ include (theme_config~"/template/extension/module/so_listing_tabs/default/default_items.twig") }}
+									{% else %}
+										<div class="ltabs-loading"></div>
+									{% endif %}
+									{% set classloaded = source_limit >= items.count or source_limit == 0 ? 'loaded' : '' %}
+									
+									{% if type_show == 'loadmore' %}
+										<div class="ltabs-loadmore"
+											 data-active-content=".items-category-{{ items.category_id == "*" ? 'all' : items.category_id }}"
+											 data-categoryid	="{{ items.category_id }}"
+											 data-rl_start		="{{ source_limit }}"
+											 data-rl_total		="{{ items.count }}"
+											 data-rl_allready	="All ready"
+											 data-ajaxurl		="{{ ajaxurl }}" 
+											 data-rl_load		="{{ source_limit }}" 
+											 data-moduleid		='{{ moduleid }}'
+											 >
+											<div class="ltabs-loadmore-btn {{ classloaded }}"
+												 data-label="{{ classloaded ? objlang.get('all_ready') : objlang.get('load_more') }}">
+												<span class="ltabs-image-loading"></span>
+												<i class="fa fa-plus"></i>
+											</div>
+										</div>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+				{{ include (theme_config~"/template/extension/module/so_listing_tabs/default/default_js.twig") }}
+			{% else %}
+				{{ objlang.get('text_noproduct') }}
+			{% endif %}
+		</div>
+	</div> <!-- /.modcontent-->
+	
+	{% if post_text |trim is not empty %}
+		<div class="form-group">
+			{{ post_text }}
+		</div>
+	{% endif %}
+</div>	

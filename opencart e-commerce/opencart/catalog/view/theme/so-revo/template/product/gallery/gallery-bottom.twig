@@ -1,0 +1,64 @@
+
+{#==== Gallery - Large image  ==== #}
+<div class="large-image  {{class_honizol}}">
+	<img itemprop="image" class="product-image-zoom" src="{{popup}}" data-zoom-image="{{popup}}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+</div>
+
+<div id="thumb-slider" class="full_slider  contentslider" data-rtl="{{direction}}" data-autoplay="no"  data-pagination="no" data-delay="4" data-speed="0.6" data-margin="10"  data-items_column0="4" data-items_column1="3" data-items_column2="5" data-items_column3="3" data-items_column4="2" data-arrows="yes" data-lazyload="yes" data-loop="no" data-hoverpause="yes">
+	{% for key,image in images %}
+		<div class="image-additional--default">
+		<a data-index="{{key}}" class="img thumbnail " data-image="{{image.popup}}" title="{{ heading_title }}">
+			<img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+		</a>
+		</div>
+	{% endfor %}
+	</ul>
+</div>
+
+<script type="text/javascript"><!--
+	$(document).ready(function() {
+		var zoomCollection = '.large-image img';
+		$( zoomCollection ).elevateZoom({
+			//value zoomType (window,inner,lens)
+			{% if soconfig.get_settings('product_enablezoom')%}
+			zoomType        : "inner",
+			{% else %}
+			zoomType        :"none",
+			{% endif %}
+			lensSize    :'250',
+			easing:true,
+			scrollZoom : true,
+			gallery:'thumb-slider',
+			cursor: 'pointer',
+			galleryActiveClass: "active",
+		});
+		$(zoomCollection).bind('touchstart', function(){
+		    $(zoomCollection).unbind('touchmove');
+		});
+		
+		{% if images %}
+		$('.large-image img').magnificPopup({
+			items: [
+			{% for   image in images %}
+				{src: '{{image.popup}}'},
+			{% endfor %}
+			],
+			gallery: { enabled: true, preload: [0,2] },
+			type: 'image',
+			mainClass: 'mfp-fade',
+			callbacks: {
+				open: function() {
+					{% if images %}
+						var activeIndex = parseInt($('#thumb-slider .img.active').attr('data-index'));
+					{% else %}
+						var activeIndex = 0;
+					{% endif %}
+					var magnificPopup = $.magnificPopup.instance;
+					magnificPopup.goTo(activeIndex);
+				}
+			}
+
+		});
+		{% endif %}
+	});
+//--></script>

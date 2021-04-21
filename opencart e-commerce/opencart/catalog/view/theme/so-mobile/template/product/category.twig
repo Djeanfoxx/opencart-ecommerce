@@ -1,0 +1,66 @@
+{#====  Variables Device_res ==== #}
+{% set devices = { 'lg' : 'Desktops','md' : 'Tablet Landscape','sm' : 'Tablet Portrait','xs' : 'Phones'} %}
+{% set device_refine = 'form-group ' %}
+
+{{ header }}
+
+<div class="container page-category">
+  <div class="row">{{ column_left }}
+    
+    <div id="content" class="col-xs-12">
+    	
+		<div class="products-category clearfix">
+			
+			{#===== Show Description Category =======#}
+			{% if thumb %}
+				<div class="form-group category-info">
+					<img src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="media-object" />
+				</div>
+			{% endif %}
+			{% if soconfig.get_settings('category_more')  %}
+					<a class="btn btn-block btn-outlined btn-collapse" role="button" data-toggle="collapse" href="#collapseCategory"> {{ text_morecategory }}  </a>
+			{% endif %}
+
+			
+			{#===== Show Sub Category =======#}
+			<div id="collapseCategory" class="product-catalog__mode {{ soconfig.get_settings('category_more') ? 'collapse' : ''}}">
+				<div class="form-group">
+					{{ description }} 
+				</div>
+				{% if categories %} 
+				<div class="refine-search form-group">
+					<h3 class="title-category">{{ text_refine }} </h3>
+					<ul class="row refine-search__list">
+					{% for category in categories %}
+						<li class="col-xs-4">
+							<a href="{{ category.href }} " class="thumbnail"><img src="{{ category.thumb }} " alt="{{ category.name }} " /> </a>
+							<a href="{{ category.href }} ">{{ category.name }} </a>
+						</li>
+					{% endfor %}
+					</ul>
+
+				</div>
+				 {% endif %}
+			</div>
+	
+	  
+			{% if products %}
+				{#==== Product Listing ==== #}
+				
+					{% include theme_directory~'/template/soconfig/listing.twig' with {listingType: listingType} %}
+				
+			{% endif %}
+		  
+			{% if not categories and not products %}
+			  <p>{{ text_empty }}</p>
+			  <div class="buttons">
+				<div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+			  </div>
+			{% endif %}
+	      
+	  </div>
+
+	  </div>
+    {{ column_right }}</div>
+</div>
+{{ footer }} 

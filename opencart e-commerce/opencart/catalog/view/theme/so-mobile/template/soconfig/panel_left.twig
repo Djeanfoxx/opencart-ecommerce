@@ -1,0 +1,69 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+<div id="panel-menu" class="side-menu panel panel-left">
+	<div class="content">
+		<div class="panel-left__top clearfix text-center">
+			<div class="panel-logo">
+				{{soconfig.get_logoMobile()}}
+			</div>
+			{% if soconfig.get_settings('barsearch_status') %}
+				<div class="panel-search">
+					{{ search }}
+				</div>
+			{% endif %}
+			
+		</div>
+		
+		{% if soconfig.get_settings('barmega1_status') %}
+			{{content_menu1}}
+		{% endif %}
+
+
+		{% if soconfig.get_settings('barmega2_status') %}
+			{{content_menu2}}
+		{% endif %}
+
+		
+		<div class="panel-left__bottom clearfix text-center">
+			{% if soconfig.get_settings('barcompare_status') %}
+			<div class="col-xs-6">
+				<i class="fa fa-check-square-o" aria-hidden="true"></i>
+				<div class="bot-inner">
+					<a href="{{compare}}">{{text_compare}}</a>
+				</div>
+			</div>
+			{% endif %}
+
+			{% if soconfig.get_settings('barwistlist_status') %}
+			<div class="col-xs-6">
+				<i class="fa fa-heart" aria-hidden="true"></i>
+				<div class="bot-inner">
+					<a href="{{wishlist}}">{{text_wishlist}}</a>
+				</div>
+			</div>
+			{% endif %}
+
+			
+			{% if language  %}
+			<div class="col-xs-6 panel-left__language">
+				{{ language }}
+				<h4>{{text_language}}</h4>
+			</div>
+			{% endif %}
+
+			<div class="col-xs-6 panel-left__language">
+				{{ currency }}
+				<h4>{{text_currency}}</h4>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+

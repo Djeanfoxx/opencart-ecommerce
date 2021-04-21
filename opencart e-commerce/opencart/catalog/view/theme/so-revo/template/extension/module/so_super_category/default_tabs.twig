@@ -1,0 +1,16 @@
+{% if tabs is not empty %}
+    <div class="spcat-tabs-wrap">
+        <span class='spcat-tab-selected'></span>
+        <span class='spcat-tab-arrow'>&#9660;</span>
+        <ul class="spcat-tabs cf">
+            {% for tab in tabs %}
+                <li class="spcat-tab {{ tab.sel is defined ? ' tab-sel tab-loaded' : '' }}"
+                    data-active-content=".items-category-{{ tab.category_id }}"
+                    data-field_order="{{ tab.category_id }}"
+                    >
+					<span class="spcat-tab-label">{{ tab.title }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

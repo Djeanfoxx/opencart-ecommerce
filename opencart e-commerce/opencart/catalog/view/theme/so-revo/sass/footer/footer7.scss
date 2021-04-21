@@ -1,0 +1,170 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/************************************************************************************************
+  FOOTER DEFFAULT
+*************************************************************************************************/
+footer.typefooter-7{
+	background: #fff;
+	.footer-top {
+	    background-color: #fff;
+        padding: 35px 0px 55px;
+	}
+	.footer-center{
+	    text-align: center;
+	    border-top: 1px solid rgb(246, 234, 220);
+	    padding: 50px 0px;
+	    background: #fff;
+	    ul li {
+		   	display: inline-block;
+		   	a {
+			    font-size: 16px;
+			    text-transform: uppercase;
+			    padding: 0px 20px;
+	        	color: rgb(28, 28, 28);
+    			font-weight: bold;
+    			@include transition(all .2s ease 0s);
+    			&:hover{ color: $linkColor; }
+			}
+		}
+		.socials-footer {
+		    margin: 25px 0px 0px;
+		}
+		.socials-wraps ul li {
+		    margin-#{$left}: 10px;
+		}
+		.socials-wraps ul li a {
+		    font-size: 18px;
+		    display: block;
+		    width: 52px;
+		    height: 52px;
+		    text-align: center;
+		    line-height: 52px;
+		    color: rgb(255, 255, 255);
+		    border-radius: 50%;
+		    transition: all 0.2s ease 0s;
+		    background: url("#{$imgPath}icon/bg-social7.png") no-repeat center center;
+		    &:hover {
+			    color: rgb(255, 255, 255) !important;
+			    opacity: 0.7;
+			}
+			.name-social{ display: none; }
+		}
+	}
+	.footer-bottom{
+        text-align: center;
+	    color: rgb(84, 84, 84);
+	    margin-bottom: 0px;
+	    background: url("#{$imgPath}bg/bg-footer7.jpg") center center no-repeat;
+	    background-size: cover;
+	    padding: 28px 0px;
+	    a{ color: $linkColor; }
+	}
+	.module.footer7-newleter{
+		.title-block{ display: table-cell; }
+		.page-heading{
+		    font-size: 20px;
+		    color: rgb(28, 28, 28);
+		    font-weight: bold;
+		    text-transform: uppercase;
+		    display: inline-block;
+		    float: $left;
+		    margin-#{$right}: 40px;
+			margin-bottom: 0;
+			margin-top: -2px;
+		}
+		.send-mail{
+			margin-bottom: 0;
+		}
+		.newsletter_promo{
+			color: rgb(137, 137, 137);
+		    font-size: 123%;
+		    display: inline-block;
+		    margin-#{$right}: 40px;
+		}
+		.block_content{
+		    display: table-cell;
+		    position: relative;
+		    width: 37%;
+		    .input-box{
+		    	.form-control{
+	    		    height: 45px;
+				    min-width: 280px;
+				    position: relative;
+				    border-width: 1px;
+				    border-style: solid;
+				    border-color: rgb(205, 205, 205);
+				    border-image: initial;
+				    border-radius: 25px 0 0 25px;
+				    background: #fff;
+				    width: 95%;
+				    padding:side-values( 0px 50px 0px 30px);
+				    @include if-rtl{
+				    	 border-radius: 0px 25px 25px 0px;
+				    } 
+		    	}
+		    }
+		    .form-inline .form-group,
+		    .btn-group, .btn-group-vertical{
+		    	display: block;
+		    }
+		    .input-group {
+		    	display: inline-block;
+		    }
+		    .subcribe{
+	    	    position: absolute;
+			    #{$right}: 10px;
+			    top: 0px;
+			    width: 86px;
+			    button{
+			    	z-index: 9;
+		    	    border: 0 !important;
+					overflow: visible;
+				    display: inline-block;
+				    background: #444;
+				    width: auto;
+				    margin: 0;
+				    cursor: pointer;
+				    height: 45px;
+				    line-height: 45px;
+				    white-space: nowrap;
+				    font-size: 13px !important;
+				    text-transform: uppercase;
+				    height: 45px;
+				    border-top-right-radius: 25px;
+				    font-weight: bold;
+				    border-bottom-right-radius: 25px;
+				    position: relative;
+				    padding: 0 20px !important;
+				    color: #fff !important;
+				    text-decoration: none !important;
+				    @include if-rtl{
+				    	border-top-left-radius: 25px;
+					    border-bottom-left-radius: 25px;
+					    border-top-right-radius: 0;
+				    	border-bottom-right-radius: 0; 
+				    }
+			    }
+		    }
+		}
+	}
+
+}

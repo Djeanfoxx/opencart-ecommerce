@@ -1,0 +1,370 @@
+{{ header }}
+    {{ column_left }}
+    
+    <div id="content">
+        <div class="page-header">
+            <div class="container-fluid">
+                <div class="pull-right">
+                    <button type="submit" form="form-simple-blog" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                    <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+                </div>
+            
+                <h1>{{ heading_title }}</h1>
+                <ul class="breadcrumb">
+                    {% for breadcrumb in breadcrumbs %}
+                        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container-fluid">
+            {% if error_warning %}
+                <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            {% endif %}
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+                </div>
+                
+                <div class="panel-body">
+                    <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-simple-blog" class="form-horizontal">    
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_status }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <select name="simple_blog_status" class="form-control">
+                                    <option value="1" {{ simple_blog_status == 1 ? "selected='selected'" : '' }}>{{ text_enabled }}</option>
+    								<option value="0" {{ simple_blog_status == 0 ? "selected='selected'" : '' }}>{{ text_disabled }}</option>
+                                </select>
+                            </div>
+                        </div>   
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_simple_blog_seo_keyword }}">{{ entry_simple_blog_seo_keyword }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <input type="text" name="simple_blog_seo_keyword" value="{{ simple_blog_seo_keyword }}" class="form-control" />
+                            </div>
+                        </div>  
+                        
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_simple_blog_heading }}">{{ entry_simple_blog_heading }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <input type="text" name="simple_blog_footer_heading" value="{{ simple_blog_footer_heading }}" class="form-control" />
+                            </div>
+                        </div>   
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_blog_module_heading }}">{{ entry_blog_module_heading }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <input type="text" name="simple_blog_heading" value="{{ simple_blog_heading }}" class="form-control" />
+                            </div>
+                        </div>   
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_product_related_heading }}">{{ entry_product_related_heading }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <input type="text" name="simple_blog_product_related_heading" value="{{ simple_blog_product_related_heading }}" class="form-control" />
+                            </div>
+                        </div>  
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_comment_related_heading }}">{{ entry_comment_related_heading }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <input type="text" name="simple_blog_comment_related_heading" value="{{ simple_blog_comment_related_heading }}" class="form-control" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_display_category }}">{{ entry_display_category }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <div class="checkbox-inline">
+                                    {% if simple_blog_display_category %}
+    	    							<input type="radio" name="simple_blog_display_category" value="1" checked="checked" /> {{ text_enabled }}&nbsp;
+    	    							<input type="radio" name="simple_blog_display_category" value="0" /> {{ text_disabled }}
+    	    						{% else %}
+    	    							<input type="radio" name="simple_blog_display_category" value="1" /> {{ text_enabled }}&nbsp;
+    	    							<input type="radio" name="simple_blog_display_category" value="0" checked="checked" /> {{ text_disabled }}
+    	    						{% endif %}
+                                </div>
+                            </div>
+                        </div>   
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_comment_approval }}">{{ entry_comment_approval }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <div class="checkbox-inline">
+                                    {% if simple_blog_comment_auto_approval %}
+    	    							<input type="radio" name="simple_blog_comment_auto_approval" value="1" checked="checked" /> {{ text_yes }}&nbsp;
+    	    							<input type="radio" name="simple_blog_comment_auto_approval" value="0" /> {{ text_no }}
+    	    						{% else %}
+    	    							<input type="radio" name="simple_blog_comment_auto_approval" value="1" /> {{ text_yes }}&nbsp;
+    	    							<input type="radio" name="simple_blog_comment_auto_approval" value="0" checked="checked" /> {{ text_no }}
+    	    						{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_author_information }}">{{ entry_author_information }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <div class="checkbox-inline">
+                                    {% if simple_blog_author_information %}
+    	    							<input type="radio" name="simple_blog_author_information" value="1" checked="checked" /> {{ text_enabled }}&nbsp;
+    	    							<input type="radio" name="simple_blog_author_information" value="0" /> {{ text_disabled }}
+    	    						{% else %}
+    	    							<input type="radio" name="simple_blog_author_information" value="1" /> {{ text_enabled }}&nbsp;
+    	    							<input type="radio" name="simple_blog_author_information" value="0" checked="checked" /> {{ text_disabled }}
+    	    						{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_related_article }}">{{ entry_related_article }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <div class="checkbox-inline">
+                                    {% if simple_blog_related_articles %}
+    	    							<input type="radio" name="simple_blog_related_articles" value="1" checked="checked" /> {{ text_enabled }}&nbsp;
+    	    							<input type="radio" name="simple_blog_related_articles" value="0" /> {{ text_disabled }}
+    	    						{% else %}
+    	    							<input type="radio" name="simple_blog_related_articles" value="1" /> {{ text_enabled }}&nbsp;
+    	    							<input type="radio" name="simple_blog_related_articles" value="0" checked="checked" /> {{ text_disabled }}
+    	    						{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span data-toggle="tooltip" title="{{ help_show_social_site_option }}">{{ entry_show_blog_column }}</label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <div class="checkbox-inline">
+
+                                    {% set blog_mode = { 
+                                        'blog-grid' : '1 Column',
+                                        'blog-2' : '2 Columns',
+                                        'blog-3' : '3 Columns',
+                                        'blog-4' : '4 Columns',
+                                        'blog-list' : 'List Column'
+                                    } 
+                                    %}
+
+                                    <select name="simple_blog_columns"  class="form-control ">
+                                    {% for name, value in blog_mode %}
+                                        {% set column_active = (simple_blog_columns == name) ? 'selected' : '' %}
+                                        <option value="{{name}}" {{column_active}} >{{value}}</option> 
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 col-xs-12 control-label">
+                                <span data-toggle="tooltip" title="" data-original-title="On Enabled, Related article will display.">Show Articles Style:</span>
+                            </label>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                    {% set article_mode = { 
+                                        'default' : 'Default',
+                                        'style1' : 'Style 1',
+                                        'style2' : 'Style 2',
+                                        'style3' : 'Style 3',
+                                        'style4' : 'Style 4',
+                                        'style5' : 'Style 5'
+                                    } 
+                                    %}
+                               
+                                <div class="btn-group btn-toggle block-group " data-toggle="buttons">
+                                    <div class="btn-group btn-toggle" data-toggle="buttons" style="margin:25px 30px 0 0">
+                                        {% for name_article, value_article in article_mode %}
+                                            {% if (simple_blog_articles_style == name_article)  %}
+                                                <label class="btn btn-default btn-sm btn-success active"><input class="field" type="radio" name="simple_blog_articles_style" value="{{name_article}}" checked="checked" /> {{value_article}}</label>
+                                            {% else %}
+                                                <label class="btn btn-default btn-sm "><input class="field" type="radio" name="simple_blog_articles_style" value="{{name_article}}" checked="checked" /> {{value_article}}</label>
+                                            {% endif %}
+
+                                           
+                                        {% endfor %}
+                                    </div>
+                                    <ul class="list-inline">
+                                        <li class="col-xs-"><img src="{{url_image}}default.png" alt="article"></li>
+                                        <li class="col-xs-"><img src="{{url_image}}style1.png" alt="article"></li>
+                                        <li class="col-xs-"><img src="{{url_image}}style2.png" alt="article"></li>
+                                        <li class="col-xs-"><img src="{{url_image}}style3.png" alt="article"></li>
+                                        <li class="col-xs-"><img src="{{url_image}}style4.png" alt="article"></li>
+                                        <li class="col-xs-"><img src="{{url_image}}style5.png" alt="article"></li>
+
+                                    </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-center">{{ text_article_related }}</h3>
+                        
+                        <div class="row">
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+								<ul class="nav nav-pills nav-stacked" id="module">
+									{% set module_row = 1 %}
+									{% for module in modules %}
+										<li><a href="#tab-module{{ module.key }}" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$('a[href=\'#tab-module{{ module.key }}\']').parent().remove(); $('#tab-module{{ module.key }}').remove(); $('#module a:first').tab('show');"></i> {{ tab_module ~ ' ' ~ module_row }}</a></li>
+										{% set module_row = module_row + 1 %}
+									{% endfor %}
+									<li id="module-add"><a onclick="addModule();"><i class="fa fa-plus-circle"></i> {{ button_module_add }}</a></li>
+								</ul>
+							</div>
+                            
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <div class="tab-content">
+                                    {% for module in modules %}
+                                        <div class="tab-pane" id="tab-module{{ module.key }}">
+                                            
+                                            <div class="form-group">
+												<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_article_limit }}</label>
+												<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+													<input type="text" name="simple_blog_module[{{ module.key }}][article_limit]" value="{{ module.article_limit }}" class="form-control" />
+												</div>
+											</div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Width of post image</label>
+                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                    <input type="text" name="simple_blog_module[{{ module.key }}][image_width]" value="{{ module.image_width }}" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Height of post image</label>
+                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                    <input type="text" name="simple_blog_module[{{ module.key }}][image_height]" value="{{ module.image_height }}" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+												<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_category }}</label>
+												<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+													<select name="simple_blog_module[{{ module.key }}][category_id]" class="form-control">
+                      									<option value="" disabled="disabled" style="font-weight: bold;">{{ text_category_label }}</option>
+                      									<option value="all" {{ module.category_id == 'all' ? "selected='selected'" : '' }}>{{ text_latest_article }}</option>
+                      									<option value="popular" {{ module.category_id == 'popular' ? "selected='selected'" : '' }}>{{ text_popular_article }}</option>
+                      									<option value="" disabled="disabled" style="font-weight: bold;">{{ entry_category }}</option>
+                      									{% for category in categories %}
+                      										<option value="{{ category.simple_blog_category_id }}" {{ category.simple_blog_category_id == module.category_id ? "selected='selected'" : '' }}>{{ category.name }}</option>
+                      									{% endfor %}
+                      								</select> 
+												</div>
+											</div>
+                                            
+                                            <div class="form-group">
+												<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_status }}</label>
+												<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+													<select name="simple_blog_module[{{ module.key }}][status]" class="form-control">
+            							                {% if module.status %}
+            								                <option value="1" selected="selected">{{ text_enabled }}</option>
+            								                <option value="0">{{ text_disabled }}</option>
+            							                {% else %}
+            								                <option value="1">{{ text_enabled }}</option>
+            								                <option value="0" selected="selected">{{ text_disabled }}</option>
+            							                {% endif %}
+                          							</select>
+												</div>
+											</div>
+                                            
+                                            <div class="form-group">
+												<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_sort_order }}</label>
+												<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+													<input type="text" name="simple_blog_module[{{ module.key }}][sort_order]" value="{{ module.sort_order }}" class="form-control" />
+												</div>
+											</div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        var module_row = {{ module_row }}
+  
+		function addModule() {
+            
+            var token = Math.random().toString(36).substr(2)
+            
+            html  = '<div class="tab-pane" id="tab-module' + token + '">'
+            
+            html += '   <div class="form-group">'
+            html += '       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_article_limit }}</label>'
+            html += '       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">'
+            html += '           <input type="text" name="simple_blog_module[' + token + '][article_limit]" value="" class="form-control" />'
+            html += '       </div>'
+            html += '   </div>'
+
+            html += '   <div class="form-group">'
+            html += '       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Width of post image</label>'
+            html += '       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">'
+            html += '           <input type="text" name="simple_blog_module[' + token + '][image_width]" value="" class="form-control" />'
+            html += '       </div>'
+            html += '   </div>'
+            html += '   <div class="form-group">'
+            html += '       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Height of post image</label>'
+            html += '       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">'
+            html += '           <input type="text" name="simple_blog_module[' + token + '][image_height]" value="" class="form-control" />'
+            html += '       </div>'
+            html += '   </div>'
+
+            html += '   <div class="form-group">'
+            html += '       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_category }}</label>'
+            html += '       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">'
+            html += '			<select name="simple_blog_module[' + token + '][category_id]" class="form-control">'
+			html += '				<option value="" disabled="disabled" style="font-weight: bold;">{{ text_category_label }}</option>'
+			html += '				<option value="all">{{ text_latest_article }}</option>'
+			html += '				<option value="popular">{{ text_popular_article }}</option>'
+			html += '				<option value="" disabled="disabled" style="font-weight: bold;">{{ entry_category }}</option>'
+									{% for category in categories %}
+										html += '<option value="{{ category.simple_blog_category_id }}">{{ category.name }}</option>'
+									{% endfor %}
+			html += '			</select>'
+            html += '       </div>'
+            html += '   </div>'
+            
+            
+                      
+            html += '   <div class="form-group">'
+            html += '       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_status }}</label>'
+            html += '       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">'
+            html += '           <select name="simple_blog_module[' + token + '][status]" class="form-control">'
+            html += '               <option value="1">{{ text_enabled }}</option>'
+            html += '               <option value="0">{{ text_disabled }}</option>'
+            html += '           </select>'
+            html += '       </div>'
+            html += '   </div>'
+            
+            html += '   <div class="form-group">'
+            html += '       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{{ entry_sort_order }}</label>'
+            html += '       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">'
+            html += '           <input type="text" name="simple_blog_module[' + token + '][sort_order]" value="" class="form-control" />'
+            html += '       </div>'
+            html += '   </div>'
+                        
+            html += '</div>'
+            
+            $('.tab-content:first-child').prepend(html)
+            
+            $('#module-add').before('<li><a href="#tab-module' + token + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'a[href=\\\'#tab-module' + token + '\\\']\').parent().remove(); $(\'#tab-module' + token + '\').remove(); $(\'#module a:first\').tab(\'show\');"></i> {{ tab_module }} ' + module_row + '</a></li>')
+            
+            $('#module a[href=\'#tab-module' + token + '\']').tab('show')
+
+			module_row++
+		}
+    </script>
+    
+    <script type="text/javascript">
+        $('#module li:first-child a').tab('show')
+    </script>
+    
+    
+{{ footer }}

@@ -1,0 +1,29 @@
+{% if articles %}
+    <div class="form-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ heading_title }}</h3>
+            </div>
+            <div class="panel-body">
+                {% if articles %}
+        	    	{% for article in articles %}
+        	    		<div class="article-author">
+        	    			<a href="{{ article['href'] }}">{{ article.article_title }}</a>
+        	    		</div>
+        	    		
+        	    		{% if article.short_description %}
+        					<div class="description">{{ article.short_description }}</div>
+        				{% endif %}        				
+        				<br />
+        				<div style="border-bottom: 1px dotted #ccc;"></div>
+        				<br />
+        	    	{% endfor %}
+        	    {% else %}
+        	    	<div class="buttons">
+        	    		<div class="center">{{ text_no_found }}</div>
+        	    	</div>
+        	    {% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}

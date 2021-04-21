@@ -1,0 +1,79 @@
+{% if theme == 'theme4' %}
+	<script type="text/javascript">
+		//<![CDATA[
+		jQuery(document).ready(function ($) {
+			;
+			(function (element) {
+				var $element = $(element);
+				$(window).load(function () {
+					$element.imagesLoaded(function () {
+					});
+				});
+				$element.imagesLoaded(function () {
+
+					$element.so_accordion({
+						items: '.so-categories-inner',
+						heading: '.so-categories-heading',
+						content: '.so-categories-content',
+						active_class: 'selected',
+						event: '{{ accmouseenter }}',
+						delay: 300,
+						duration: 500,
+						active: '1'
+					});
+
+					var height_content = function () {
+						$('.so-categories-inner', $element).each(function () {
+							var $inner = $('.so-categories-content', $(this).filter('.selected'));
+							$inner.css('height', 'auto');
+							if ($inner.length) {
+								var inner_height = $inner.height();
+								$inner.css('height', inner_height);
+							}
+						});
+					}
+					$(window).resize(function () {
+						height_content();
+					});
+					$(window).load(function () {
+						height_content();
+					});
+				});
+			})('#{{ uniqued }}')
+
+		});
+		//]]>
+	</script>
+{% endif %}
+
+<!--[if lt IE 9]>
+<div id="{{ uniqued }}" class="so-categories module {{ theme }} {{ deviceclass_sfx }} {{ columnclass_sfx }} msie lt-ie9"><![endif]-->
+<!--[if IE 9]>
+<div id="{{ uniqued }}" class="so-categories module {{ theme }} {{ deviceclass_sfx }} {{ columnclass_sfx }} msie"><![endif]-->
+<!--[if gt IE 9]><!-->
+<div id="{{ uniqued }}" class="so-categories module {{ theme }} {{ deviceclass_sfx }} {{ columnclass_sfx }}">
+	{% if disp_title_module %}
+	<h3 class="modtitle">{{ head_name }}</h3>
+	{% endif %}
+	
+	{% if pre_text != '' %}
+	<div class="form-group">
+		{{ pre_text }}
+	</div>
+	{% endif %}
+
+	<div class="modcontent">
+		{% if list is not empty and list|length %}
+			{{ include (theme_config~"/template/extension/module/so_categories/default_"~theme~".twig") }}
+		{% else %}
+			{{ objlang.get('text_noitem') }}
+		{% endif %}
+	</div>
+
+	{% if post_text != '' %}
+	<div class="form-group">
+		{{ post_text }}
+	</div>
+	{% endif %}
+</div>
+

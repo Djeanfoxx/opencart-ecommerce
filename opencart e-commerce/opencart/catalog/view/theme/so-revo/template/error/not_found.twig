@@ -1,0 +1,47 @@
+{{ header }}
+<div class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">
+        {{ column_left }}
+
+        {% if column_left and column_right %}
+        {% set class = 'col-sm-6' %}
+        {% elseif column_left or column_right %}
+        {% set class = 'col-sm-9' %}
+        {% else %}
+        {% set class = 'col-sm-12' %}
+        {% endif %}
+        <div id="content" class="bg-page-404 {{ class }}">{{ content_top }}
+    		<div class="row">
+                <div class="content_404">
+                    <div class="item-left col-lg-5 col-md-5">
+                        <div class="erro-image">
+                            <span class="erro-key">
+                                <img src="image/catalog/demo/bonuspage/404/img-404.png" alt="">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="item-right col-lg-7 col-md-7">
+                        <div class="block-top font-ct">
+                            <h2><span>Oops, {{ heading_title }} </span></h2>
+                            <div class="warning-code"><p>{{ text_error }} </p></div>
+                        </div>
+
+                        <div class="block-bottom">
+                            <a href="{{ continue }} " class="btn btn-revo" title="{{ button_continue }} ">{{ button_continue }} </a>
+                            <a href="#" class="btn btn-revo" title="Go Support">Go Support</a>                  
+                        </div>
+                    </div>
+                </div>
+                {{ content_bottom }} 
+            </div>
+    	</div>
+    	  
+        {{ column_right }}
+    </div>
+</div>
+{{ footer }}

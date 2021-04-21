@@ -1,0 +1,354 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+{#====  Variables url parameter ==== #}
+{% if url_thumbgallery %} {% set thumbgallery = url_thumbgallery %}
+{% else %} {% set thumbgallery = soconfig.get_settings('card_gallery') %}{% endif %}
+
+{% if url_cartinfo %} {% set cartinfo = url_cartinfo %}
+{% else %} {% set cartinfo = soconfig.get_settings('desktop_addcart_position') %}{% endif %}
+
+
+{#==== filters panel Top==== #}
+<div class="product-filter product-filter-top filters-panel">
+  <div class="row">
+		<div class="col-sm-5 view-mode">
+			{% set category_route = soconfig.get_route() %}
+			
+			{% if (column_left or column_right ) and category_route =='product/category' %}
+				{% if url_asideType %} {% set btn_canvas = url_asideType %}
+				{% else %}{% set btn_canvas = soconfig.get_settings('catalog_col_type') %}
+				{% endif %}
+
+				{% set class_btn_canvas = (btn_canvas =='off_canvas') ? '' : 'hidden-lg hidden-md' %}
+				<a href="javascript:void(0)" class="open-sidebar {{class_btn_canvas}}"><i class="fa fa-bars"></i>{{ text_sidebar }}</a>
+				<div class="sidebar-overlay "></div>
+			{% endif %}
+			<div class="list-view">
+				<div class="btn btn-gridview">{{text_gridview}}</div>
+				<button type="button" id="grid-view-2" class="btn btn-view hidden-sm hidden-xs">2</button>
+			  	<button type="button" id="grid-view-3" class="btn btn-view hidden-sm hidden-xs ">3</button>
+			  	<button type="button" id="grid-view-4" class="btn btn-view hidden-sm hidden-xs">4</button>
+			  	<button type="button" id="grid-view-5" class="btn btn-view hidden-sm hidden-xs">5</button>
+				<button type="button" id="grid-view" class="btn btn-default grid hidden-lg hidden-md" title="{{ button_grid }}"><i class="fa fa-th-large"></i></button>
+				<button type="button" id="list-view" class="btn btn-default list " title="{{ button_list }}"><i class="fa fa-bars"></i></button>
+				<button type="button" id="table-view" class="btn btn-view"><i class="fa fa-table" aria-hidden="true"></i></button>
+				
+			</div>
+		</div>
+	
+		<div class="short-by-show form-inline text-right col-md-7 col-sm-6 col-xs-12">
+			<div class="form-group short-by">
+				<label class="control-label" for="input-sort">{{ text_sort }}</label>
+				<select id="input-sort" class="form-control" onchange="location = this.value;">
+					
+					{% for sorts in sorts %}
+					{% if sorts.value == '%s-%s'|format(sort, order) %}
+						<option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+					{% else %}
+					
+					<option value="{{ sorts.href }}">{{ sorts.text }}</option>
+					
+					{% endif %}
+					{% endfor %}
+				
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="input-limit">{{ text_limit }}</label>
+				<select id="input-limit" class="form-control" onchange="location = this.value;">
+					{% for limits in limits %}
+					{% if limits.value == limit %}
+					<option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+					{% else %}
+					<option value="{{ limits.href }}">{{ limits.text }}</option>
+					{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+			<div class="form-group product-compare hidden-sm hidden-xs"><a href="{{ compare }}" id="compare-total" class="btn btn-default">{{ text_compare }}</a></div>
+		</div>
+	
+  </div>
+</div>
+{#==== Product List|Grid ==== #}
+
+<div class="products-list row nopadding-xs">
+	{% for  product in products %}
+	
+		<div class="product-layout ">
+			<div class="product-item-container">
+				{#=======Show Group_cart_info ======= #}
+				{% if cartinfo == 'right' %}
+					{% set class_cart_info = 'cartinfo--right' %}
+				{% elseif cartinfo == 'bottom' %}
+					{% set class_cart_info = 'cartinfo--static' %}
+					{% set leftb = 'left-b' %}
+					{% set rightb = 'right-b' %}
+				{% elseif cartinfo == 'center' %}
+					{% set class_cart_info = 'cartinfo--center' %}
+				{% else %}
+					{% set class_cart_info = 'cartinfo--left' %}
+				{% endif %}
+				<div class="left-block {{ leftb }}">
+					{% if thumbgallery   and product.image_galleries %}
+
+					{% if thumbgallery == 1 %}
+						{% set  class_thumbgallery = 'product-card__left' %}
+					{% elseif thumbgallery == 2 %}
+						{% set  class_thumbgallery = 'product-card__right' %}
+					{% else %}
+						{% set  class_thumbgallery = 'product-card__bottom' %}
+					{% endif %}
+					<div class="product-card__gallery {{class_thumbgallery}}">
+						    <div class="item-img thumb-active" data-src="{{product.first_gallery['thumb']}}"><img class="lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{product.first_gallery['cart']}}" alt="{{ product.name }}"></div>
+							{% set total_gallery = 2 %}
+							{% for number_gallery,image_gallery in product.image_galleries %}
+								{% if number_gallery < total_gallery %}
+								<div class="item-img" data-src="{{image_gallery.thumb}}"><img class="lazyload " data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{image_gallery.cart}}" alt="{{ product.name }}"></div>
+								{% endif %}
+							{% endfor %}
+					</div>
+					{% endif %}
+
+					<div class="product-image-container">
+					
+						<a href="{{ product.href }} " title="{{ product.name }} ">
+							<img  data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ product.thumb }}"  title="{{ product.name }} " class="lazyload img-responsive" />
+							
+						</a>
+					</div>
+					
+					{#===== Show CountDown Product =======#}
+					{% if soconfig.get_settings('countdown_status') and product.special_end_date %}
+					
+						{% include theme_directory~'/template/soconfig/countdown.twig' with {product: product,special_end_date:product.special_end_date} %}
+					
+					{% endif %}
+					
+					{% if product.quantity== 0 %}
+						<div class="label-stock label label-success ">{{ product.stock_status}}</div> 
+					{% endif %}
+					
+					{% if product.price  and  product.special  %} 
+					<div class="box-label">
+						{#=======Discount Label======= #}
+						{% if soconfig.get_settings('discount_status')  %} 
+							<span class="label-product label-sale">
+								 {{ product.discount }}
+							</span>
+						{% endif %} 
+						
+					</div> 
+					{% endif %} 
+
+					
+					{% if cartinfo != 'bottom' %}
+					<div class="button-group {{class_cart_info}}">
+						{% if soconfig.get_settings('desktop_addcart_status') %}
+						<button class="addToCart  btn-button" type="button" title="{{ button_cart }}" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');">						
+							<i class="fa fa-shopping-cart"></i><span>{{ button_cart }}</span>
+						</button>
+						{% endif %}
+						{% if soconfig.get_settings('desktop_wishlist_status') %}
+						<button class="wishlist btn-button" type="button" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i><span>{{ button_wishlist }}</span></button>
+						{% endif %} 
+
+						{% if soconfig.get_settings('desktop_Compare_status') %}
+						<button class="compare btn-button" type="button" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-random"></i><span>{{ button_compare }}</span></button>
+						{% endif %} 
+
+						{% if soconfig.get_settings('quick_status') %}
+							<a class="quickview iframe-link visible-lg btn-button" title="{{ objlang.get('text_quickview')}}" data-fancybox-type="iframe"  href="{{ product.href_quickview }}"> <i class="fa fa-search"></i><span>{{ text_quickview}}</span> </a>
+						{% endif %} 
+					</div>
+					{% endif %}
+					{% if cartinfo == 'bottom' %}
+						{% if soconfig.get_settings('quick_status') %}
+							<a class="quickview iframe-link visible-lg btn-button" title="{{ objlang.get('text_quickview')}}" data-fancybox-type="iframe"  href="{{ product.href_quickview }}"> <i class="fa fa-search"></i><span>{{ text_quickview}}</span> </a>
+						{% endif %} 
+					{% endif %} 
+				</div>
+				
+				<div class="right-block {{ rightb }}">
+					<h4><a href="{{ product.href }}">{{ product.name }} </a></h4>
+					<div class="rate-history">
+						{% if soconfig.get_settings('rating_status') %} 
+						<div class="ratings">
+							<div class="rating-box">
+							{% for i in 1..5 %}
+							{% if product.rating < i %} 
+								<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+							{% else %}   
+								<span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+							{% endif %} 
+							{% endfor %}
+
+							</div>
+							<a class="rating-num"  href="{{ product.href }}" rel="nofollow" target="_blank" >{{product.reviews}}</a>
+						</div>
+						{% endif %}
+						
+					</div>
+
+					
+					{% if product.price %} 
+					<div class="price">
+						{% if not product.special %} 
+							<span class="price-new">{{ product.price }} </span>
+						{% else %}   
+							<span class="price-new">{{ product.special }} </span> <span class="price-old">{{ product.price }} </span>
+						{% endif %} 
+					</div>
+					{% endif %}
+					
+					<div class="description">
+						<p>{{ product.description }} </p>
+					</div>
+					
+					{% if cartinfo == 'bottom' %}
+					<div class="button-group cartinfo--static">		
+						{% if soconfig.get_settings('desktop_addcart_status') %}
+						<button class="addToCart" type="button" title="{{ button_cart }}" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');">
+							<i class="fa fa-shopping-cart"></i><span>{{ button_cart }}</span>
+						</button>
+						{% endif %}
+										
+						{% if soconfig.get_settings('desktop_wishlist_status') %}
+						<button class="wishlist btn-button" type="button" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart-o"></i><span>{{ button_wishlist }}</span></button>
+						{% endif %} 
+
+						
+
+						{% if soconfig.get_settings('desktop_Compare_status') %}
+						<button class="compare btn-button" type="button" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-random"></i><span>{{ button_compare }}</span></button>
+						{% endif %} 
+					</div>
+					{% endif %}
+					
+				</div>
+
+				{% if soconfig.get_settings('desktop_addcart_status') or soconfig.get_settings('desktop_wishlist_status') or  soconfig.get_settings('desktop_Compare_status') %}
+				<div class="list-block">
+
+					{% if soconfig.get_settings('desktop_addcart_status') %}
+					<button class="addToCart btn-button" type="button" title="{{ button_cart}}" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i></button>
+					{% endif %} 
+
+					{% if soconfig.get_settings('desktop_wishlist_status') %}
+					<button class="wishlist btn-button" type="button" title="{{ button_wishlist}}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart-o"></i></button>
+					{% endif %} 
+
+					{% if soconfig.get_settings('desktop_Compare_status') %}
+					<button class="compare btn-button" type="button" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-random"></i></button>
+					{% endif %} 
+
+					
+				</div>
+				{% endif %} 
+			</div>
+		</div>
+		{# ====End Clearfix fluid grid layout =======#}
+	
+	{% endfor %}
+</div>
+
+{#==== filters panel Bottom==== #}
+<div class="product-filter product-filter-bottom filters-panel">
+	<div class="row">
+		<div class="col-sm-6 text-left">{{ pagination }}</div>
+		<div class="col-sm-6 text-right">{{ results }}</div>
+	</div>
+</div>
+
+<script type="text/javascript"><!--
+reinitView();
+
+function reinitView() {
+
+	$( '.product-card__gallery .item-img').hover(function() {
+		$(this).addClass('thumb-active').siblings().removeClass('thumb-active');
+		var thumb_src = $(this).attr("data-src");
+		$(this).closest('.product-item-container').find('img.img-responsive').attr("src",thumb_src);
+	}); 
+
+	$('.view-mode .list-view button').bind("click", function() {
+		$(this).parent().find('button').removeClass('active');
+		$(this).addClass('active');
+	});	
+	// Product List
+	$('#list-view').click(function() {
+		$('.products-category .product-layout').attr('class', 'product-layout product-list col-xs-12');
+		localStorage.setItem('listview', 'list');
+	});
+
+	// Product Grid
+	$('#grid-view').click(function() {
+		var cols = $('.left_column , .right_column ').length;
+
+		
+		$('.products-category .product-layout').attr('class', 'product-layout product-grid col-lg-3 col-md-3 col-sm-6 col-xs-12');
+		
+		localStorage.setItem('listview', 'grid');
+	});
+
+	// Product Grid 2
+	$('#grid-view-2').click(function() {
+		$('.products-category .product-layout').attr('class', 'product-layout product-grid product-grid-2 col-lg-6 col-md-6 col-sm-6 col-xs-12');
+		localStorage.setItem('listview', 'grid-2');
+	});
+
+	// Product Grid 3
+	$('#grid-view-3').click(function() {
+		$('.products-category .product-layout').attr('class', 'product-layout product-grid product-grid-3 col-lg-4 col-md-4 col-sm-6 col-xs-12');
+		localStorage.setItem('listview', 'grid-3');
+	});
+
+	// Product Grid 4
+	$('#grid-view-4').click(function() {
+		$('.products-category .product-layout').attr('class', 'product-layout product-grid product-grid-4 col-lg-3 col-md-4 col-sm-6 col-xs-12');
+		localStorage.setItem('listview', 'grid-4');
+	});
+
+	// Product Grid 5
+	$('#grid-view-5').click(function() {
+		$('.products-category .product-layout').attr('class', 'product-layout product-grid product-grid-5 col-lg-15 col-md-4 col-sm-6 col-xs-12');
+		localStorage.setItem('listview', 'grid-5');
+	});
+
+	// Product Table
+	$('#table-view').click(function() {
+		$('.products-category .product-layout').attr('class', 'product-layout product-table col-xs-12');
+		localStorage.setItem('listview', 'table');
+	})
+
+	
+	{% if url_listview %}
+		localStorage.setItem('listview', '{{url_listview}}');
+	{% else %}
+		if(localStorage.getItem('listview')== null) localStorage.setItem('listview', '{{soconfig.get_settings('product_catalog_mode')}}');
+	{% endif %}
+
+	if (localStorage.getItem('listview') == 'table') {
+		$('#table-view').trigger('click');
+	} else if (localStorage.getItem('listview') == 'grid-2'){
+		$('#grid-view-2').trigger('click');
+	} else if (localStorage.getItem('listview') == 'grid-3'){
+		$('#grid-view-3').trigger('click');
+	} else if (localStorage.getItem('listview') == 'grid-4'){
+		$('#grid-view-4').trigger('click');
+	} else if (localStorage.getItem('listview') == 'grid-5'){
+		$('#grid-view-5').trigger('click');
+	} else {
+		$('#list-view').trigger('click');
+	}
+	
+
+}
+
+//--></script> 

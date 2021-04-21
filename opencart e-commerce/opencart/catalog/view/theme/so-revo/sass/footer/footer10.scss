@@ -1,0 +1,261 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/************************************************************************************************
+  FOOTER DEFFAULT
+*************************************************************************************************/
+footer.typefooter-10{
+	
+	
+	.news-letter.bg{
+		float: none;
+		text-align: center;
+    	padding: 70px 0 90px;
+	}
+	.news-letter .newsletter_promo{display: block; font-size: 14px;color: #fff;line-height: 16px;}
+	.news-letter .page-heading{ color: #fff; font-size: 20px;margin-bottom: 13px;line-height: 22px;}
+	.news-letter .title-block{ display: block; }
+	.news-letter .block_content{ display: block; margin-top: 10px;
+		.subcribe button{z-index: 9;}
+		.subcribe button,
+		.input-box input{
+			height: 45px;
+		}
+		@include if-rtl{
+			.input-box input{
+				border-radius: 20px;
+				-webkit-border-radius: 20px;
+				-ms-border-radius: 20px;
+				-o-border-radius: 20px;
+			}
+		}
+		.show-error{
+			display: block;
+		}
+
+	}
+	.footer-top{
+		background: #030303;
+		border-bottom: 1px solid rgba(35,35,35,.75);
+	}
+	.footer-midle{
+		background: #030303;
+		padding-bottom: 20px;
+	}
+	.policy-shop{
+	   overflow: hidden;
+	   .col{
+	   	width: 20%;
+	   	float: $left;
+	   }
+	   .col1{
+		   	.content-policy {
+		   		border: none;
+		   		padding-#{$left}: 0;
+		   	}
+	   }
+	    .content-policy {
+	        margin: 25px 0;
+	        border-#{$left}: 1px solid rgba(35,35,35,.75);
+	        padding-#{$left}: 10px;
+	        cursor: pointer; 
+	        .imgages {
+	            float: $left;
+	            margin-#{$right}: 12px;
+	        }
+	         .content{
+	            padding-#{$left}: 50px;
+	            padding-#{$right}: 10px;
+	            h2 {
+	                margin-bottom: 0;
+	                font-size: 108%;
+	                font-weight: bold;
+	                color: $linkColor;
+	                text-transform: uppercase;
+	                color: #fff;
+	            }
+	            p {
+	                color: #898989;
+	                font-size: 92.3%;
+	                margin-bottom: 0;
+	            }
+	            &:hover{
+	            	h2{
+	            		color: $linkColor;
+	            	}
+	            }
+	         }
+	    }
+	}
+	.socials-wrap{
+		float: $left;
+		ul{
+			padding-top: 15px;
+			padding-#{$left}: 0;
+			padding-bottom: 20px;
+			 li{
+				float: $left;
+				margin-#{$left}: 0;
+				margin-#{$right}: 5px;
+				margin-bottom: 5px;
+				&:last-child{
+					margin-#{$right}: 0;
+				}
+				a{
+					width: 30px;
+					height: 30px;
+					line-height: 27px;
+					background: #343434;
+					color: #999999;
+					&:hover{
+						background: $background;
+						color: #fff;
+					}
+					span{font-size: 14px;}
+				}
+
+			}
+		}
+	}	
+	.footer-block {
+	    padding-top: 45px;
+	    padding-bottom: 30px;
+	    .footer-block-title {
+		    margin-bottom: 17px;
+		    h3{
+		    	font-weight: 600;
+			    font-size: 123%;
+			    text-transform: uppercase;
+			    color: #fff;
+		    }
+		}
+		.links-footer li a{
+		  	display: inline-block;
+    		padding: 5px 0;
+    		color: #b7b7b7;	
+    		&:hover{
+    			color: $linkColor;
+    		}
+		}
+		.footer-block-content {
+		    color: #b7b7b7;
+		    .links-contact{
+		    	padding-top: 7px;
+			     li {
+				    position: relative;
+				    padding-#{$left}: 30px;
+				    min-height: 30px;
+				    line-height: 22px;
+				    color: #b7b7b7;
+				    &:before{ 
+				     	position: absolute;
+					    #{$left}: 0;
+					    top: 0px;
+					    content: '';
+					    display: inline-block;
+					    width: 20px;
+					    height: 20px;
+					    background: url(../../images/icon-image.png);
+					}
+					a {
+					    display: inline-block;
+					    padding: 5px 0;
+					    color: #b7b7b7;
+					    &:hover{
+					    	color: $linkColor;
+					    }
+					}
+					&.phone-icon:before {
+					    background-position: -124px -178px;
+					}
+					
+					&.email-icon{
+	    				margin: 15px 0 10px;
+						&:before {
+						    background-position: -124px -219px;
+						}
+					}
+					&.add-icon:before {
+					    background-position: -124px -264px;
+					}
+				}
+				
+			}
+		}
+	}
+	.footer-brand{
+		background: #030303;
+		.slider-brand-wrapper{ 
+			padding: 0 60px;
+			border-top: 1px solid rgba(35,35,35,.75);
+			padding-top: 40px;
+			padding-bottom: 10px;
+			.item{
+				text-align: center;
+				a:hover{ @include opacity(0.8); }
+			}
+			&:hover{
+				.owl2-nav [class*='owl2-'] {
+					 @include opacity(1);
+				}
+			}
+			.title h3{
+				text-align: center;
+				font-size: 16px;
+				text-transform: uppercase;
+				color: #898989;
+				margin-bottom: 19px;
+			}
+			.owl2-nav div{
+
+			}
+			.owl2-nav div.owl2-prev{
+			    #{$left}: -50px;
+				
+			}
+			.owl2-nav .owl2-next{
+			    #{$right}: -50px;
+			    
+			}
+			.owl2-nav [class*='owl2-'] {
+			    margin-top: -20px;
+			    position: absolute;
+			    top: 50%;
+			    color: #fff;
+			    border-radius: 2px;
+			   @include opacity(0);
+			  // @include transition(all ease 0.5s);
+			}
+		}
+	}
+	.footer-bottom{
+		background: #030303;
+		color: #7d7d7d;
+		.copyright a:hover{
+			text-decoration: underline;
+		}
+	}
+	.so-custom-popup .alert, .so-custom-default .alert{
+		float: none;
+	    width: 45%;
+	    display: inline-block;
+	}
+}

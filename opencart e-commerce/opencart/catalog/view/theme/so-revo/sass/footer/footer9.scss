@@ -1,0 +1,290 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/************************************************************************************************
+  FOOTER DEFFAULT
+*************************************************************************************************/
+footer.typefooter-9{
+	background: url(../../images/bg-footer9.jpg) no-repeat center center;
+	.footer-top{
+		background: transparent;
+		padding: 0;
+		border-bottom: 1px solid rgba(243, 243, 243, 0.16);
+		.footer-block {
+		    padding-bottom: 45px;
+		    padding-top: 45px;
+		}
+		.footer-block-title {
+		    text-align: center;
+		    padding-top: 3px;
+		    h3{
+		    	margin-bottom: 28px;
+		    }
+		}
+		.col2{
+			padding-top: 48px;
+			padding-bottom: 70px;
+			border-#{$left}: 1px solid rgba(243, 243, 243, 0.16);
+    		border-#{$right}: 1px solid rgba(243, 243, 243, 0.16);
+		}
+		.col3{
+			padding-top: 45px;
+		}
+		
+		.footer-block-content {
+			p{
+				text-align: center;
+				margin-bottom: 17px;
+			}
+		}
+		.socials-wrap{
+			 text-align: center;
+			 display: block;
+			 float: none;
+			 .title-follow {
+			    font-weight: 700;
+			    font-size: 123%;
+			    text-transform: uppercase;
+			    color: #fff;
+			    display: block;
+			    padding-top: 0;
+			    padding-bottom: 23px;
+			}
+			ul{
+				display: inline-block;
+				padding-#{$left}: 0;
+			}
+			p {
+				color: #b7b7b7;
+			    display: block !important;
+			}
+
+		}
+		.footer-apps{
+			padding-top: 54px;
+			 ul{
+				display: flex;
+	    		justify-content: center;
+
+				 li {
+				    float: $left;
+				    margin: 2px 5px;
+				}
+			}
+		}
+	}
+
+
+	.footer-block {
+	    padding-top: 27px;
+	    padding-bottom: 32px;
+	    .footer-block-title {
+		    margin-bottom: 17px;
+		    h3{
+		    	font-weight: 700;
+			    font-size: 123%;
+			    text-transform: uppercase;
+			    color: #fff;
+		    }
+		}
+		.links-footer li a{
+		  	display: inline-block;
+    		padding: 4px 0;
+    		color: #b7b7b7;
+    		&:before{
+    			content: '\f105';
+			    display: inline-block;
+			    font-family: FontAwesome;
+			    font-style: normal;
+			    font-weight: normal;
+			    font-variant: normal;
+			    font-stretch: normal;
+			    font-size-adjust: none;
+			    line-height: 1;
+			    text-align: center;
+			    font-size: 12px;
+			    margin-#{$right}: 5px;
+    		}
+    		&:hover{
+    			color: $linkColor;
+    			&:before{
+    				color: $linkColor;
+    			}
+    		}
+		}
+		.footer-block-content {
+		    color: #b7b7b7;
+		    .links-contact li {
+			    position: relative;
+			    padding-#{$left}: 39px;
+			    min-height: 30px;
+			    line-height: 18px;
+			    color: #b7b7b7;
+			    &:before{ 
+			     	position: absolute;
+				    #{$left}: 0;
+				    top: 4px;
+				    content: '';
+				    display: inline-block;
+				    width: 30px;
+				    height: 30px;
+				    background: url(../../images/icon-image.png) #969696;
+				    border-radius: 3px;
+				    -webkit-border-radius: 3px;
+				}
+				&:hover:before{
+					background-color: $background;
+
+				}
+				a {
+				    display: inline-block;
+				    padding: 5px 0;
+				    color: #b7b7b7;
+				    &:hover{
+				    	color: $linkColor;
+				    }
+				}
+				&.add-icon:before {
+				    background-position: -8px -10px;
+				}
+				&.email-icon{
+					padding-top: 9px;
+    				margin: 27px 0 30px;
+					&:before {
+					    background-position: -11px -51px;
+					}
+				}
+				&.phone-icon:before {
+				    background-position: -11px -91px;
+				}
+			}
+		}
+	}
+	.footer-bottom {	
+		background-color: #fff;
+	    padding: 10px 0;
+	    .copyright{
+	    	text-align: $left;
+			margin-bottom: 0;
+			a:hover{text-decoration: underline;}
+	    }
+	    .paymen{
+			text-align: right;
+	    }
+	}
+	.news-letter{
+		float: none;
+		.title-block{
+			display: block;
+			color: #b7b7b7;
+			text-align: center;
+			padding-top: 3px;
+			padding-bottom: 0;
+			.page-heading{
+				font-weight: 700;
+			    font-size: 123%;
+			    text-transform: uppercase;
+			    color: #fff;
+			    margin-bottom: 32px;
+			}
+			p.hightlight{
+				font-size: 115.4%;
+			    font-weight: 700;
+			    margin-bottom: 0px;
+			    color: $linkColor;
+			}
+		}
+		.newsletter_promo{
+			display: block;
+			line-height: 1.66;
+			margin-bottom: 16px;
+			p{
+				margin-bottom: 41px;
+			}
+		}
+		.block_content{
+			text-align: center;
+			padding: 0;
+			display: block;
+			.show-error{
+				display: block;
+			}
+
+		}
+		.block_content .input-box input{
+			width: 240px;
+		    height: 42px;
+		    border: 1px solid #dadada;
+		    @include border-radius(0);
+		    margin: 0;
+		}
+		 .block_content .subcribe{
+			position: relative;
+			clear: both;
+			display: block;
+			button{
+				z-index: 9;
+			    @include border-radius(0);
+			    border: 0 !important;
+			    overflow: visible;
+			    display: inline-block;
+			    width: auto;
+			    margin: 0;
+			    cursor: pointer;
+			    height: 39px;
+			   // line-height: 35px;
+			    white-space: nowrap;
+			    text-transform: uppercase;
+			    font-weight: 400;
+			    position: relative;
+			    padding: side-values(0 39px 0 36px !important);
+			    color: #fff !important;
+			    text-decoration: none !important;
+			    margin-top: 30px;
+			    font-size: 12px;
+			    background-color: #fff;
+			    color: #131313 !important;
+			    font-weight: 700;
+			     &:hover{
+			    	background: $background;
+			    	color: #fff !important;
+			    }
+			    &:before{
+			    	content: '\f0da';
+				    font-family: FontAwesome;
+				    font-style: normal;
+				    font-weight: normal;
+				    font-variant: normal;
+				    font-stretch: normal;
+				    line-height: 1;
+				    text-align: center;
+				    font-size: 12px;
+				    margin-#{$right}: 5px;
+				    position: absolute;
+				    #{$right}: 24px;
+				    top: 14px;
+			    }
+			}
+		   
+		}
+	}
+
+}

@@ -1,0 +1,71 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+
+{% if seller_detail %}
+<div class="seller-usergroup">
+	<div class="container">
+		<div class="seller_logo pull-left">
+			<a href="{{seller_detail.seller_href}}" target="_self" title="{{seller_detail.seller_name}}">
+				<img class="img-responsive" src="{{ seller_detail_custom.seller_logo }}">										 
+			</a>
+			
+		</div>
+		<h3 class="seller_name--title">
+			<a href="{{seller_detail.seller_href}}" target="_self" title="{{seller_detail.seller_name}}">
+					{{seller_detail.seller_name}}								 
+			</a>
+		</h3>
+		
+		{% if seller_review_status %}
+		{% if seller_detail.seller_rating %}
+			<div class="rating">
+					
+					  {% for i in 1..5 %}
+					  {% if seller_detail.seller_rating < i %}
+					  <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+					  {% else %}
+					  <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i></span>
+					 {% endif %}
+					  {% endfor %}
+					  <a href="{{ seller_detail.seller_review_link }}">{{ seller_detail.seller_count }} {{ text_seller_review }}</a>
+					</div>
+					{% else %}
+					<div class="rating">{{ text_seller_rating }}
+					{% for i in 1..5 %}
+						<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+					{% endfor %}
+					<a href="{{ seller_detail.seller_review_link }}">{{ seller_detail.seller_count }} {{ text_seller_review }}</a>
+			</div>
+		{% endif %}
+		{% endif %}
+		<div class="seller-email">
+			<i class="fa fa-envelope" aria-hidden="true"></i> {{ seller_detail_custom.seller_email }}
+		</div>
+
+		<div class="seller-address">
+			<i class="fa fa-home" aria-hidden="true"></i> {{ seller_detail_custom.seller_address }}
+		</div>
+		
+		<div class="seller_description">
+		{{seller_detail_custom.seller_description}}
+		</div>
+		
+	</div>
+</div>
+{% else %}
+<div class="breadcrumbs ">
+	<div class="container">
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+</div>
+{% endif %}

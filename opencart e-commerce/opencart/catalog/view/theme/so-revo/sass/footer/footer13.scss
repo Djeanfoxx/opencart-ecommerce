@@ -1,0 +1,133 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/************************************************************************************************
+  FOOTER DEFFAULT
+*************************************************************************************************/
+footer.typefooter-13{
+	.footer-top{
+		padding: 57px 0 30px;
+		background: #2f2f2f;
+		border-bottom: 1px solid rgba(35,35,35,.75);
+	}
+	.footer-bottom {
+		background: #212121;
+		color: #fff;
+		padding-top: 0;
+	}
+	.footer-middle{
+		background: #212121;
+		color: #fff;
+		text-align: center;
+		padding-top: 62px;
+
+		.copyright{
+			margin-bottom: 20px;
+			color: #e3e3e3;
+			 a{
+				color: $linkColor;
+				margin-bottom: 20px;
+				&:hover{
+					text-decoration: underline;
+				}
+			}
+		}
+		.categories-footer{ 
+			margin-bottom: 16px;
+			 text-align: center; clear: both; 
+	      nav a {position: relative; color: #e3e3e3; font-weight: 400; text-transform: uppercase;  padding: 0 15px; @include transition(all .3s ease 0s);
+	       &:before{
+				content: "";
+				width: 5px;
+			    height: 2px;
+			    background: #e3e3e3;
+			    position: absolute;
+			    top: 8px;
+				#{$left}: -3px;
+	       }
+	       &:first-child{
+	       	&:before{
+	       		display: none;
+	       	}
+	       }
+	        &:hover{ color: $linkColor; }
+	      }
+	      p { padding: 0 25%; line-height: 28px;  margin: side-values(10px 13px 0); }
+	    }
+	}
+	.custom_instagram{
+		.modtitle{
+			background: none;
+    		border: none;
+    		margin-bottom: 35px;
+    		text-align: center;
+    		span{
+    			font-size: 24px;
+			    color: #fff;
+			    text-transform: none;
+			    font-weight: normal;
+    		}
+		}
+		.so-instagram-gallery .instagram-items-inner{
+			margin: 0 -5px;
+			.instagram_users .img_users a{
+				border: none;
+				img{
+	                @include transition (all 0.4s ease);
+	            }
+				&:hover{
+					img{
+						@include opacity(0.8);
+					}
+				}
+			}
+			i{
+				display: none;
+			}
+		}
+		.so-instagram-gallery .instagram00-5 .instagram-item{
+			padding: 0 5px;
+		}
+	}
+	.f13-socials-wrap{
+		margin-bottom: 20px;
+		clear: both;
+		ul{
+			list-style: none;
+			padding: 0;
+			li{
+				display: inline-block;
+				margin: 0 5px;
+				.name-social{
+					display: none;
+				}
+				.icon-social{
+					color: #fff;
+					font-size: 17px;
+					&:hover{
+						color: $linkColor;
+					}
+				}
+			}
+		}	
+	}
+
+}

@@ -1,0 +1,87 @@
+<div class="cat-wrap theme4">
+	{% set i = 0 %}
+	{% for items in list %}
+		{% set i = i + 1 %}
+		<div class="so-categories-inner">
+			<div class="so-categories-heading">
+				<div class="icon_left"></div>
+				{% if cat_title_display %}
+					<div class="cat-title">
+						<a href="{{ items.link }}"
+						   title="{{ items.title }}" target="{{ item_link_target }}" >
+							{{ items.title_maxlength }}
+						</a>
+					</div>
+				{% endif %}
+				<div class="icon_right"></div>
+			</div>
+			<div class="so-categories-content cf">
+				{% if items.child_cat is not empty %}
+					{% set k = 0 %}
+					{% for item in items.child_cat %}
+						{% set k = k + 1 %}
+						{% set count = items.child_cat|length %}
+						<div class="so-categories-content-inner">
+							<div class="child-cat {{ k == count ? 'cat-lastitem' : '' }}">
+								<div class="child-cat-info">
+									{% if items.image and items.image != '' and items.product_image == 1 %}
+										<div class="image-cat" title="{{ item.title }}"
+										     style="max-width:{{ width }}px;">
+											<a href="{{ item.link }}"
+											   title="{{ item.title }}" target="{{ item_link_target }}" >
+												<img
+													src="{{ item.image }}"
+													title="{{ item.title }}"
+													alt="{{ item.title }}"/>
+											</a>
+										</div>
+									{% elseif items.product_image == 1 %}
+										<div class="image-cat" title="{{ item.title }}"
+										     style="max-width:{{ width }}px;">
+											<a href="{{ item.link }}"
+											   title="{{ item.title }}" target="{{ item_link_target }}" >
+												<img
+													src="{{ placeholder_path }}"
+													title="{{ item.title }}"
+													alt="{{ item.title }}"/>
+											</a>
+										</div>
+									{% endif %}
+
+									{% if cat_sub_title_display %}
+										<div class="child-cat-desc">
+											<div class="child-cat-title">
+												<a href="{{ item.link }}"
+												   title="{{ item.title }}" target="{{ item_link_target }}">
+													{% if item.title|length > cat_sub_title_maxcharacs and cat_sub_title_maxcharacs != 0 %}
+														{{ item.title|striptags|slice(0, cat_sub_title_maxcharacs) }}
+													{% else %}	
+														{{ item.title }}
+													{% endif %}
+												</a>
+											</div>
+											
+											{% if cat_all_product %}
+												<div class="num_items" style="float:left;color: #737373;">
+													{{ '(' ~ item.all_product ~ ')' }}
+												</div>
+											{% endif %}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="so-categories-content-inner">
+						<div class="child-cat subcat-empty">
+							<div class="child-cat-info">
+								{{ objlang.get('text_noitem') }}
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	{% endfor %}
+</div>

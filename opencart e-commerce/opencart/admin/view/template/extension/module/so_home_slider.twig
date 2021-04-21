@@ -1,0 +1,854 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  	<div class="page-header">
+    	<div class="container-fluid">
+	      	<div class="pull-right">
+				<button type="submit" form="form-featured" data-toggle="tooltip" title="{{ objlang.get('entry_button_save') }} " class="btn btn-primary"><i class="fa fa-save"></i> {{ objlang.get('entry_button_save')}}</button>
+				<a class="btn btn-success" onclick="$('#action').val('save_edit');$('#form-featured').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_edit') }} " ><i class="fa fa-pencil-square-o"></i> {{ objlang.get('entry_button_save_and_edit')}}</a>
+				<a class="btn btn-info" onclick="$('#action').val('save_new');$('#form-featured').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_new') }} " ><i class="fa fa-book"></i>  {{ objlang.get('entry_button_save_and_new')}}</a>
+				<a href="{{ cancel}} " data-toggle="tooltip" title="{{ objlang.get('entry_button_cancel') }} " class="btn btn-danger"><i class="fa fa-reply"></i>  {{ objlang.get('entry_button_cancel')}}</a>
+			</div>
+		      <h1>{{ heading_title_so }}</h1>
+		      <ul class="breadcrumb">
+		        {% for breadcrumb in breadcrumbs %}
+		        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		        {% endfor %}
+		      </ul>
+    	</div>
+  	</div>
+  <div class="container-fluid">
+
+    {% if error.warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error.warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+
+    {% if success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i>  {{ success }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}  
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+	{% endif %}
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ subheading }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
+			{#//Nav tabs #}
+			<div class="row">
+				<div class="col-xs-12">
+					<ul class="nav nav-tabs" role="tablist">
+						<li {% if selectedid  == 0  %} class="active" {% endif %} > <a href="{{ link }} "> <span class="fa fa-plus"></span> {{ objlang.get('button_add_module') }}</a></li>
+						{% set i = 1%}
+						{% for key, module in moduletabs %}  
+							<li role="presentation" {% if module.module_id == selectedid  %} class="active"{% endif %} >
+							<a href="{{ link }}&module_id={{ module.module_id}}" aria-controls="bannermodule-{{ key }} "  >
+								<span class="fa fa-pencil"></span> {{ module.name}}
+							</a>
+							</li>
+							{% set i = i + 1 %}  
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					{% set module_row = 1 %}
+					{% for key, module in modules %}  	
+						{% if selectedid %} 
+						<div class="pull-right">
+							<a href="{{ action }}&delete=1" class="remove btn btn-danger" ><span><i class="fa fa-remove"></i> {{ objlang.get('entry_button_delete') }}</span></a>
+						</div>
+						{% endif %} 
+
+						<div  id="tab-module{{module_row}}" class="col-sm-12">
+							<div class="form-group"> 
+								{# Module Name #}
+								<input type="hidden" name="tab_module" id="tab_module" value=""/>
+								<input type="hidden" name="action" id="action" value=""/>
+								<label class="col-sm-3 control-label" for="input-name"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_name_desc') }} ">{{ objlang.get('entry_name') }}  </span></label>
+								<div class="col-sm-9">
+									<div class="col-sm-5">
+										<input type="text" name="name" value="{{ module.name }}" placeholder="{{ objlang.get('entry_name') }} " id="input-name" class="form-control" />
+									</div>
+									{% if error.name %} 
+									<div class="text-danger col-sm-12">{{ error.name }} </div>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group">
+								{# Header title #}
+								<label class="col-sm-3 control-label" for="input-head_name"><b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_head_name_desc') }} ">{{ objlang.get('entry_head_name') }}  </span></label>
+								<div class="col-sm-9">
+									<div class="col-sm-5">
+										{% set i=0 %}											
+										{% for language in languages %} 
+											{% set i = i + 1 %}		
+											<input type="text" name="module_description[{{ language.language_id }}][head_name]" placeholder="{{ objlang.get('entry_head_name') }}" id="input-head-name-{{ language.language_id}}" value="{{ module_description[language.language_id].head_name ? module_description[language.language_id].head_name : '' }}"  class="form-control {{ i > 1 ? 'hide ' : 'first-name '}}" />
+											
+										{% endfor %}
+										 
+									</div>
+									<div class="col-sm-3">
+										<select  class="form-control" id="language_head-name">
+											{% for language in languages %} 
+											<option value="{{ language.language_id }}">
+												{{ language.name }} 
+											</option>
+											{% endfor %} 
+										</select>
+									</div>
+									{% if error.head_name %} 
+									<div class="text-danger col-sm-12">{{ error.head_name }} </div>
+									{% endif %}
+								</div>
+							</div>
+							<div class="form-group">
+								{# Display header title #}
+								<label class="col-sm-3 control-label" for="input-disp_title_module"> <span data-toggle="tooltip" title="{{ objlang.get('entry_display_title_module_desc') }} ">{{ objlang.get('entry_display_title_module') }}  </span></label>
+								<div class="col-sm-9">
+									<div class="col-sm-5">
+										<select name="disp_title_module" id="input-disp_title_module" class="form-control">
+											{% if module.disp_title_module %} 
+												<option value="1" selected="selected">{{ objlang.get('text_yes') }} </option>
+												<option value="0">{{ objlang.get('text_no') }} </option>
+											{% else %}   
+												<option value="1">{{ objlang.get('text_yes') }} </option>
+												<option value="0" selected="selected">{{ objlang.get('text_no') }} </option>
+											 {% endif %}
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group"> 
+								{# Status #}
+								<label class="col-sm-3 control-label" for="input-status"><span data-toggle="tooltip" title="{{ objlang.get('entry_status_desc') }} ">{{ objlang.get('entry_status') }}  </span></label>
+								<div class="col-sm-9">
+									<div class="col-sm-5">
+										<select name="status" id="input-status" class="form-control">
+											{% if module.status %} 
+												<option value="1" selected="selected">{{ objlang.get('text_enabled') }} </option>
+												<option value="0">{{ objlang.get('text_disabled') }} </option>
+											{% else %}   
+												<option value="1">{{ objlang.get('text_enabled') }} </option>
+												<option value="0" selected="selected">{{ objlang.get('text_disabled') }} </option>
+											 {% endif %}
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="tab-pane">
+							<ul class="nav nav-tabs" id="so_youtech">
+								<li>
+									<a href="#so_module_module" data-toggle="tab" onclick="$('#tab_module').val('add-module')">{{ objlang.get('entry_module' )}}	</a>
+								</li>
+								
+								<li>
+									<a href="#so_module_image_option" data-toggle="tab" onclick="$('#tab_module').val('add-module')">
+										{{ objlang.get('entry_image_option' )}}
+									</a>
+								</li>
+								<li>
+									<a href="#effect_option" data-toggle="tab" onclick="$('#tab_module').val('add-module')">
+										{{ objlang.get('entry_effect_option' )}}
+									</a>
+								</li>
+								<li>
+									<a href="#advanced_option" data-toggle="tab" onclick="$('#tab_module').val('add-module')">
+										{{ objlang.get('entry_advanced_option' )}}	
+									</a>
+								</li>
+
+								{% if selectedid %}
+								<li>
+									<a href="#slider_option" data-toggle="tab" onclick="$('#tab_module').val('add-slide')">
+										{{ objlang.get('entry_slider_option' )}}									
+									</a>
+								</li>
+								{% endif %}
+							</ul>
+							<div class="tab-content">
+							{# // -----------------------------------------------------------------------#}
+								<div class="tab-pane" id="so_module_module"> 
+									{# General Option #}
+									<div class="form-group"> {# Class suffix  #}
+										<label class="col-sm-3 control-label" for="input-class_suffix">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_class_suffix_desc') }} ">{{ objlang.get('entry_class_suffix') }}  </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="class_suffix" value="{{ module.class_suffix }}" id="input-class_suffix" class="form-control" />
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# Open link  #}
+										<label class="col-sm-3 control-label" for="input-open_link">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_open_link_desc') }} ">{{ objlang.get('entry_open_link') }}  </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="item_link_target" id="input-open_link" class="form-control">
+													{% for option_id, option_value in item_link_targets %}
+														{% set selected = option_id  == module.item_link_target ? 'selected' :'' %}	
+														<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+													{% endfor %} 
+												</select>
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group"> {# Columns 1  #}
+										<label class="col-sm-3 control-label" for="input-column_1200">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column0_desc') }} ">{{ objlang.get('entry_column') }}  </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="nb_column0" id="input-column_1200" class="form-control">
+													{% for option_id, option_value in nb_columns %}
+														{% set selected = option_id  == module.nb_column0 ? 'selected' :'' %}	
+														<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+													{% endfor %} 
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# Columns 2  #} 
+										<label class="col-sm-3 control-label" for="input-column_992">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column1_desc') }} ">{{ objlang.get('entry_column') }}  </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="nb_column1" id="input-column_992" class="form-control">
+													{% for option_id, option_value in nb_columns %}
+														{% set selected = option_id  == module.nb_column1 ? 'selected' :'' %}	
+														<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+													{% endfor %} 
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# Columns 3  #} 
+										<label class="col-sm-3 control-label" for="input-column_768_991">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column2_desc') }} ">{{ objlang.get('entry_column') }}  </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="nb_column2" id="input-column_768_992" class="form-control">
+													{% for option_id, option_value in nb_columns %}
+														{% set selected = option_id  == module.nb_column2 ? 'selected' :'' %}	
+														<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+													{% endfor %} 
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# Columns 4  #} 
+										<label class="col-sm-3 control-label" for="input-column_480_767">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column3_desc') }} ">{{ objlang.get('entry_column') }}  </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="nb_column3" id="input-column_480_767" class="form-control">
+													{% for option_id, option_value in nb_columns %} 
+														{% set selected = option_id  == module.nb_column3 ? 'selected' :'' %}	
+														<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+													{% endfor %} 
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group "> {# Columns 5  #}
+										<label class="col-sm-3 control-label" for="input-column_0_479">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_nb_column4_desc') }} ">{{ objlang.get('entry_column') }}  </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="nb_column4" id="input-column_0_479" class="form-control">
+													{% for option_id, option_value in nb_columns %}
+														{% set selected = option_id  == module.nb_column4 ? 'selected' :'' %}	
+														<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+													{% endfor %} 
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+							
+							
+							{# // -----------------------------------------------------------------------#}
+								<div class="tab-pane" id="so_module_image_option">  {# Image Option #}
+									
+									<div class="form-group"> {# Image width #}
+										<label class="col-sm-3 control-label" for="input-width">
+											<b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_width_desc') }} ">{{ objlang.get('entry_width') }} </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="width" value="{{ module.width }}" id="input-width" class="form-control" />
+											</div>
+											{% if error.width %} 
+											<div class="text-danger col-sm-12">{{ error.width }} </div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="form-group"> {# Image height #}
+										<label class="col-sm-3 control-label" for="input-height">
+											<b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_height_desc') }} ">{{ objlang.get('entry_height') }} </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="height" value="{{ module.height }}" id="input-height" class="form-control" />
+											</div>
+											{% if error.height %} 
+											<div class="text-danger col-sm-12">{{ error.height }} </div>
+											{% endif %} 
+										</div>
+									</div>
+									
+								</div>
+
+							{# // -----------------------------------------------------------------------#}
+								<div class="tab-pane" id="effect_option"> {# <!-- Effect Options -->  #}
+									
+									<div class="form-group"> {# <!-- autoplay -->  #}
+										<label class="col-sm-3 control-label" for="input-autoplay"> <span data-toggle="tooltip" title="{{ objlang.get('entry_autoplay_desc') }} ">{{ objlang.get('entry_autoplay') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="autoplay" id="input-autoplay" class="form-control">
+													{% if module.autoplay %} 
+														<option value="1" selected="selected">{{ objlang.get('text_yes') }} </option>
+														<option value="0">{{ objlang.get('text_no') }} </option>
+													{% else %}   
+														<option value="1">{{ objlang.get('text_yes') }} </option>
+														<option value="0" selected="selected">{{ objlang.get('text_no') }} </option>
+													{% endif %} 
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# <!-- autoplayTimeout -->  #}
+										<label class="col-sm-3 control-label" for="input-autoplayTimeout"> <b style="color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_autoplayTimeout_desc') }} ">{{ objlang.get('entry_autoplayTimeout') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="autoplayTimeout" value="{{ module.autoplayTimeout }}" id="input-autoplayTimeout" class="form-control" />
+											</div>
+											{% if error.autoplayTimeout %} 
+												<div class="text-danger col-sm-12">{{ error.autoplayTimeout }} </div>
+											{% endif %} 
+										</div>
+									</div>
+									<div class="form-group"> {# <!-- autoplayHoverPause -->  #}
+										<label class="col-sm-3 control-label" for="input-autoplayHoverPause"> <span data-toggle="tooltip" title="{{ objlang.get('entry_autoplayHoverPause_desc') }} ">{{ objlang.get('entry_autoplayHoverPause') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="autoplayHoverPause" id="input-autoplayHoverPause" class="form-control">
+													{% if module.autoplayHoverPause %} 
+														<option value="1" selected="selected">{{ objlang.get('text_yes') }} </option>
+														<option value="0">{{ objlang.get('text_no') }} </option>
+													{% else %}   
+														<option value="1">{{ objlang.get('text_yes') }} </option>
+														<option value="0" selected="selected">{{ objlang.get('text_no') }} </option>
+													{% endif %}  
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# <!-- autoplaySpeed -->  #}
+										<label class="col-sm-3 control-label" for="input-autoplaySpeed"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_autoplaySpeed_desc') }} ">{{ objlang.get('entry_autoplaySpeed') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="autoplaySpeed" value="{{ module.autoplaySpeed }}" id="input-autoplaySpeed" class="form-control" />
+											</div>
+											{% if error.autoplaySpeed %} 
+												<div class="text-danger col-sm-12">{{ error.autoplaySpeed }} </div>
+											{% endif %} 
+										</div>
+									</div>									
+									<div class="form-group"> {# <!-- startPosition -->  #}
+										<label class="col-sm-3 control-label" for="input-startPosition"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_startPosition_desc') }} ">{{ objlang.get('entry_startPosition') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="startPosition" value="{{ module.startPosition }}" id="input-startPosition" class="form-control" />
+											</div>
+											{% if error.startPosition %} 
+												<div class="text-danger col-sm-12">{{ error.startPosition }} </div>
+											{% endif %} 
+										</div>
+									</div>
+									<div class="form-group"> {# <!-- mouseDrag -->  #}
+										<label class="col-sm-3 control-label" for="input-mouseDrag"> <span data-toggle="tooltip" title="{{ objlang.get('entry_mouseDrag_desc') }} ">{{ objlang.get('entry_mouseDrag') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="radio-inline">
+													{% if module.mouseDrag %} 
+														<input type="radio" name="mouseDrag" value="1" checked="checked" />
+														{{ objlang.get('text_yes') }} 
+													{% else %}   
+														<input type="radio" name="mouseDrag" value="1" />
+														{{ objlang.get('text_yes') }} 
+													{% endif %}  
+												</label>
+												<label class="radio-inline">
+													{% if not module.mouseDrag %} 
+														<input type="radio" name="mouseDrag" value="0" checked="checked" />
+														{{ objlang.get('text_no') }} 
+													{% else %}   
+														<input type="radio" name="mouseDrag" value="0" />
+														{{ objlang.get('text_no') }} 
+													{% endif %}  
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# <!-- touchDrag -->  #}
+										<label class="col-sm-3 control-label" for="input-touchDrag"> <span data-toggle="tooltip" title="{{ objlang.get('entry_touchDrag_desc') }} ">{{ objlang.get('entry_touchDrag') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="radio-inline">
+													{% if module.touchDrag %} 
+														<input type="radio" name="touchDrag" value="1" checked="checked" />
+														{{ objlang.get('text_yes') }} 
+													{% else %}   
+														<input type="radio" name="touchDrag" value="1" />
+														{{ objlang.get('text_yes') }} 
+													{% endif %}  
+												</label>
+												<label class="radio-inline">
+													{% if not module.touchDrag %} 
+														<input type="radio" name="touchDrag" value="0" checked="checked" />
+														{{ objlang.get('text_no') }} 
+													{% else %}   
+														<input type="radio" name="touchDrag" value="0" />
+														{{ objlang.get('text_no') }} 
+													{% endif %}  
+												</label>
+											</div>
+										</div>
+									</div>	
+
+									<div class="form-group"> {# <!--animateOut-->  #}
+										<label class="col-sm-3 control-label" for="input-animateOut"> <span data-toggle="tooltip" title="{{ objlang.get('entry_animateOut_desc') }} ">{{ objlang.get('entry_animateOut') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="animateOut" id="input-animateOut" class="form-control">
+													{% for option_id, option_value in animateOuts %}
+														{%  set selected = (option_id  ==  module.animateOut) ? 'selected' : '' %}
+														<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# <!--animateIn-->  #}
+										<label class="col-sm-3 control-label" for="input-animateIn"> <span data-toggle="tooltip" title="{{ objlang.get('entry_animateIn_desc') }} ">{{ objlang.get('entry_animateIn') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="animateIn" id="input-animateIn" class="form-control">
+													{% for option_id, option_value in animateIns %}
+														{%  set selected = (option_id  ==  module.animateIn) ? 'selected' : '' %}
+															<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+														{% endfor %}
+												</select>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group"> {# <!-- dots -->  #}
+										<label class="col-sm-3 control-label" for="input-dots"> <span data-toggle="tooltip" title="{{ objlang.get('entry_dots_desc') }} ">{{ objlang.get('entry_dots') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="radio-inline">
+													{% if module.dots %} 
+														<input type="radio" name="dots" value="1" checked="checked" />
+														{{ objlang.get('text_yes') }} 
+													{% else %}   
+														<input type="radio" name="dots" value="1" />
+														{{ objlang.get('text_yes') }} 
+													{% endif %} 
+												</label>
+												<label class="radio-inline">
+													{% if not module.dots %} 
+														<input type="radio" name="dots" value="0" checked="checked" />
+														{{ objlang.get('text_no') }} 
+													{% else %}   
+														<input type="radio" name="dots" value="0" />
+														{{ objlang.get('text_no') }} 
+													{% endif %}  
+												</label>
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group"> {# <!-- Loop -->  #}
+										<label class="col-sm-3 control-label" for="input-loop"> <span data-toggle="tooltip" title="{{ objlang.get('entry_loop_desc') }} ">{{ objlang.get('entry_loop') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="radio-inline">
+													{% if module.loop %} 
+														<input type="radio" name="loop" value="1" checked="checked" />
+														{{ objlang.get('text_yes') }} 
+													{% else %}   
+														<input type="radio" name="loop" value="1" />
+														{{ objlang.get('text_yes') }} 
+													{% endif %}  
+												</label>
+												<label class="radio-inline">
+													{% if not module.loop %} 
+														<input type="radio" name="loop" value="0" checked="checked" />
+														{{ objlang.get('text_no') }} 
+													{% else %}   
+														<input type="radio" name="loop" value="0" />
+														{{ objlang.get('text_no') }} 
+													{% endif %}  
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# <!-- navs -->  #}
+										<label class="col-sm-3 control-label" for="input-navs"> <span data-toggle="tooltip" title="{{ objlang.get('entry_navs_desc') }} ">{{ objlang.get('entry_navs') }}  </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="radio-inline">
+													{% if module.navs %} 
+														<input type="radio" name="navs" value="1" checked="checked" />
+														{{ objlang.get('text_yes') }} 
+													{% else %}   
+														<input type="radio" name="navs" value="1" />
+														{{ objlang.get('text_yes') }} 
+													{% endif %}  
+												</label>
+												<label class="radio-inline">
+													{% if not module.navs %} 
+														<input type="radio" name="navs" value="0" checked="checked" />
+														{{ objlang.get('text_no') }} 
+													{% else %}   
+														<input type="radio" name="navs" value="0" />
+														{{ objlang.get('text_no') }} 
+													{% endif %}  
+												</label>
+											</div>
+										</div>
+									</div>
+									
+									
+								</div>	
+							{# // -----------------------------------------------------------------------#}
+								<div class="tab-pane" id="advanced_option"> {# Advanced Option #}
+									<div class="form-group"> {# Pre-text #}
+										<label class="col-sm-3 control-label" for="input-pre_text"> <span data-toggle="tooltip" title="{{ objlang.get('entry_pre_text_desc') }} ">{{ objlang.get('entry_pre_text') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<textarea name="pre_text" id="input-pre_text" class="form-control">{{ module.pre_text }} </textarea>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# Post-text #}
+										<label class="col-sm-3 control-label" for="input-post_text"> <span data-toggle="tooltip" title="{{ objlang.get('entry_post_text_desc') }} ">{{ objlang.get('entry_post_text') }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<textarea name="post_text" id="input-post_text" class="form-control">{{ module.post_text }} </textarea>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"> {# Use Cache #}
+										<label class="col-sm-3 control-label" for="input-use_cache">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_use_cache_desc') }} ">{{ objlang.get('entry_use_cache') }} </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<label class="radio-inline">
+													{% if module.use_cache %} 
+														<input type="radio" name="use_cache" value="1" checked="checked" />
+														{{ objlang.get('text_yes') }} 
+													{% else %}   
+														<input type="radio" name="use_cache" value="1" />
+														{{ objlang.get('text_yes') }} 
+													{% endif %} 
+												</label>
+												<label class="radio-inline">
+													{% if not module.use_cache %} 
+														<input type="radio" name="use_cache" value="0" checked="checked" />
+														{{ objlang.get('text_no') }} 
+													{% else %}   
+														<input type="radio" name="use_cache" value="0" />
+														{{ objlang.get('text_no') }} 
+													{% endif %}   
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group" id="input-cache_time_form"> {# Cache Time #}
+										<label class="col-sm-3 control-label" for="input-cache_time">
+											<span data-toggle="tooltip" title="{{ objlang.get('entry_cache_time_desc') }} ">{{ objlang.get('entry_cache_time') }} </span>
+										</label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="cache_time" value="{{ module.cache_time }}" id="input-cache_time" class="form-control" />
+											</div>
+											{% if error.cache_time %} 
+											<div class="text-danger col-sm-12">{{ error.cache_time }} </div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							{# // -----------------------------------------------------------------------#}
+								{% if selectedid %}
+								<div class="tab-pane" id="slider_option">
+									<div class = "col-md-12">
+										<div class="form-group"> {# <!-- Image slide-->  #}
+											<label class="col-sm-2 control-label" for="input-slide_title"><b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_image_desc') }} ">{{ objlang.get('entry_image') }}  </span></label>
+											<div class="col-sm-10">
+												<div class="col-sm-5">
+													<a href="" id="thumb-image" data-toggle="image" class="img-thumbnail">
+													<img src="{{ slide_description.thumb ? slide_description.thumb  : module.thumb }}" alt="" title="" data-placeholder="{{ slide_description.thumb ? slide_description.thumb : module.thumb }} " />
+													</a>
+													<input type="hidden" name="image" value="{{ slide_description.image ? slide_description.image : '' }}" id="input-image" />
+													
+												</div>
+												{% if error.image %} 
+													<div class="text-danger col-sm-12">{{ error.image }} </div>
+												{% endif %}
+											</div>
+										</div>
+										<div class="form-group"> {# <!--Link -->  #}
+											<label class="col-sm-2 control-label" for="input-link"> <span data-toggle="tooltip" title="{{ objlang.get('entry_link_desc') }} ">{{ objlang.get('entry_link') }}  </span> </label>
+											<div class="col-sm-10">
+												<div class="col-sm-5">
+													<input type="text" name="slide_link" value="{{ slide_description.url ? slide_description.url }} " id="input-link" class="form-control" />
+												</div>
+											</div>
+										</div>
+										<div class="form-group"> {# <!--Status slide -->  #}
+											<label class="col-sm-2 control-label" for="input-slide_status"> <span data-toggle="tooltip" title="{{ objlang.get('entry_status_slide_desc') }} ">{{ objlang.get('entry_status') }}  </span></label>
+											<div class="col-sm-10">
+												<div class="col-sm-5">
+													<select name="slide_status" id="input-slide_status" class="form-control">
+														{% if slide_description.status  and  slide_description.status %} 
+															<option value="1" selected="selected">{{ objlang.get('text_yes') }} </option>
+															<option value="0">{{ objlang.get('text_no') }} </option>
+														{% else %}   
+															<option value="1">{{ objlang.get('text_yes') }} </option>
+															<option value="0" selected="selected">{{ objlang.get('text_no') }} </option>
+														{% endif %} 
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class = "col-md-12">
+										<ul class="nav nav-tabs" id="language">
+											{% for language in languages %} 
+											<li>
+												<a href="#language{{ language.language_id }}" data-toggle="tab">
+													<img src="language/{{ language.code}}/{{ language.code }}.png" title="{{ language.name }} " />
+													{{ language.name }} 
+												</a>
+											</li>
+											 {% endfor %}
+										</ul>
+										<div class="tab-content">
+										{% for language in languages %} 
+											<div class="tab-pane" id="language{{ language.language_id }}">
+												<div class="form-group"> {# <!-- Slide title-->  #}
+												<label class="col-sm-2 control-label" for="input-slide_title"><b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_slide_title_desc') }} ">{{ objlang.get('entry_slide_title') }}  </span></label>
+													<div class="col-sm-10">
+														<div class="col-sm-5">
+															<input type="text"   name="slide_description[{{language.language_id }}][slide_title]" placeholder="{{ objlang.get('entry_slide_title') }} " id="input-slide_title-{{ language.language_id }}" value="{{ slide_description[language.language_id].title  ? slide_description[language.language_id].title : '' }}" class="form-control" />
+															<input type="hidden" name="slide_description[{{ language.language_id }}][language_id]" value="{{ language.language_id }}" />
+														</div>
+														{% if error.slide_title %} 
+															<div class="text-danger col-sm-12">{{ error.slide_title }} </div>
+														{% endif %}
+													</div>
+												</div>
+												<div class="form-group"> {# <!--Caption -->  #}
+													<label class="col-sm-2 control-label" for="input-caption"> <span data-toggle="tooltip" title="{{ objlang.get('entry_caption_desc') }} ">{{ objlang.get('entry_caption') }}  </span> </label>
+													<div class="col-sm-10">
+														<div class="col-sm-5">
+															<input type="text" name="slide_description[{{ language.language_id }}][slide_caption]" placeholder="{{ objlang.get('entry_caption') }} " id="input-slide_caption-{{ language.language_id }}" value="{{ slide_description[language.language_id].caption ? slide_description[language.language_id].caption : '' }}" class="form-control" />
+														</div>
+													</div>
+												</div>
+												<div class="form-group"> {# <!--Description -->  #}
+													<label class="col-sm-2 control-label" for="input-description{{ language.language_id }} "> <span data-toggle="tooltip" title="{{ objlang.get('entry_description_desc') }} ">{{ objlang.get('entry_description') }}  </span></label>
+													<div class="col-sm-10">
+														<div class="col-sm-12">
+															<textarea name="slide_description[{{ language.language_id }}][slide_desciption]"  id="input-slide_desciption-{{ language.language_id }}" class="form-control" data-toggle="summernote">{{ slide_description[language.language_id].description ? slide_description[language.language_id].description: ''}}</textarea>
+														</div>
+													</div>
+												</div>
+											</div>
+										{% endfor %}
+										</div>
+									</div>
+									<div id="slidesContent" class="col-md-12" style="border:#ccc 1px solid; padding:10px; background:#f5f5f5">
+										<h3 style="text-align:center;background:#4e9e41; color:#fff; padding: 10px;font-weight:bold">{{ objlang.get('label_listslide')}}</h3>
+										<div id="slides">
+
+											{% for slide in slides %}
+												<div id="slides_{{ slide.id}}" class="panel" style="border:#ccc 1px solid; padding:10px;">
+													<div class="row">
+														<div class="col-lg-1">
+															<span><i class="fa fa-arrows "></i></span>
+														</div>
+														<div class="col-md-3">
+															<img src="{{ slide.image}}" alt="" class="img-thumbnail" />
+														</div>
+														<div class="col-md-8">
+															<h4 class="pull-left">
+																#{{ slide.id}} - {{ slide.title}}
+															</h4>
+															<div class="btn-group-action pull-right">
+																{% if slide.status %}
+																<a class="btn btn-default"
+																	href="{{ link}}&slide_id={{ slide.id}}&tab=slide&module_id={{ module.moduleid}}">
+																	<i class="fa fa-edit"></i>
+																	Edit
+																</a>
+																<a class="btn btn-default"
+																	href="{{ link }}&slide_id={{ slide.id}}&tab=slide&module_id={{ module.moduleid}}&delete=1">
+																	<i class="fa fa-trash"></i>
+																	Delete
+																</a>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+												</div>
+											{% endfor %}
+										</div>
+									</div>
+
+								</div>
+								{% endif %}
+
+							</div>
+
+						</div>
+
+						{% set module_row = module_row + 1 %}
+					{% endfor %}
+				</div>
+			</div>
+			
+		  
+        </form>		
+      </div>
+    </div>
+
+  	</div>
+ 
+	{% if selectedid %} 
+	<script>
+	  $(function() {
+	    $( "#slides" ).sortable({
+			update: function(event, ui) {        
+			var arr = $(this).sortable('toArray');
+			$.ajax({
+				url: 'index.php?route=extension/module/so_home_slider/sortposition&user_token={{user_token}}&sortarray='+arr,
+				dataType: 'json'
+			});
+		  }
+		});
+	    $( "#slides" ).disableSelection();
+	  });
+	  </script> 
+	{% endif %}
+  
+<script type="text/javascript">
+	
+	{% if _GET.tab  and  _GET.tab =="slide" %}
+		$('#so_youtech a:last').tab('show');
+	{% else %} 
+		$('#so_youtech a:first').tab('show');
+	{% endif %}
+
+	$('#language a:first').tab('show');
+	if($("input[name='child_category']:radio:checked").val() == '0')
+	{
+		$('#input-category_depth_form').hide();
+	}else
+	{
+		$('#input-category_depth_form').show();
+	}
+
+	$("input[name='child_category']:radio").change(function(){
+		if($(this).val() == '0')
+		{
+			$('#input-category_depth_form').hide();
+		}else
+		{
+			$('#input-category_depth_form').show();
+		}
+	});
+
+	$('#language_head-name').change(function(){
+		var that = $(this), opt_select = $('option:selected', that).val() , _input = $('#input-head-name-'+opt_select);
+		$('[id^="input-head-name-"]').addClass('hide');
+		_input.removeClass('hide');
+	});
+		
+		$('.first-name').change(function(){
+			$('input[name="head-name"]').val($(this).val());
+		});
+		if($("input[name='use_cache']:radio:checked").val() == '0')
+		{
+			$('#input-cache_time_form').hide();
+		}else
+		{
+			$('#input-cache_time_form').show();
+		}
+		$("input[name='use_cache']").change(function(){
+			val = $(this).val();
+			if(val ==0)
+			{
+				$('#input-cache_time_form').hide();
+			}else
+			{
+				$('#input-cache_time_form').show();
+			}
+		});
+	</script>
+	<script type="text/javascript">
+		jQuery(document).ready(function ($) {
+			var button = '<div class="remove-caching" style="margin-left: 15px"><button type="button" onclick="remove_cache()" title="{{ entry_button_clear_cache }}" class="btn btn-danger"><i class="fa fa-remove"></i> {{ entry_button_clear_cache }}</button></div>';
+			var button_min = '<div class="remove-caching" style="margin-left: 7px"><button type="button" onclick="remove_cache()" title="{{ entry_button_clear_cache }}" class="btn btn-danger"><i class="fa fa-remove"></i> </button></div>';
+			if($('#column-left').hasClass('active')){
+				$('#column-left #stats').after(button);
+			}else{
+				$('#column-left #stats').after(button_min);
+			}
+			$('#button-menu').click(function(){
+				$('.remove-caching').remove();
+				if($(this).parents().find('#column-left').hasClass('active')){
+					$('#column-left #stats').after(button);
+				}else{
+					$('#column-left #stats').after(button_min);
+				}
+			});
+		});
+		function remove_cache(){
+			var success_remove = '{{success_remove}}';
+			$.ajax({
+				type: 'POST',
+				url: '{{linkremove}}',
+				data: {	is_ajax_cache_lite: 1},
+				success: function () {
+					var html = '<div class="alert alert-success cls-remove-cache"> '+success_remove+' <button type="button" class="close" data-dismiss="alert">&times;</button></div>';
+					if(!($('.page-header .container-fluid .alert-success')).hasClass('cls-remove-cache')){
+						$('.page-header .container-fluid').append(html);
+					}
+				},
+			});
+		}
+	</script>
+</div>
+{{ footer }}

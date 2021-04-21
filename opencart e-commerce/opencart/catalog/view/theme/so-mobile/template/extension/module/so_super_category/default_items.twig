@@ -1,0 +1,234 @@
+{% if child_items is not empty %}
+	{% set k = rl_loaded is defined ? rl_loaded : 0 %}
+	{% set count = child_items|length %}
+	{% set i = 0 %}
+	{% if type_show == 'slider' %}
+		<div class="ltabs-items-inner owl2-carousel ltabs-slider products-list grid">
+	{% endif %}
+	{% set countItem = child_items|length %}
+	{% for item in child_items %}
+		{% set i = i + 1 %}
+		{% set k = k + 1 %}
+		{% if type_show == 'slider' and (i % rows == 1 or rows == 1) %}
+			<div class="ltabs-item product-layout ">
+        {% endif %}
+	  	{% if type_show == 'loadmore' %}
+		  	<div class="spcat-item new-spcat-item product-layout">
+        {% endif %}		
+			<div class="item-inner product-thumb product-item-container transition {% if i == countItem %} last-product {% endif %}">
+				<div class="left-block so-quickview">
+					<div class="image product-image-container {{ product_image_num ==2 ? 'second_img' : '' }}">
+						
+
+						{% if item.thumb and product_image == 1 %}
+							<a class="lt-image" data-product ='{{item.product_id}}'
+							   href="{{ item.link }}" target="{{ item_link_target }}"
+								title="{{ item.name }}">
+								{% if product_image_num == 2 %}
+									<img src="{{ item.thumb }}" class="img-1" alt="{{ item.name }}">
+									<img src="{{ item.thumb2 }}" class="img-2" alt="{{ item.name }}">
+								{% else %}
+									<img src="{{ item.thumb }}" alt="{{ item.name }}">
+								{% endif %}
+							</a>
+						{% endif %}
+					</div>
+					<div class="box-label">
+						{% if item.special and display_sale %}
+							<span class="label-product label-sale">{{ item.discount }}</span>
+						{% endif %}
+						{% if item.productNew and display_new %}
+							<span class="label-product label-new">{{ objlang.get('text_new') }}</span>
+						{% endif %}	
+					</div>
+				</div>
+				<div class="right-block">
+					<div class="caption">
+						{% if product_display_title == 1 %}
+							<h4>
+								<a href="{{ item.link }}" title="{{ item.name }}" target="{{ item_link_target }}">{{ item.name_maxlength }}</a>
+							</h4>
+						{% endif %}
+
+						{% if display_rating %}
+							<div class="rating">
+							  	{% for j in 1..5 %}
+							  		{% if item.rating < j %}
+							  			<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+							  		{% else %}
+							  			<span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+							  		{% endif %}
+							  	{% endfor %}
+							</div>
+						{% endif %}
+
+						{% if product_display_description == 1 %}
+							<p>{{ item.description_maxlength }}</p>
+						{% endif %}
+
+						{% if item.price and product_display_price == 1 %}
+							<p class="price">
+							  	{% if item.special is empty %}
+							  		{{ item.price }}
+							  	{% else %}
+							  		<span class="price-new">{{ item.special }}</span>
+							  		<span class="price-old">{{ item.price }}</span>
+							  	{% endif %}
+							  
+							  
+							</p>
+						{% endif %}
+					</div>
+
+					<div class="button-group">
+						{% if display_add_to_cart == 1 %}
+							<button class="addToCart" type="button" onclick="cart.add('{{ item.product_id }}');"> <span>{{ objlang.get('button_cart') }}</span></button>
+						{% endif %}
+						{% if display_wishlist == 1 %}
+							<button class="wishlist btn-button" type="button" data-toggle="tooltip" title="{{ objlang.get('button_wishlist') }}" onclick="wishlist.add('{{ item.product_id }}');"><i class="fa fa-heart"></i></button>
+						{% endif %}
+						{% if display_compare == 1 %}
+							<button class="compare btn-button" type="button" data-toggle="tooltip" title="{{ objlang.get('button_compare') }}" onclick="compare.add('{{ item.product_id }}');"><i class="fa fa-exchange"></i></button>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% if type_show == 'slider' and (i % rows == 0 or i == count) %}
+        </div>
+    	{% endif %}
+    	
+    	{% if type_show == 'loadmore' %}
+    	</div>
+    	{% endif %}
+        
+        {% if type_show == 'loadmore' %}
+	        {% set clear = 'clr1' %}
+	        {% if k % 2 == 0 %} {% set clear = clear ~ ' clr2' %} {% endif %}
+	        {% if k % 3 == 0 %} {% set clear = clear ~ ' clr3' %} {% endif %}
+	        {% if k % 4 == 0 %} {% set clear = clear ~ ' clr4' %} {% endif %}
+	        {% if k % 5 == 0 %} {% set clear = clear ~ ' clr5' %} {% endif %}
+	        {% if k % 6 == 0 %} {% set clear = clear ~ ' clr6' %} {% endif %}
+	        <div class="{{ clear }}"></div>
+        {% endif %}		
+	{% endfor %}
+
+	{% if type_show == 'slider' %}
+		</div>
+	{% endif %}
+{% else %}
+	{{ 'Has no content to show' }}
+{% endif %}
+
+
+{% if type_show == 'slider' %}
+    <script type="text/javascript">
+    	jQuery(document).ready(function ($) {
+    		var $tag_id = $('#{{ tag_id }}'),
+    			parent_active = $('.spcat-items-selected', $tag_id),
+    			total_product = parent_active.data('total'),
+    			tab_active = $('.ltabs-items-inner',parent_active),
+    			_delay = {{ product_delay }},
+    			_duration = {{ product_duration }},
+    			_effect = '{{ effect }}',
+    			nb_column0 = {{ product_column0 }},
+    			nb_column1 = {{ product_column1 }},
+    			nb_column2 = {{ product_column2 }},
+    			nb_column3 = {{ product_column3 }},
+    			nb_column4 = {{ product_column4 }};
+
+			tab_active.owlCarousel2({
+				rtl: {{ direction }},
+				nav: {{ slider_display_navigation }},
+				dots: false,
+				margin: 0,
+				loop:  {{ slider_display_loop }},
+				autoplay: {{ slider_auto_play }},
+				autoplayHoverPause: {{ slider_auto_hover_pause }},
+				autoplayTimeout: {{ slider_auto_interval_timeout }},
+				autoplaySpeed: {{ slider_auto_play_speed }},
+				mouseDrag: {{ slider_mouse_drag }},
+				touchDrag: {{ slider_touch_drag }},
+				navRewind: true,
+				navText: [ '', '' ],
+				responsive: {
+					0: {
+						items: nb_column4,
+						nav: (total_product/{{ rows }}) >= nb_column4  ? {{ slider_display_navigation == 1 ? "true" : "false" }} : false
+					},
+					480: {
+						items: nb_column3,
+						nav: (total_product/{{ rows }}) >= nb_column3 ? {{ slider_display_navigation == 1 ? "true" : "false" }} : false
+					},
+					768: {
+						items: nb_column2,
+						nav: (total_product/{{ rows }}) >= nb_column2 ? {{ slider_display_navigation == 1 ? "true" : "false" }} : false
+					},
+					992: {
+						items: nb_column1,
+						nav: (total_product/{{ rows }}) >= nb_column1 ? {{ slider_display_navigation == 1 ? "true" : "false" }} : false
+					},
+					1200: {
+						items: nb_column0,
+						nav: (total_product/{{ rows }}) >= nb_column0  ? {{ slider_display_navigation == 1 ? "true" : "false" }} : false
+					}
+				}
+			});
+			
+			tab_active.on("translate.owl.carousel2", function (e) {
+				var $item_active = $(".ltabs-items-inner .owl2-item.active", $tag_id);
+				_UngetAnimate($item_active);
+			});
+
+			tab_active.on("translated.owl.carousel2", function (e) {
+				var $item_active = $(".ltabs-items-inner .owl2-item.active", $tag_id);
+				var $item = $(".ltabs-items-inner .owl2-item", $tag_id);
+				_UngetAnimate($item);
+
+				if ($item_active.length > 1 && _effect != "none") {
+					_getAnimate($item_active);
+				} else {
+					$item.css({"opacity": 1, "filter": "alpha(opacity = 100)"});
+				}
+			});
+
+			var $item = $(".owl2-item", $tag_id);
+			_UngetAnimate($item);
+			_getAnimate($item);
+
+			function _getAnimate($el) {
+				if (_effect == "none") return;
+				tab_active.removeClass("extra-animate");
+				$el.each(function (i) {
+					var $_el = $(this);
+					$(this).css({
+						"-webkit-animation": _effect + " " + _duration + "ms ease both",
+						"-moz-animation": _effect + " " + _duration + "ms ease both",
+						"-o-animation": _effect + " " + _duration + "ms ease both",
+						"animation": _effect + " " + _duration + "ms ease both",
+						"-webkit-animation-delay": +i * _delay + "ms",
+						"-moz-animation-delay": +i * _delay + "ms",
+						"-o-animation-delay": +i * _delay + "ms",
+						"animation-delay": +i * _delay + "ms",
+						"opacity": 1
+					}).animate({opacity: 1});
+
+					if (i == $el.size() - 1) {
+						tab_active.addClass("extra-animate");
+					}
+				});
+			}
+
+			function _UngetAnimate($el) {
+				$el.each(function (i) {
+					$(this).css({
+						"animation": "",
+						"-webkit-animation": "",
+						"-moz-animation": "",
+						"-o-animation": "",
+						"opacity": 1
+					});
+				});
+			}
+		});
+	</script>
+{% endif %}

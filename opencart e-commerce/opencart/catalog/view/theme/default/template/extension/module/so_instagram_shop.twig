@@ -1,0 +1,14 @@
+<div class="module so-instagram-shop {{ class_suffix }}">
+	{% if disp_title_module %}
+		<h3 class="modtitle">{{ name }}</h3>
+	{% endif %}
+	{% if pre_text != '' %}		
+		<div class="form-group">{{ pre_text }}</div>
+	{% endif %}
+	<div class="modcontent">
+		{{ embed_widget }}
+	</div>
+	{% if post_text != '' %}		
+		<div class="form-group">{{ post_text }}</div>
+	{% endif %}
+</div>

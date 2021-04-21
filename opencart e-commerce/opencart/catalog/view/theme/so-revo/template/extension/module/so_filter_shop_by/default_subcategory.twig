@@ -1,0 +1,34 @@
+<li class="so-filter-options" data-option="Subcategory">
+	<div class="so-filter-heading">
+		<div class="so-filter-heading-text">
+			<span>{{ obj_lang.get('text_subcategory') }}</span>
+		</div>
+		<i class="fa fa-chevron-down"></i>
+	</div>
+
+	<div class="so-filter-content-opts">
+		<div class="so-filter-content-opts-container">
+			{% if subcategory_all is not empty %}
+				{% for item in subcategory_all %}
+					{% if subcate_id|length > 0 and subcate_id != "" %}
+						{% set class = item.subcate_id in subcate_id|split(',') == true ? 'opt_active' : '' %}
+					{% else %}
+						{% set class = "" %}
+					{% endif %}
+					<div class="so-filter-option-sub so-filter-option opt-select {{ class }} {{ item.subcate_count_product > 0 ? 'opt_enable' : 'opt_disable' }}" data-type="subcategory" data-subcategory_value= "{{ item.subcate_id }}" data-count_product="{{ item.subcate_count_product }}" data-list_product="{{ item.subcate_list_product }}">
+						<div class="so-option-container">
+							<div class="option-input">
+								<span class="fa fa-square-o"></i>
+							</div>
+							<label><img class="hidden" src="{{ item.subcate_image }}"> {{ item.subcate_name }}</label>
+							<div class="option-count {% if subcate_id|length > 0 %} {{ item.subcate_id in subcate_id|split(',') == true ? 'opt_close' : '' }} {% endif %}">
+								<span>{{ item.subcate_count_product }}</span>
+								<i class="fa fa-times"></i>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+</li>

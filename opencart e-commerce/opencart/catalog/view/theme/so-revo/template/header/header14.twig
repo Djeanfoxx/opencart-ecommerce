@@ -1,0 +1,94 @@
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headertop = soconfig.get_settings('toppanel_type') =='1' or soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+
+<header id="header" class=" variant typeheader-{{ typeheader ? typeheader : '1'}}">
+	
+
+	<!-- HEADER TOP -->
+	<div class="header-top {{hidden_headertop}}">
+		<div class="container">
+			<div class="row">
+				<div class="header-top-left  col-lg-6 col-md-5 col-sm-4 col-xs-8">
+					<ul class="list-inlines">
+						{% if soconfig.get_settings('welcome_message_status') %}
+						<li class="hidden-xs hidden-sm hidden-md" >
+							{% if soconfig.get_settings('welcome_message') is not empty %}
+								{{ soconfig.decode_entities( soconfig.get_settings('welcome_message') ) }}
+							{% endif %}
+						</li>
+						{% endif  %} 
+						<li class="phone hidden-xs hidden-sm hidden-md">
+							{% if soconfig.get_settings('phone_status') and soconfig.get_settings('contact_number') %}
+								{{ soconfig.decode_entities( soconfig.get_settings('contact_number') ) }}
+							{% endif %} 
+						</li>
+						<!-- LANGUAGE CURENTY -->
+						{% if soconfig.get_settings('lang_status') %}
+							<li class="language" >{{ language }} </li>
+							<li class="currency" ><span class="pull-left hidden-xs hidden-sm">{{ text_currency  }}: </span> {{ currency }}</li>
+						{% endif %} 
+					</ul>
+				</div>
+				<div class="header-top-right collapsed-block col-lg-6 col-sm-12 col-md-7 col-sm-8 col-xs-4 ">
+					<h5 class="tabBlockTitle hidden-lg hidden-sm hidden-md visible-xs">{{ text_more }}<a class="expander " href="#TabBlock-1"><i class="fa fa-angle-down"></i></a></h5>
+					<div  class="tabBlock" id="TabBlock-1">
+						<ul class="top-link list-inline">
+							<li class="account" id="my_account"><a href="{{ account  }}" title="{{ text_account }}" class="btn-xs dropdown-toggle" data-toggle="dropdown"> {{ text_account }}</a>
+								<ul class="dropdown-menu ">
+									{% if (logged) %}
+									<li><a href="{{ account  }}">{{ text_account  }}</a></li>
+									<li><a href="{{ order  }}">{{ text_order  }}</a></li>
+									<li><a href="{{ transaction  }}">{{ text_transaction  }}</a></li>
+									<li><a href="{{ download  }}">{{ text_download  }}</a></li>
+									<li><a href="{{ logout }}">{{ text_logout }}</a></li>
+									{% else %}
+									<li><a href="{{ register  }}"><i class="fa fa-user"></i> {{ text_register  }}</a></li>
+									<li><a href="{{ login }}"><i class="fa fa-pencil-square-o"></i>{{ text_login }}</a></li>
+									{% endif %}
+								</ul>
+							</li>
+							<li class="wishlist"><a href="{{ wishlist }}" class="top-link-wishlist" title="{{ text_wishlist }} ">{{ text_wishlist }}</a></li>
+							{% if soconfig.get_settings('checkout_status') %}
+							<li class="checkout"><a href="{{ checkout }} " class="btn-link" title="{{ text_checkout }} "><span >{{ text_checkout }} </span></a></li>
+							{% endif %} 
+							<li class="block-cart">
+								 {{ cart }} 
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{#======	HEADER promotion	=======#}  
+	{% if soconfig.get_settings('promotion_status') and soconfig.get_settings('promotion') %}
+	<div class="header-promotion hidden-xs {{hidden_headertop}}" >
+		{{ soconfig.decode_entities( soconfig.get_settings('promotion') ) }}
+		<div class="button topbar-close"></div>
+	</div>
+	{% endif %}
+	<!-- HEADER BOTTOM -->
+	<div class="header-bottom {{hidden_headerbottom}}">
+		<div class="container">
+			<div class="row">
+				<!-- LOGO -->
+				<div class="navbar-logo col-lg-2 col-md-2 col-sm-4 col-xs-12">
+				   {{soconfig.get_logo()}}
+				</div>
+				<div class="header-bottom-right col-lg-10 col-md-10 col-sm-8 col-xs-12">
+					<div class="contain">
+						<div class="header_search">
+							{{ search_block }}
+						</div>
+						<!-- BOX CONTENT MENU -->
+						<div class="responsive megamenu-style-dev megamenu-dev">
+							{{content_menu }}	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>

@@ -1,0 +1,54 @@
+{{ header }}
+
+{% set imglogo 	= soconfig.get_settings('comingsoon_imglogo') %}
+{% set backgroundLogo = '' %}
+{% if imglogo %}
+	{% set backgroundLogo = 'background-image:url(image/'~imglogo~')'%}
+{% endif %}
+<div class="comingsoon-page text-center comingsoon-page" style="{{backgroundLogo}}">
+	<div class="container">
+
+			{% if soconfig.get_settings('comingsoon_title') is not empty %}
+			<h1 class="comingsoon--title">
+				{{soconfig.get_settings('comingsoon_title')}}
+			</h1>	
+			{% endif %}
+
+			{% if comingsoon_content is not empty %}
+			<div class="comingsoon--content">
+				{{comingsoon_content}}
+			</div>
+			{% endif %}
+
+			<div class="comingsoon--countdown"></div>
+
+			<div class="comingsoon--newsletter">
+				{{content_comingsoon}}
+			</div>
+			
+			{% set full_date 	= soconfig.get_settings('comingsoon_date')|split('-') %}
+			{% set year_end  	= full_date[0]%}
+			{% set month_end 	= full_date[1]%}
+			{% set day_end   	= full_date[2]%}
+			<script type="text/javascript">
+			 $(function () {
+				var austDay = new Date({{year_end}}, {{month_end}}-1 , {{day_end}});
+				$('.comingsoon--countdown').countdown(austDay, function(event) {
+					var $this = $(this).html(event.strftime(''
+					   + '<div class="time-item time-day"><div class="num-time">%D</div><div class="name-time">{{objlang.get('text_labelDay')}} </div></div>'
+					   + '<div class="time-item time-hour"><div class="num-time">%H</div><div class="name-time">{{objlang.get('text_labelHour')}}</div></div>'
+					   + '<div class="time-item time-min"><div class="num-time">%M</div><div class="name-time">{{objlang.get('text_labelMin')}} </div></div>'
+					   + '<div class="time-item time-sec"><div class="num-time">%S</div><div class="name-time">{{objlang.get('text_labelSec')}}</div></div>'));
+				});
+				
+			});
+			</script>
+			<style type="text/css">
+				  .common-home .container-megamenu.vertical .vertical-wrapper{display: none !important;}
+				  .common-home .container-megamenu.vertical:hover .vertical-wrapper{display: block !important;}
+			</style>
+
+	</div>
+</div>
+
+{{ footer }}

@@ -1,0 +1,85 @@
+{#
+****************************************************** 
+ * @package	SO Framework for Opencart 3.x
+ * @author	http://www.opencartworks.com
+ * @license	GNU General Public License
+ * @copyright(C) 2008-2017 opencartworks.com. All rights reserved.
+ ******************************************************
+#}
+{% set category_info = soconfig.get_settings('lstimg_cate_status') %}
+{% if category_info %}
+	<h3 class="title-category ">{{heading_title}}</h3> 
+	{#===== Show Description Category =======#}
+	{% if thumb or description %}
+	<div class="form-group category-info">
+			{% set class_category_info = category_info == 2 ? 'col-sm-9 col-xs-12' : 'col-sm-12 col-xs-12' %}
+			<div class=" row">
+				{% if thumb and category_info == 2 %}
+					<div class="img-cate col-sm-3 col-xs-12"><img class="media-object lazyload"  data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ thumb }}" alt="{{ heading_title }}" title="{{ heading_title }}" /></div>
+				{% endif %}
+
+				{% if description %}
+					<div class="{{class_category_info}}">{{ description }}</div>
+				{% endif %}
+				
+			</div>
+		
+		
+	</div>
+	{% endif %}
+{% endif %}
+
+{#===== Show Sub Category =======#}
+{% if categories and soconfig.get_settings('product_catalog_refine') %}
+	<div class="refine-search form-group clearfix">
+		<h3 class="title-category">{{ text_refine }}</h3>
+		<ul class="refine-search__content ">
+		{% for category in categories %}
+			<li class="refine-search__subitem">
+				{%if soconfig.get_settings('product_catalog_refine') == 1 %}
+					<a href="{{ category.href }}" class="thumbnail"><img class="lazyload"  data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{category.thumb}}" alt="{{ category.name }}" /> </a>
+				{% else %}
+					<a href="{{ category.href }}" class="thumbnail"><img class="lazyload"  data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{category.thumb}}" alt="{{ category.name }}" /> </a>
+					<a href="{{ category.href }}" class="text-center">{{ category.name }}</a>
+				{% endif %}
+			</li>
+		{% endfor %}
+		</ul>
+		<script type="text/javascript"><!--
+			catalog_refine_number = {{soconfig.get_settings('catalog_refine_number')}};
+			if(catalog_refine_number <= $('.refine-search__content > li').length)
+			$('.refine-search__content').append('<li class="refine-loadmore"><i class="fa fa-plus"></i> <span class="more-view"> {{text_refine_more}} </span></li>');
+
+			var show_catalog_refine_number = catalog_refine_number-1 ;
+			$('ul.refine-search__content > li.refine-search__subitem').each(function(i){
+				if(i>show_catalog_refine_number){
+					$(this).css('display', 'none');
+				}
+			});
+
+			$("ul.refine-search__content .refine-loadmore").click(function(){
+				if($(this).hasClass('open')){
+					$('ul.refine-search__content li.refine-search__subitem').each(function(i){
+						if(i>show_catalog_refine_number){
+							$(this).slideUp(200);
+							$(this).css('display', 'none');
+						}
+					});
+					$(this).removeClass('open');
+					$('.refine-loadmore').html('<i class="fa fa-plus"></i> <span class="more-view">{{text_refine_more}} </span>');
+
+				}else{
+					$('ul.refine-search__content li.refine-search__subitem').each(function(i){
+						if(i>show_catalog_refine_number){
+							$(this).slideDown(200);
+						}
+					});
+					$(this).addClass('open');
+					$('.refine-loadmore').html('<i class="fa fa-minus"></i> <span class="more-view">{{text_refine_less}} </span>');
+				}
+			});
+		//--></script> 
+		
+		
+	</div>
+{% endif %}

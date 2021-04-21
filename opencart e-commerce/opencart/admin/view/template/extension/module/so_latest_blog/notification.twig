@@ -1,0 +1,24 @@
+{{ header }}
+    {{ column_left }}
+
+    <div id="content">
+        <div class="page-header">
+            <div class="container-fluid">
+                <h1>{{ error_database }}</h1>
+                <ul class="breadcrumb">
+                    {% for breadcrumb in breadcrumbs %}
+                        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>
+                {{ text_install_message }}
+            </div>
+        </div>
+
+    </div>
+
+{{ footer }}

@@ -1,0 +1,132 @@
+content/*===============================================
+    [SASS DIRECTORY ]
+    
+    [1] MODULE DEFAULT
+    [2] BLOCK SEARCH
+    [3] SOCIAL FOOTER
+    
+==============================================*/
+.sohomepage-slider{
+    margin-bottom: 30px !important;
+    .so-homeslider{border: none !important;}
+}
+.common-home .menu-home > a strong{
+	color: $linkColor !important;
+}
+.sohomepage-slider{
+    margin-bottom: 30px !important;
+}
+.layout-15{
+	.so-instagram-shop{
+		.widget-hotspot{
+			//height: 52px;
+			//width: 52px;
+			color: $linkColor;
+			font-size: 12px;
+	    	font-family: 'roboto';
+			text-align: center;
+			box-shadow: 0 0 16px rgba(0,0,0,.27);
+			@include transform(scale(.8) !important);
+		}
+		 .snpt-pict-item:hover .widget-hotspot, .snptwdgt__item:hover .widget-hotspot{
+			background: $background !important;
+			color: #fff !important;
+			@include transform(scale(1) !important);
+
+		}
+		
+		// .snptwdgt-container .snptwdgt__item .snptlinked-item-ico{
+		// 	display: none;
+		// }
+		
+		
+		
+		
+	}
+	@media (min-width: 992px){
+		public-modal .modal-right-column{
+			width: calc(39% - 30px) !important;
+		    margin-#{$right}: 0px !important;
+		    padding-#{$right}: 30px !important;
+		    margin-#{$left}: 30px !important;
+		}
+	}
+	public-modal .public-hotspot-info-holder .public-hotspot-info .public-hotspot-info__first-line{
+		display: inline !important;
+	}
+	
+	public-modal .public-hotspot-info-holder .public-hotspot-info .public-hotspot-info__product-image-holder{
+		margin-bottom: 10px !important;
+	}
+	public-modal .public-hotspot-info-holder .public-hotspot-info .public-hotspot-info__btn-buy.snpt-cta-btn{
+		margin-top: 0 !important;
+	}
+	.hotspot-modal .modal-dialog .chevron{
+		  top: 50% !important;
+	    margin-top: -10px;
+	    font-size: 25px !important;
+	    color: #fff !important;
+	    font-weight: bold !important;
+	}
+	 .snpt-modal.hotspot-modal .public-item-modal div.above-previews-row{
+		//color: #161616 !important;
+		border-bottom: 1px dashed #dcdcdc !important;
+		padding-bottom: 20px !important;
+		margin-bottom: 35px !important;
+		margin-top: 30px !important; 
+	}
+	@include if-rtl{
+		public-modal .back-to-item-image{
+			margin: 0;
+		}
+	}
+	public-modal .public-hotspot-info-holder .public-hotspot-info .public-hotspot-info__product-image-inner{
+		@include border-radius(0 !important);
+		border: none !important;
+	}
+	public-modal .public-hotspot-info-holder .public-hotspot-info .public-hotspot-info__number{
+		display: none;
+	}
+	public-modal .public-hotspot-info-holder .public-hotspot-info .public-hotspot-info__price{
+		color: #000000 !important;
+		font-weight: bold;
+		font-size: 20px;
+		font-family: 'roboto';
+	}
+	public-modal .public-hotspot-info-holder .public-hotspot-info .public-hotspot-info__btn-buy.snpt-cta-btn .snpt-cta-btn_ico{
+		display: none;
+	}
+	 public-modal .public-hotspot-info-holder .public-hotspot-info .public-hotspot-info__btn-buy.snpt-cta-btn{
+		background:  url("#{$imgPath}icon-image.png")  no-repeat -129px -369px;
+		text-indent: -99em;
+		width: 30px !important;
+		font-size: 0;
+		height: 23px !important;
+    	background-color: transparent !important;
+	}
+	public-modal .back-to-item-image .back-to-item-image__image{
+		width: 80px !important;
+		height: 80px !important;
+	}
+	.snpt-modal.hotspot-modal a.public-hotspot--username{
+		text-transform: capitalize;
+		display: inline-block;
+	}
+	public-modal .profile-avatar{
+		height: 80px !important;
+		width: 80px !important;
+	}
+	 // &.hotspot-modal-tm-1 .snpt-modal.hotspot-modal .modal-content{
+	 // 	background: #fff !important;
+	 // }
+	 // &.hotspot-modal-tm-1.modal-open{
+		// background: #000 !important;
+	 // }
+	 // &.hotspot-modal-tm-1 .mobile-modal-header, &.hotspot-modal-tm-1 .modal-backdrop.modal-backdrop--hotspots{
+		// background: #777 !important;
+	 // }
+	 .hotspot-modal--frontend .product-images-slide img,
+	 .hotspot-modal .modal-content{
+	 	@include border-radius(0 !important);
+	 }
+}

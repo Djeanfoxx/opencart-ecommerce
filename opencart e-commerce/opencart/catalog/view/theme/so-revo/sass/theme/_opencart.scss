@@ -1,0 +1,114 @@
+/*===============================================
+	[SASS DIRECTORY ]
+	
+   [1] PAGE ACCOUNT
+   [2] PAGE INFORMATION
+   [3] PAGE CHECKOUT
+   [4] LANGUAGE CURENTY 
+	[5] CSS FEAFURE MENU DEMO
+==============================================*/
+
+/*============PAGE ACCOUNT ==================*/
+.account-login,
+.affiliate-login{
+   .well {min-height:395px; background: #fff;}
+}
+
+.account-account,
+.affiliate-account{
+   #content > h2{@include rem(font-size, 16px);}
+   #content .list-unstyled{margin-bottom: 30px;}
+}
+
+.account-address{
+   #content .table-responsive{
+      .table>tbody>tr>td{ line-height: 24px;padding: 10px;}
+   }
+}
+.custom-border{
+    border: 1px solid #eee;
+    padding: 10px 20px;
+}
+/* @group List Box */
+.list-box {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+.btn-link:focus, .btn-link:hover{
+    text-decoration: none;
+}
+
+.list-box li{border-bottom: 1px solid #ececec;}
+.list-box li:last-child{border-bottom: 0;}
+.list-box li a{
+    display: inline-block;
+    word-wrap: break-word;
+    padding: 8px 0;
+    margin-right: 5px;
+	 @include linkGray();
+}
+/* @end */
+
+
+/*============PAGE CHECKOUT ==================*/
+.checkout-cart, .checkout-checkout{
+    .panel-group .panel{border-radius: 0;}
+}
+.checkout-cart .content_404 .item-left{    visibility: hidden;}
+.table-responsive{
+    .table{
+        thead > *{ background-color: rgba(51,51,51,0.1); font-weight: bold;}
+        tbody td.text-left{
+            a{font-weight: bold; color: $textBody;}
+            &:hover a{color: $linkColor;}
+        }
+    }
+   
+}
+
+
+/*============LANGUAGE CURENTY ==================*/
+
+.btn-group .btn-link{
+	text-align: $left;
+	background: transparent ;
+	text-decoration: none;
+	padding: 5px 10px;
+	color: #2d2d2d;
+	font-weight: normal;
+	position: relative;z-index: 1;
+    &:hover{
+        color: $linkColor;
+    }
+}
+.dropdown-menu{ 
+	.btn-block{
+		border: none;
+		background: transparent;
+		text-align: $left;
+	}
+}
+
+/*============ CSS FEAFURE MENU DEMO ==================*/
+.feature-layout{
+   .image-link{
+		@include linkGray();
+		.thumbnail{position: relative; overflow: hidden; border-radius: 0;background: #333;padding: 0;}
+		
+		.btn {position: absolute; top:-100px;left: calc(50% - 50px); @include buttonColor(); @include transition(all 0.3s ease-in-out 0s);border-radius: 2px;}
+		&:hover { 
+			.thumbnail{border: 1px solid #ccc;
+				img{opacity: 0.7;}
+			}
+			.btn{top:calc(50% - 25px);}
+		}
+		.figcaption{font-size: 13px; text-align: center;font-weight: 600; text-transform: uppercase; }
+	}
+}
+
+.feature-blog{
+    .menu--item{display: block; margin-bottom: 20px;text-align: center;
+        p{font-size: 12px; text-transform: uppercase; font-weight: bold; margin:5px 0;}
+    }
+}

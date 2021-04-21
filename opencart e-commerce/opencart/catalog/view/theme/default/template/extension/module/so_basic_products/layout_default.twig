@@ -1,0 +1,95 @@
+<div class="item-wrap row cf {{ class_respl0 }}">
+
+{% set j = 0 %}
+	{% for product in products %}
+	{% set j = j + 1 %}
+
+	<div class="item-element ">
+		<div class="item-inner">
+			<div class="product-thumb transition">
+			<div class="image">
+				{% if product.special and display_sale %}
+					<span class="label label-sale">{{ text_sale }}</span>
+				{% endif %}
+				{% if product.productNew and display_new %}
+					<span class="label label-new">{{ text_new }}</span>
+				{% endif %}
+
+				{% if product_image %}
+					<a href="{{ product.href }}" target="{{ item_link_target }}" title= "{{ product.name }}">
+						{% if product_image_num ==2 %}
+							<img src="{{ product.thumb }}" class="img-thumb1" alt="{{ product.name }}">
+							<img src="{{ product.thumb2 }}" class="img-thumb2" alt="{{ product.name }}">
+						{% else %}
+							<img src="{{ product.thumb }}" alt="{{ product.name}}">
+						{% endif %}
+					</a>
+				{% endif %}
+			</div>
+			{% if display_title or display_description or display_price %}
+			<div class="caption">
+				{% if display_title %}
+					<h4>
+						<a href="{{ product.href }}" target="{{ item_link_target }}">
+							{{ product.name_maxlength|raw }}
+						</a>
+					</h4>
+				{% endif %}
+				{% if display_description %}
+					<p> {{ (product.description_maxlength|raw) }}</p>
+					
+				{% endif %}
+				{% if display_rating %}
+				<div class="rating">
+					{% for i in 1..5 %}
+						{% if product.rating < i %}
+							<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+							{% else %}
+							<span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+						{% endif %}
+					{% endfor %}				  
+				</div>
+				{% endif %}
+				{% if  display_price %}
+					{% if  product.price %}
+					<p class="price">
+					  {% if not product.special %}
+					  {{ product.price }}
+					  {% else %}
+					  <span class="price-new"{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+					  {% endif %}
+					  {% if product.tax %}
+					  <span class="price-tax">{{ text_tax}} {{ product.tax}}</span>
+					  {% endif %}
+					</p>
+					{% endif %}
+				{% endif %}
+			</div>
+			{% endif %}
+			{% if display_add_to_cart or display_wishlist or display_compare %}
+				
+					<div class="button-group">
+					{% if display_add_to_cart %}
+						<button type="button" onclick="cart.add('{{product.product_id}}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+					{% endif %}
+					{% if display_wishlist %}
+						<button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+					{% endif %}
+					{% if display_compare %}
+						<button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+					{% endif %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	 </div>
+	{% set clear = 'clr1' %}
+	{% if j % 2 == 0 %} {% set clear = clear ~ ' clr2' %} {% endif %}
+	{% if j % 3 == 0 %} {% set clear = clear ~ ' clr3' %} {% endif %}
+	{% if j % 4 == 0 %} {% set clear = clear ~ ' clr4' %} {% endif %}
+	{% if j % 5 == 0 %} {% set clear = clear ~ ' clr5' %} {% endif %}
+	{% if j % 6 == 0 %} {% set clear = clear ~ ' clr6' %}	{% endif %}
+	<div class="{{ clear }}"></div>
+{% endfor %} 		
+</div>
+			

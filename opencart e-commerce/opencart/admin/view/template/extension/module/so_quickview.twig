@@ -1,0 +1,163 @@
+{{ header }} {{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+				<button type="submit" form="form-featured" data-toggle="tooltip" title="{{ entry_button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ entry_button_save }}</button>
+				<a class="btn btn-success" onclick="$('#action').val('save_edit');$('#form-featured').submit();" data-toggle="tooltip" title="{{ entry_button_save_and_edit }}" ><i class="fa fa-pencil-square-o"></i> {{ entry_button_save_and_edit }}</a>
+				<a class="btn btn-info" onclick="$('#action').val('save_new');$('#form-featured').submit();" data-toggle="tooltip" title="{{ entry_button_save_and_new }}" ><i class="fa fa-book"></i> {{ entry_button_save_and_new }}</a>
+				<a href="{{ cancel }}" data-toggle="tooltip" title="{{ entry_button_cancel }}" class="btn btn-danger"><i class="fa fa-reply"></i> {{ entry_button_cancel }}</a>
+			</div>
+			<h1>{{ heading_title_so }}</h1>
+			<ul class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="container-fluid">
+		{% if error.warning is defined %}
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error.warning }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		{% if success is defined and success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+	    <div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ subheading }}</h3>
+			</div>
+			<div class="panel-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
+					<div class="row">
+						<ul class="nav nav-tabs" role="tablist">
+							<li {% if selectedid ==0 %} class="active" {% endif %}> <a href="{{ link }}"> <span class="fa fa-plus"></span> {{ button_add_module }}</a></li>
+							{% set i = 1 %}
+							{% for key, module in moduletabs %}
+								<li role="presentation" {% if module.module_id == selectedid %} class="active" {% endif %}>
+									<a href="{{ link }}&module_id={{ module.module_id }}" aria-controls="bannermodule-{{ key }}"  >
+										<span class="fa fa-pencil"></span> {{ module.name }}
+									</a>
+								</li>
+								{% set i = i + 1 %}
+							{% endfor %}
+						</ul>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+						{% set module_row = 1 %}
+						{% for module in modules %}
+						{% if selectedid %}
+							<div class="pull-right">
+								<a href="{{ action }}&delete=1" class="remove btn btn-danger" ><span><i class="fa fa-remove"></i> {{ entry_button_delete }}</span></a>
+							</div>
+						{% endif %}
+							<div  id="tab-module{{ module_row }}" class="col-sm-12">
+								<div class="form-group">
+									<input type="hidden" name="action" id="action" value=""/>
+									<label class="col-sm-3 control-label" for="input-name"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_name_desc }}">{{ entry_name }} </span></label>
+									<div class="col-sm-9">
+										<div class="col-sm-5">
+											<input type="text" name="name" value="{{ module.name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+										</div>
+										{% if error.name is defined %}
+										<div class="text-danger col-sm-12">{{ error.name }}</div>
+										{% endif %}
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="input-status"><span data-toggle="tooltip" title="{{ entry_status_desc }}">{{ entry_status }} </span></label>
+									<div class="col-sm-9">
+										<div class="col-sm-5">
+											<select name="status" id="input-status" class="form-control">
+												{% if module.status == 1 %}
+													<option value="1" selected="selected">{{ text_enabled }}</option>
+													<option value="0">{{ text_disabled }}</option>
+												{% else %}
+													<option value="1">{{ text_enabled }}</option>
+													<option value="0" selected="selected">{{ text_disabled }}</option>
+												{% endif %}
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane">
+								<ul class="nav nav-tabs" id="so_youtech">
+									<li>
+										<a href="#so_module_module" data-toggle="tab">
+											{{ entry_module }}
+										</a>
+									</li>
+								</ul>
+								<div class="tab-content">							
+									<div class="tab-pane" id="so_module_module">
+										<div class="form-group"> 
+											<label class="col-sm-3 control-label" for="input-class_suffix">
+												<span data-toggle="tooltip" title="{{ entry_class_suffix_desc }}">{{ entry_class_suffix }} </span>
+											</label>
+											<div class="col-sm-9">
+												<div class="col-sm-5">
+													<textarea name="class_suffix" rows="5" class="form-control" id="input-class_suffix">{{ module.class_suffix }}</textarea>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label" for="input-head_name"> <span data-toggle="tooltip" title="{{ entry_label_button_desc }}">{{ entry_label_button }} </span></label>
+											<div class="col-sm-9">
+												<div class="col-sm-5">
+													{% set i = 0 %}
+													{% for language in languages %}
+														{% set i = i + 1 %}
+														<input type="text" name="label_button[{{ language.language_id }}][label_text]" placeholder="{{ entry_label_button }}" id="input-label-text-{{ language.language_id }}" value="{{ label_button[language.language_id]['label_text'] is defined ? label_button[language.language_id]['label_text'] : '' }}" class="form-control {{ i>1 ? ' hide ' : ' first-name' }}" />
+														{% if i == 1 %}
+															<input type="hidden" class="form-control" id="input-label_text" placeholder="{{ entry_label_button }}" value="{{ label_button[language.language_id]['label_text'] is defined ? label_button[language.language_id]['label_text'] : '' }}" name="label_text">
+														{% endif %}
+													{% endfor %}
+												</div>
+												<div class="col-sm-3">
+													<select  class="form-control" id="language">
+														{% for language in languages %}
+														<option value="{{ language.language_id }}">
+															{{ language.name }}
+														</option>
+														{% endfor %}
+													</select>
+												</div>
+												{% if error.label_text is defined %}
+													<div class="text-danger col-sm-12">{{ error.label_text }}</div>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% set module_row = module_row + 1 %}
+						{% endfor %}
+						</div>
+					</div>
+	        	</form>
+	        </div>
+	    </div>	
+  	</div>
+	<script type="text/javascript"><!--
+		$('#so_youtech a:first').tab('show');
+		$('#language').change(function(){
+			var that = $(this), opt_select = $('option:selected', that).val() , _input = $('#input-label-text-'+opt_select);
+			$('[id^="input-label-text-"]').addClass('hide');
+			_input.removeClass('hide');
+		});
+
+		$('.first-name').change(function(){
+			$('input[name="head_name"]').val($(this).val());
+		});
+//--></script>
+</div>
+{{ footer }}

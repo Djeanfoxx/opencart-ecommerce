@@ -1,0 +1,188 @@
+{{ header }}
+<div class="container">
+	<ul class="breadcrumb">
+		{% for breadcrumb in breadcrumbs %}
+		<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		{% endfor %}
+	</ul>
+	<div class="row">
+		<div  class="col-sm-12">
+				{{ content_top }}
+			
+				<div class="row">
+					<div class="store_top_div clearfix">
+						<div class="col-lg-3 col-sm-4 content-aside ">
+							<div class="module">
+								<h3 class="modtitle"><span>{{ store_name }}</span> </h3>
+								<div class="modcontent">
+   									<div class="store_logo text-center">
+										<img class="img-responsive" src="{{ store_logo }}">
+									</div>
+									<div class="seller-name">
+										<h3>{{ seller_name }}</h3>
+									</div>
+									<ul class="list-inline">
+										<li class="ratings">
+											<div class="rating-box">
+												{% if seller_review_status %}
+													{% if store_rating.rating %}
+
+													<div class="rating text-left">
+													  {% for i in 1..5 %}
+													  {% if store_rating.rating < i %} <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> {% else %} <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> {% endif %}
+													  {% endfor %}({{ store_rating.rating|number_format(1) }})
+													</div>
+
+													{% else %}
+
+														{% for i in 1..5 %}
+															<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+														{% endfor %}({{ store_rating.rating|number_format(1) }})
+													{% endif %}		
+												{% endif %}					 
+											</div>
+										</li>
+										
+										<li class="store-rating">
+											<a href="{{ store_review }}" target="_blank">{{ text_sellerreview }} ({{ store_rating['count'] }})</a>
+										</li>
+									</ul>
+									
+									<div class="seller-description">
+									{{store_description}}
+									</div>
+									
+									
+									<ul class="seller-infor--list">
+										{% if (module_purpletree_multivendor_store_email) is not null %}
+										<li class="seller-email">
+											<div><i class="fa fa-envelope" aria-hidden="true"></i> {{ store_email }}</div>
+										</li>
+										{% endif %}
+										{% if (module_purpletree_multivendor_store_phone) is not null %}
+										<li class="seller-phone">
+											<div><i class="fa fa-phone" aria-hidden="true"></i> {{ store_phone }}</div>
+										</li>
+										{% endif %}
+										
+										{% if (module_purpletree_multivendor_store_address) is not null %}
+										<li class="seller-address">
+											<div><i class="fa fa-home" aria-hidden="true"></i> {{ store_address }}</div>
+										</li>
+										{% endif %}
+										
+										<li class="seller-return">
+											<div><a href="{{ store_return_policy }}" target="_blank">{{ text_returnpolicy }}</a></div>
+										</li>
+										<li class="seller-shipping">
+											<div><a href="{{ store_shipping_policy }}" target="_blank">{{ text_shippingpolicy }}</a></div>
+										</li>
+										<li class="seller-about">
+											<div><a href="{{ store_about }}" target="_blank">{{ text_aboutstore }}</a></div>
+										</li>
+										<li class="seller-return" >
+											<div><a href="{{ seller_contact }}" class="pts-btn pts-btn-xs pts-btn-primary" target="_blank">{{ text_sellercontact }}</a></div>
+										</li>
+									</ul>
+									
+ 								</div>
+							</div>		
+							
+							
+						</div>
+						<div class="col-lg-9 col-sm-8">
+							<div class="pts-banner">
+								<img class="img-responsive" src="{{ store_banner }}">
+							</div>
+							{% if seller_products %}
+							
+							<div class="row product-filter filters-panel">
+								<div class="col-md-2 col-sm-6 hidden-xs">
+								  
+								</div>
+								<div class="col-md-2 col-sm-6">
+								  
+								</div>
+								<div class="short-by-show form-inline text-right col-md-5 col-xs-6">
+								  <div class="form-group short-by">
+									<label class="control-label" for="input-sort">{{ text_sort }}</label>
+									<select id="input-sort" class="form-control" onchange="location = this.value;">
+									{% for sorts in sorts %}
+										{% if sorts.value == '%s-%s'|format(sort, order) %}
+									  <option value="{{ sorts.href }}" selected="selected">{{ sorts.text }}</option>
+										{% else %}
+									  <option value="{{ sorts.href }}">{{ sorts.text }}</option>
+										{% endif %}
+									  {% endfor %}
+									</select>
+								  </div>
+								</div>
+
+								<div class="form-inline col-md-3  text-right col-xs-6">
+								  <div class="form-group ">
+									<label class="control-label" for="input-limit">{{ text_limit }}</label>
+									<select id="input-limit" class="form-control" onchange="location = this.value;">
+										{% for limits in limits %}
+										{% if limits.value == limit %}
+									  <option value="{{ limits.href }}" selected="selected">{{ limits.text }}</option>
+										{% else %}
+									  <option value="{{ limits.href }}">{{ limits.text }}</option>
+										{% endif %}
+									  {% endfor %}
+									</select>
+								  </div>
+								</div>
+							  </div>
+						  
+
+							<div class="products-list row grid">
+							{% for product in seller_products %}
+							<div class="product-layout product-grid col-lg-3 col-md-4 col-sm-6 col-xs-12">
+							  <div class="product-item-container">
+								<div class="left-block left-b">
+									<a href="{{ product.href }}">
+										<img src="{{ product.image }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" />
+									</a>
+									
+								</div>
+								<div class="right-block right-b">
+								  <div class="caption">
+									<h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+									
+									{% if product.price %}
+									<p class="price">
+									{% if not product.special %}
+									  {{ product.price }}
+									  {% else %}
+									  <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+									  {% endif %}
+									</p>
+									{% endif %}
+									
+								  </div>
+								  	<div class="button-group cartinfo--static">
+										<button class="addToCart" type="button" onclick="cart.add('{{ product.product_id }}', '{{ product.minimum }}');"><i class="fa fa-shopping-cart"></i> <span>{{ button_cart }}</span></button>
+										<button class="wishlist btn-button" type="button" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i> </button>
+										<button class="compare btn-button" type="button" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-random"></i>  </button>
+									</div>
+								</div>
+
+							  </div>
+							</div>
+							{% endfor %}
+						  </div>
+						  <div class="row">
+							<div class="col-sm-6 text-left">{{ pagination }}</div>
+							<div class="col-sm-6 text-right">{{ results }}</div>
+						  </div>
+						  {% else %}
+							<div class="text-center"><h3>{{ text_no_results }}</h3></div>
+						  {% endif %}
+						</div>
+					</div>
+				</div>
+			{{ content_bottom }}
+		</div>
+	</div>
+</div>
+{{ footer }}

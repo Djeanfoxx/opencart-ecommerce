@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col-lg-9 col-sm-6 col-xs-12 cart-popup-left">
+		<div class="product-image col-lg-5">
+			{% if product.thumb %} 
+			<a href="{{ product.href }}"><img  src="{{ product.thumb }}"  alt="{{ product.name }}" title="{{ product.name }}"  /></a> 
+			{% endif %}
+		</div>
+
+		<div class="cart-popup-info col-lg-7">
+			<h3 class="product-name">{{ product.name }}</h3>
+			
+			{% if product.option %}
+            {% for option in product.option %} <br />
+            - <small>{{ option.name }} {{ option.value }}</small> {% endfor %}
+            {% endif %}
+          
+			{% if product.price %} 
+			<div class="price">
+				<span class="price-quantity">{{ product.quantity }} x</span>
+				<span class="price-new">{{ product.price }} </span>
+				
+			</div>
+			{% endif %}
+			
+			
+			
+		</div>
+	</div>
+  
+	<div class="col-lg-3 col-sm-6 col-xs-12 cart-popup-right">
+
+		<div class="cart-popup-action">
+			<a href="{{ checkout }}" class="btn btn-checkout">{{ text_checkout }}</a>
+			<div class="cart-popup-imgbottom">
+				{{text_subtotal}}
+			</div>
+			<a href="#" class="btn btn-view-cart inverse" data-dismiss="modal" aria-label="Close">{{text_continue}}</a>
+			<a href="{{ cart }}" class="btn btn-view-cart inverse"> {{ text_cart }}</a>
+
+		</div>
+	</div>
+</div>
+
+

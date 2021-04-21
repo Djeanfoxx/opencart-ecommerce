@@ -1,0 +1,35 @@
+<li class="so-filter-options" data-option="Manufacturer">
+	<div class="so-filter-heading">
+		<div class="so-filter-heading-text">
+			<span>{{ obj_lang.get('text_manufacturer') }}</span>
+		</div>
+		<i class="fa fa-chevron-down"></i>
+	</div>
+
+	<div class="so-filter-content-opts">
+		<div class="so-filter-content-opts-container">
+			{% for item in manufacturer_all %}
+				{% if manu_id|length > 0 and manu_id != "" %}
+					{% set class = item.manu_value_id in manu_id|split(',') == true ? 'opt_active' : '' %}
+				{% else %}
+					{% set class = "" %}
+				{% endif %}
+				
+				{% if disp_manu['disp_manu_id_'~item.manu_value_id] %}
+					<div class="so-filter-option opt-select {{ class }} {{ item.manu_count_product > 0 ? 'opt_enable' : 'opt_disable' }}" data-type="manufacturer" data-manufacturer_value= "{{ item.manu_value_id }}" data-count_product="{{ item.manu_count_product }}" data-list_product="{{ item.manu_list_product }}">
+						<div class="so-option-container">
+							<div class="option-input">
+								<span class="fa fa-square-o"></i>
+							</div>
+							<label><img src="{{ item.manu_value_image }}"> {{ item.manu_value_name }}</label>
+							<div class="option-count {% if manu_id|length > 0 %} {{ item.manu_value_id in manu_id.split(',') == true ? 'opt_close' : '' }} {% endif %}">
+								<span>{{ item.manu_count_product }}</span>
+								<i class="fa fa-times"></i>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</li>

@@ -1,0 +1,262 @@
+{{ header }}
+    <div class="container">
+		<ul class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			{% endfor %}
+		</ul>
+        <div class="row">
+            {{ column_left }}
+            {% if column_left and column_right %}
+                {% set class = 'col-sm-6' %}
+            {% elseif column_left or column_right %}
+                {% set class = 'col-md-9 col-sm-12' %}
+            {% else %}
+                {% set class = 'col-sm-12' %}
+            {% endif %}
+            
+            <div id="content" class="{{ class }}">
+                {{ content_top }}
+                
+                <div class="rows form-group">
+                    {% if article_info_found is defined %}
+                        <div class="article-info">
+                            {% if image %}
+    							{% if featured_found is defined %}
+    								<div class="article-image">
+    									<img src="{{ image }}" alt="{{ article_info.article_title }}"  />
+    								</div>
+    							{% else %}
+    								<div class="article-thumbnail-image">
+    									<img src="{{ image }}" alt="{{ article_info.article_title }}"/>
+    									<span class="article-description">
+    										{{ article_info.description }}
+    									</span>
+    								</div>
+    							{% endif %}
+    						{% endif %}
+                            
+                            <div class="article-sub-title">
+                                <span class="article-author"><a href="{{ author_url }}">{{ text_posted_by }}: {{ article_info.author_name }}</a></span>
+                           
+                                <span class="article-date">{{ text_created }}: {{ article_date_modified }}</span>
+                                {% if article_info.allow_comment %}
+                                    <span class="article-comment">{{ total_comment }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="article-title">
+                                <h3>{{ article_info.article_title }}</h3>
+                            </div>
+                            
+                            {% if featured_found is defined %}
+    							<div class="article-description" style="clear: both;">
+    								{{ article_info.description }}
+    							</div>
+    						{% else %}
+    							<div class="article-description">
+    								{{ article_info.description }}
+    							</div>
+    						{% endif %}
+                            
+                            {% if article_additional_description %}
+    							{% for description in article_additional_description %}
+    								<div class="article-description">
+    									{{ description.additional_description }}
+    								</div>
+    							{% endfor %}
+    						{% endif %}
+                            
+                            {% if products %}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">{{ text_related_product }}</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row product-layout">
+                                            {% for product in products %}
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                    <div class="product-thumb transition simple-blog-product">
+                                                        {% if product.thumb %}
+        								        			<div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+        								        		{% endif %}
+                                                        
+                                                        <div class="caption text-center">
+                                                            <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>  
+                                                        </div>
+                                                    </div>    
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            {% if simple_blog_related_articles is defined and related_articles %}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">{{ text_related_article }}</h3>
+                                    </div>
+                                    
+                                    <div class="panel-body">
+                                        <div class="related-article">
+                                        	<div class="row ">
+                                        		{% for related_article in related_articles %}
+                                        			<div class=" col-sm-4 col-xs-12">
+                                        				<div class="form-group">
+                                                            <div class="image text-center">
+                                                                <a href="{{ related_article.article_href }}">
+																	<img src="{{ related_article.image }}" alt="{{ related_article.article_title }}" title="{{ related_article.article_title }}" class="img-responsive" />
+																</a>
+                                                            </div>
+                                                            <div class="name text-center">
+                                                                <a href="{{ related_article.article_href }}">{{ related_article.article_title }}</a>
+                                                            </div>
+                                                            
+                                                            <div class="related-article-meta">
+                                            					{{ text_posted_by }} <a href="{{ related_article.author_href }}">{{ related_article.author_name }}</a> | {{ text_on }} {{ related_article.date_added }} 
+                                            				</div>
+                                                        </div>
+                                        			</div>
+                                        		{% endfor %}
+                                        	</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            {% if simple_blog_author_information is defined %}
+                                {% if author_image is defined %}
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{ author_name ~ " " ~ text_author_information }}</h3>
+                                        </div>
+                                        
+                                        <div class="panel-body">
+                                            <div class="author-info">
+    											<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+    												<img src="{{ author_image }}" alt="{{ article_info.article_title }}" style="border: 1px solid #cccccc; padding: 5px; border-radius: 5px;" />
+    											</div>
+    											<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+    												{{ author_description }}
+    											</div>
+    										</div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                            
+                            {% if article_info.allow_comment %}                                
+                                <div class="panel panel-default related-comment">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <div id="comments" class="blog-comment-info">
+                                                <div id="comment-list"></div>
+        										<div id="comment-section"></div>
+        										<h2 id="review-title">
+        											{{ text_write_comment }}
+        											<i class="fa fa-times-circle fa-lg" id="reply-remove" style="display:none; cursor: pointer;" onclick="removeCommentId();"></i>
+        										</h2>							
+        										<input type="hidden" name="blog_article_reply_id" value="0" id="blog-reply-id"/>
+        										
+        										<div class="form-group contacts-form row">
+												    <div class="col-md-6">
+													   <b>{{ entry_name }}</b><br />
+													   <input type="text" name="name" value="" class="form-control" /><br />
+												    </div>
+												    <div class="col-md-12">
+													   <b>{{ entry_review }}</b><br />
+														<textarea name="text" class="form-control"></textarea>
+														<span style="font-size: 11px;">{{ text_note }}</span>
+														<br /><br />
+												    </div>
+                                                    <div class="col-md-12">
+    													{{ captcha }}
+    												</div>
+        										  
+        										</div>
+        										
+        										<div class="text-left"><a id="button-comment" class="btn btn-info"><span>{{ button_submit }}</span></a></div>			
+                                            </div>    										
+    									</div>
+                                    </div>                                    
+                                </div>                                    
+                            {% endif %}
+                            
+                        </div>
+                    {% else %}
+                        <h3 class="text-center">{{ text_no_found }}</h3>
+                    {% endif %}
+                </div>
+                
+                {{ content_bottom }}
+            </div>
+            
+            {{ column_right }}
+        </div>        
+    </div>
+    
+    <script type="text/javascript">
+		function removeCommentId() {
+			$("#blog-reply-id").val(0);
+			$("#reply-remove").css('display', 'none');
+		}
+	</script>
+    
+    <script type="text/javascript">
+		$('#comment-list .pagination a').delegate('click', function() {
+			$('#comment-list').fadeOut('slow');
+				
+			$('#comment-list').load(this.href);
+			
+			$('#comment-list').fadeIn('slow');
+			
+			return false;
+		});			
+		
+		$('#comment-list').load('index.php?route=extension/simple_blog/article/comment&simple_blog_article_id={{ simple_blog_article_id }}');
+		
+	</script>	
+    
+    <script type="text/javascript">		
+		$('#button-comment').bind('click', function() {
+			$.ajax({
+				type: 'POST',
+				url: 'index.php?route=extension/simple_blog/article/writeComment&simple_blog_article_id={{ simple_blog_article_id }}',
+				dataType: 'json',
+				data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()) + '&reply_id=' + encodeURIComponent($('input[name=\'blog_article_reply_id\']').val()),
+				beforeSend: function() {
+					$('.success, .warning').remove();
+					$('#button-comment').attr('disabled', true);
+					$('#review-title').after('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> {{ text_wait }}</div>');
+				},
+				complete: function() {
+					$('#button-comment').attr('disabled', false);
+					$('.attention').remove();
+				},
+				success: function(data) {
+				   
+                    $('.alert').remove();
+                    
+					if (data['error']) {
+						$('#review-title').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + data['error'] + '</div>');
+					}
+					
+					if (data['success']) {
+						$('#review-title').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + data['success'] + '</div>');
+										
+						$('input[name=\'name\']').val('');
+						$('textarea[name=\'text\']').val('');
+						$('input[name=\'captcha\']').val('');
+						$("#blog-reply-id").val(0);
+						$("#reply-remove").css('display', 'none');
+						
+						$('#comment-list').load('index.php?route=extension/simple_blog/article/comment&simple_blog_article_id={{ simple_blog_article_id }}');							
+					}
+				}
+			});
+		});
+	</script> 	
+		
+    
+{{ footer }}

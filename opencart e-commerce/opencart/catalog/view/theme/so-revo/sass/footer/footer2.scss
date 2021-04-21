@@ -1,0 +1,49 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/************************************************************************************************
+  FOOTER DEFFAULT
+*************************************************************************************************/
+.typefooter-2{ 
+  background: #fff;
+  .footer-top {
+    background-color: #f0f0f0;
+    padding: 20px 0;
+    height: auto;
+  }
+  .news-letter .block_content .input-box input{
+    height: 40px; border-color: $background;
+  }
+  .news-letter .block_content .subcribe button{ height: 40px; z-index: 9; }
+  .socials-wrap ul li a{ background-color: $background; color: #ebebeb; 
+    &:hover{ color: #fff !important; }
+  }
+  .so-custom-default{
+      padding: 0;
+      border: none;
+      .title-block{
+        padding-bottom: 0;
+      }
+  }
+  .so-custom-default .newsletter_promo{
+    display: none;
+  }
+}

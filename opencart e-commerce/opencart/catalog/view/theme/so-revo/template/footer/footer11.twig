@@ -1,0 +1,40 @@
+<footer class="footer-container typefooter-{{typefooter ? typefooter : '1'}}">
+	
+	{% if footer_11 %} 
+	<div class="footer-main desc-collapse showdown" id="collapse-footer">
+		{{ footer_11 }}
+	</div>
+	{% endif %}
+
+	<div class="button-toggle hidden-lg hidden-md">
+         <a class="showmore" data-toggle="collapse" href="#collapse-footer" data-target="#collapse-footer"  >
+             <span class="toggle-more"><i class="fa fa-angle-double-down"></i>{{ text_show_more}}</span> 
+            <span class="toggle-less"><i class="fa fa-angle-double-up"></i>{{ text_show_less}}</span>            
+		</a>     
+	</div>
+
+	{#======	FOOTER BOTTOM	=======#} 
+	<div class="footer-bottom ">
+		<div class="container">
+			<div class="row">
+			{% set col_copyright = soconfig.get_settings('imgpayment_status') ? 'col-md-7' : 'col-md-12' %}
+				<div class="copyright {{ col_copyright }}">
+					{% if soconfig.get_settings('copyright') is empty %}
+						{{ powered }}
+					{% else %}
+						{{ soconfig.decode_entities(soconfig.get_settings('copyright'))|replace({'{year}': "now"|date("Y")}) }}
+					{% endif %}
+
+				</div>
+
+				{% if soconfig.get_settings('imgpayment_status')%} 
+				<div class="col-md-5 paymen">
+					<img class="lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="image/{{  soconfig.get_settings('imgpayment') }}"  alt="imgpayment">
+				</div>
+				{% endif %} 
+
+			</div>
+		</div>
+	</div>
+	{{ footer_bottom }}
+</footer>

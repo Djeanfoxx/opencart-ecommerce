@@ -1,0 +1,57 @@
+{# ======================
+List Preloader Animation
+===========================
+1.Line loader
+2.Double Bounce loader
+3.Cube Move Loader
+4.Circle Bounce Loader
+5.Folding Cube loader
+=========================#}
+
+{% set preloader_no = (preloader == 'line') ? 'no-pre-loader' : '' %}
+{% set preloader_output = '<div class="so-pre-loader '~ preloader_no ~'">' %}
+
+{% if preloader == 'double-loop' %}
+{# ===== 1.Double Bounce loader ======#}
+    {% set preloader_output = preloader_output~'<div class="so-loader-center"><div class="spinner-bounce"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>'%}
+	
+{% elseif preloader == 'cube-move' %}
+{# ===== 3.Cube Move Loader======#}
+	{% set preloader_output = preloader_output~'<div class="so-loader-center">'%}  
+	{% set preloader_output = preloader_output~'<div class="spinner-cube">'%} 
+		{% set preloader_output = preloader_output~'<div class="cube1"></div>'%} 
+		{% set preloader_output = preloader_output~'<div class="cube2"></div>'%} 
+	{% set preloader_output = preloader_output~'</div>'%}  
+	{% set preloader_output = preloader_output~'</div>'%}
+	
+{% elseif preloader == 'circle-bounce' %}
+{# ===== 4.Circle Bounce Loader======#}
+	{% set preloader_output = preloader_output~'<div class="so-loader-center">'%}  
+	{% set preloader_output = preloader_output~'<div class="spinner-bounce2">'%} 
+		{% set preloader_output = preloader_output~'<div class="bounce1"></div>'%} 
+		{% set preloader_output = preloader_output~'<div class="bounce2"></div>'%} 
+		{% set preloader_output = preloader_output~'<div class="bounce3"></div>'%} 
+	{% set preloader_output = preloader_output~'</div>'%}  
+	{% set preloader_output = preloader_output~'</div>'%}
+
+
+{% elseif preloader == 'folding-cube' %}
+{# ===== 7.Folding Cube loader======#}
+	{% set preloader_output = preloader_output~'<div class="so-loader-center">'%}  
+	{% set preloader_output = preloader_output~'<div class="spinner-folding-cube">'%} 
+		{% set preloader_output = preloader_output~'<div class="sk-cube1 sk-cube"></div>'%} 
+		{% set preloader_output = preloader_output~'<div class="sk-cube2 sk-cube"></div>'%} 
+		{% set preloader_output = preloader_output~'<div class="sk-cube4 sk-cube"></div>'%} 
+		{% set preloader_output = preloader_output~'<div class="sk-cube3 sk-cube"></div>'%} 
+	{% set preloader_output = preloader_output~'</div>'%}  
+	{% set preloader_output = preloader_output~'</div>'%}
+
+{% else %}
+{# ===== 9.Circle loader ======#}
+	{# ===== 8.Line loader======#}
+	{% set preloader_output = preloader_output~'<div class="so-loader-line" id="line-load"></div>'%} 
+{% endif %}
+
+{% set preloader_output = preloader_output ~ '</div>' %}
+
+{{preloader_output}}

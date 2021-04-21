@@ -1,0 +1,248 @@
+	
+{% set class_instagram = 'instagram00-' ~ nb_column0 ~ ' instagram01-' ~ nb_column1 ~ ' instagram02-' ~ nb_column2 ~ ' instagram03-' ~ nb_column3 ~ ' instagram04-' ~ nb_column4 %}
+{% set cls_btn_page = button_page  ==  'top' ? 'button-type1':'button-type2' %}
+{% set btn_type = button_page  ==  'top' ? 'button-type1':'button-type2' %}
+{% set btn_prev = button_page  ==  'top' ? '&#171':'&#139' %}
+{% set btn_next = button_page  ==  'top' ? '&#187':'&#155' %}
+{% set nb_rows = row %}
+{% set navs = navs == 0 ? 'false' : 'true' %}
+{% set dots = dots == 0 ? 'false' : 'true' %}
+
+	<div class="module footer-links{{ direction_class}} {{ class_suffix }} ">
+		{% if disp_title_module %} 
+			<h4 class="title-footer">{{ head_name }}</h4>
+		{% endif %} 
+
+		{% if pre_text !=' ' %}
+			<div class="form-group">
+				{{ pre_text }}
+			</div>
+		{% endif %}
+		
+		<div class="modcontent">
+			
+			<div class="so-instagram-gallery {{ cls_btn_page }} {{ count }}" id="{{ moduleid  }}">
+				{% if count is defined and count|length %} 
+					{% if type_show  ==  'slider' %} 
+					<div class="instagram-items-inner owl2-carousel">
+					{% else %}   
+					<div class="instagram-items-inner {{ class_instagram }}">
+					{% endif %}  
+
+					{% set j = 0 %}
+					{% for i in 0..count %}
+						{% set j = j + 1 %} 
+
+						{% if type_show  ==  'slider'  and  (j % nb_rows  ==  1  or  nb_rows  ==  1) %} 
+						<div class="instagram-item">
+						{% endif %}
+
+						{% if type_show  ==  'simple'%} 
+						<div class="instagram-item {{ i }}">
+						{% endif %} 
+							<div class="instagram_users">
+								<div class="img_users">
+									<a title="{{ json_output.data[i].user.full_name }}" data-href="{{ json_output.data[i].link}}" class="instagram_gallery_image gallery_image_{{ moduleid  }}" rel="" href="{{ json_output.data[i].images.low_resolution.url }}?taken-by={{ json_output.data[i].user.username }}">
+										<img class="image_users" src="{{ json_output.data[i].images.low_resolution.url }}" title="{{ json_output.data[i].user.full_name  }}" alt="{{ json_output.data[i].user.full_name  }}" />
+									</a>
+								</div>
+							</div>
+						{% if type_show  ==  'slider'  and  (j % nb_rows  ==  0  or  j  ==  count) %} 
+						</div>
+						{% endif %}
+
+						{% if type_show  ==  'simple'%} 
+						</div>
+						{% endif %} 
+					{% endfor %} 
+					</div> <!--/.instagram-items-inner-->
+				{% else %} 
+					{{ objlang.get('text_noproduct') }}
+				{% endif %} 
+			</div>
+		</div> <!-- /.modcontent-->
+
+		{% if post_text !=' ' %}
+			<div class="form-group">
+				{{ post_text }}
+			</div>
+		{% endif %}
+			
+	</div>
+
+	{% if type_show  ==  "slider"%}
+	<script type="text/javascript">
+
+		//<![CDATA[
+		jQuery(document).ready(function ($) {
+			;(function (element) {
+				var $element = $(element),
+				$extraslider = $(".instagram-items-inner", $element),
+				_delay = {{ delay }} ,
+				_duration = {{ duration }} ,
+				_effect = '{{ effect }} ';
+
+				this_item = $extraslider.find('div.media');
+				this_item.find('div.item:eq(0)').addClass('head-button');
+				this_item.find('div.item:eq(0) .media-heading').addClass('head-item');
+				this_item.find('div.item:eq(0) .media-left').addClass('so-block');
+				this_item.find('div.item:eq(0) .media-content').addClass('so-block');
+				$extraslider.on("initialized.owl.carousel2", function () {
+					var $item_active = $(".owl2-item.active", $element);
+					if ($item_active.length > 1 && _effect != "none") {
+						_getAnimate($item_active);
+					}
+					else {
+						var $item = $(".owl2-item", $element);
+						$item.css({"opacity": 1, "filter": "alpha(opacity = 100)"});
+					}
+
+					{% if dots  ==  "true" %} 
+						if ($(".owl2-dot", $element).length < 2) {
+							$(".owl2-prev", $element).css("display", "none");
+							$(".owl2-next", $element).css("display", "none");
+							$(".owl2-dot", $element).css("display", "none");
+						}
+					{% endif %}
+
+					{% if button_page  ==  "top"%} 
+						$(".owl2-controls", $element).insertBefore($extraslider);
+						$(".owl2-dots", $element).insertAfter($(".owl2-prev", $element));
+					{% else %}  
+							$(".owl2-nav", $element).insertBefore($extraslider);
+							$(".owl2-controls", $element).insertAfter($extraslider);
+					{% endif %}
+
+			});
+
+				$extraslider.owlCarousel2({
+					rtl: {{ direction}},
+					margin: {{ margin }},
+					slideBy: {{ slideBy }},
+					autoplay: {{ autoplay }},
+					autoplayHoverPause: {{ pausehover  }},
+					autoplayTimeout: {{ autoplay_timeout }} ,
+					autoplaySpeed: {{ autoplaySpeed }} ,
+
+					startPosition: {{ startPosition }} ,
+					mouseDrag: {{ mouseDrag }},
+					touchDrag: {{ touchDrag }} ,
+					autoWidth: false,
+					responsive: {
+						0: 	{ items: {{ nb_column4 }} } ,
+						480: { items: {{ nb_column3 }} },
+						768: { items: {{ nb_column2 }} },
+						992: { items: {{ nb_column1 }} },
+						1200: {items: {{ nb_column0 }}}
+					},
+					dotClass: "owl2-dot",
+					dotsClass: "owl2-dots",
+					dots: {{ dots }} ,
+					dotsSpeed:{{ dotsSpeed }} ,
+					nav: {{ navs }} ,
+					loop: {{ loop }} ,
+					navSpeed: {{ navSpeed }} ,
+					navText: ["{{ btn_prev }} ", "{{ btn_next }} "],
+					navClass: ["owl2-prev", "owl2-next"]
+
+				});
+
+	$extraslider.on("translate.owl.carousel2", function (e) {
+		{% if dots  ==  "true" %} 
+			if ($(".owl2-dot", $element).length < 2) {
+				$(".owl2-prev", $element).css("display", "none");
+				$(".owl2-next", $element).css("display", "none");
+				$(".owl2-dot", $element).css("display", "none");
+			}
+		{% endif %} 
+
+		var $item_active = $(".owl2-item.active", $element);
+			_UngetAnimate($item_active);
+			_getAnimate($item_active);
+		});
+
+	$extraslider.on("translated.owl.carousel2", function (e) {
+
+		{% if dots  ==  "true" %} 
+			if ($(".owl2-dot", $element).length < 2) {
+				$(".owl2-prev", $element).css("display", "none");
+				$(".owl2-next", $element).css("display", "none");
+				$(".owl2-dot", $element).css("display", "none");
+			}
+		{% endif %} 
+
+		var $item_active = $(".owl2-item.active", $element);
+		var $item = $(".owl2-item", $element);
+
+		_UngetAnimate($item);
+
+		if ($item_active.length > 1 && _effect != "none") {
+			_getAnimate($item_active);
+		} else {
+			$item.css({"opacity": 1, "filter": "alpha(opacity = 100)"});
+		}
+	});
+
+	function _getAnimate($el) {
+		if (_effect == "none") return;
+				//if ($.browser.msie && parseInt($.browser.version, 10) <= 9) return;
+				$extraslider.removeClass("extra-animate");
+				$el.each(function (i) {
+					var $_el = $(this);
+					$(this).css({
+						"-webkit-animation": _effect + " " + _duration + "ms ease both",
+						"-moz-animation": _effect + " " + _duration + "ms ease both",
+						"-o-animation": _effect + " " + _duration + "ms ease both",
+						"animation": _effect + " " + _duration + "ms ease both",
+						"-webkit-animation-delay": +i * _delay + "ms",
+						"-moz-animation-delay": +i * _delay + "ms",
+						"-o-animation-delay": +i * _delay + "ms",
+						"animation-delay": +i * _delay + "ms",
+						"opacity": 1
+					}).animate({
+						opacity: 1
+					});
+
+					if (i == $el.size() - 1) {
+						$extraslider.addClass("extra-animate");
+					}
+				});
+			}
+
+			function _UngetAnimate($el) {
+				$el.each(function (i) {
+					$(this).css({
+						"animation": "",
+						"-webkit-animation": "",
+						"-moz-animation": "",
+						"-o-animation": "",
+						"opacity": 1
+					});
+				});
+			}
+
+		})("#{{ moduleid  }}");
+	});
+		//]]>
+	</script>
+	{% endif %}
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".gallery_image_{{ moduleid }}").attr('rel', 'gallery').fancybox({
+		        prevMethod : false,
+				helpers: {
+					thumbs	: {
+						width	: 50,
+						height	: 50,
+					},
+
+					{% if show_fullname %}
+						title : {type : 'over'},
+		            {% else %} 
+		            	title : null
+		            {% endif %}
+				},
+			});
+		});
+	</script>

@@ -1,0 +1,77 @@
+
+{#==== Gallery - Large image  ==== #}
+
+<div id="thumb-slider" class="" >
+	{% for key,image in images %}
+		<div class="col-sm-6 gallery-grid" data-index="{{key}}" >
+			<a class="thumbnail" title="{{ heading_title }}" >
+				<img src="{{ image.popup }}" data-index="{{key}}" title="{{ heading_title }}" alt="{{ heading_title }}" />
+			</a>
+		</div>
+	{% endfor %}
+	<div class="gallery-button text-center">
+		<div class="gallery-zoom"><i class="fa fa-search"></i> {{text_gallery_in_zoom}}</div>
+	</div>
+	
+</div>
+
+<script type="text/javascript"><!--
+	$(document).ready(function() {
+		var zoomCollection = '.gallery-grid img';
+		$( zoomCollection ).elevateZoom({
+			{% if soconfig.get_settings('product_enablezoom')%}
+				zoomType        : "inner",
+			{% else %}
+				zoomType        :"none",
+			{% endif %}
+			lensSize    :'250',
+			cursor: 'pointer',
+			galleryActiveClass: "active",
+			
+		});
+		$(zoomCollection).bind('touchstart', function(){
+		    $(zoomCollection).unbind('touchmove');
+		});
+		
+		
+		$(".gallery-zoom").hover(
+			function() {
+		        $(this).html('<i class="fa fa-search"></i> {{text_gallery_out_zoom}}');
+		    },
+		    function() {
+		        $(this).html('<i class="fa fa-search"></i> {{text_gallery_in_zoom}}');
+		});
+
+		// Initialize the sticky scrolling on an item 
+		$(".content-product-right").stick_in_parent({
+			    offset_top: 10,
+			    bottoming   : true
+		});
+		
+		{% if images %}
+		$('.gallery-zoom').magnificPopup({
+			items: [
+			{% for   image in images %}
+				{src: '{{image.popup}}'},
+			{% endfor %}
+			],
+			gallery: { enabled: true, preload: [0,2] },
+			type: 'image',
+			mainClass: 'mfp-fade',
+  			callbacks: {
+				open: function() {
+					{% if images %}
+						var activeIndex = 0;
+					{% else %}
+						var activeIndex = 0;
+					{% endif %}
+					var magnificPopup = $.magnificPopup.instance;
+					magnificPopup.goTo(activeIndex);
+				}
+			}
+
+		});
+		{% endif %}
+
+	});
+//--></script>

@@ -1,0 +1,38 @@
+<footer class="footer-container typefooter-{{typefooter ? typefooter : '1'}}">
+	{% if footer_13 %} 
+
+		{{ footer_13 }}
+
+	{% endif %}
+	{% if footer_14 %} 
+
+		{{ footer_14 }}
+
+	{% endif %}
+
+	
+
+	{#======	FOOTER BOTTOM	=======#} 
+	<div class="footer-bottom ">
+		<div class="container">
+			<div class="bottom-contain">
+				<div class=" copyright">
+					{% if soconfig.get_settings('copyright') is empty %}
+						{{ powered }}
+					{% else %}
+						{{ soconfig.decode_entities(soconfig.get_settings('copyright'))|replace({'{year}': "now"|date("Y")}) }}
+					{% endif %}
+
+				</div> 
+				
+				{% if soconfig.get_settings('imgpayment_status')%} 
+				<div class="payment">
+					<img class="lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="image/{{  soconfig.get_settings('imgpayment') }}"  alt="imgpayment">
+				</div>
+				{% endif %} 
+
+			</div>
+		</div>
+	</div>
+	{{ footer_bottom }}
+</footer>
